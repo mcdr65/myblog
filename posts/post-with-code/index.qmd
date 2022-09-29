@@ -3,7 +3,7 @@ title: "Exponential Growth"
 author: "André Meichtry"
 date: "2022-09-29"
 categories: [news, code, analysis]
-image: "image.jpg"
+image: "image.png"
 fig-cap-location: top
 format:
   html:
