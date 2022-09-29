@@ -1,0 +1,19 @@
+project:
+  type: website
+
+website:
+  title: "Stats and other things"
+  navbar:
+    right:
+      - about.qmd
+      - icon: github
+        href: https://github.com/
+    
+format:
+  html:
+    theme: default
+    css: styles.css
+
+
+
+
