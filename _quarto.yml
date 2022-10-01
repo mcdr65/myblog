@@ -3,14 +3,14 @@ project:
   output-dir: docs
 
 website:
-  title: "Stats and other things"
+  title: "André Meichtry"
   site-url: "https://mcdr65.github.io/myblog/"
   description: "Blog about stats"
   navbar:
     right:
       - about.qmd
       - icon: github
-        href: https://github.com/
+        href: https://github.com/mcdr65
       - icon: rss
         href: index.xml
     
