@@ -4,7 +4,7 @@ project:
 
 website:
   title: "Stats and other things"
-  site-url: https://mcdr65.github.io/myblog/
+  site-url: "https://mcdr65.github.io/myblog/"
   description: "Blog about stats"
   navbar:
     right:
