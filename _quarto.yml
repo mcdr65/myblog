@@ -16,7 +16,9 @@ website:
     
 format:
   html:
-    theme: vapor
+    theme:
+      light: litera
+      dark: vapor
     css: styles.css
     code-link: true
 

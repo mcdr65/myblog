@@ -2,6 +2,10 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://mcdr65.github.io/myblog/index.html</loc>
-    <lastmod>2022-10-01T14:47:37.698Z</lastmod>
+    <lastmod>2022-10-01T15:49:59.008Z</lastmod>
+  </url>
+  <url>
+    <loc>https://mcdr65.github.io/myblog/posts/post-with-code/index.html</loc>
+    <lastmod>2022-10-01T15:54:33.356Z</lastmod>
   </url>
 </urlset>
