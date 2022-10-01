@@ -5,8 +5,8 @@ date: "2022-09-26"
 categories: [news]
 ---
 
-Welcome!
+Welcome! 
 
-![](profile.png)
+![Cosmic Cliffs from James-Webb telescope](profile.png)
 
-Since this post doesn't specify an explicit `image`, the first image in the post will be used in the listing page of posts.
+

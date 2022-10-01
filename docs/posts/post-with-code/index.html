@@ -1,14 +1,11 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
-
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
 <meta name="generator" content="quarto-1.1.251">
-
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-
 <meta name="author" content="André Meichtry">
 <meta name="dcterms.date" content="2022-09-29">
-
 <title>Stats and other things - Exponential Growth</title>
 <style>
 code{white-space: pre-wrap;}
@@ -87,7 +84,6 @@ code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
-
 <script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
 <script src="../../site_libs/quarto-nav/headroom.min.js"></script>
 <script src="../../site_libs/clipboard/clipboard.min.js"></script>
@@ -100,11 +96,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
-<script id="quarto-search-options" type="application/json">{
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="dark"><script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
   "collapse-after": 3,
@@ -122,19 +117,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     "search-detached-cancel-button-title": "Cancel",
     "search-submit-button-title": "Submit"
   }
-}</script>
-
-  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
-
-<link rel="stylesheet" href="../../styles.css">
+}</script><script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script><link rel="stylesheet" href="../../styles.css">
 </head>
-
 <body class="nav-fixed fullcontent">
 
 <div id="quarto-search-results"></div>
-  <header id="quarto-header" class="headroom fixed-top">
-    <nav class="navbar navbar-expand-lg navbar-dark ">
-      <div class="navbar-container container-fluid">
+  <header id="quarto-header" class="headroom fixed-top"><nav class="navbar navbar-expand-lg navbar-dark "><div class="navbar-container container-fluid">
       <div class="navbar-brand-container">
     <a class="navbar-brand" href="../../index.html">
     <span class="navbar-title">Stats and other things</span>
@@ -145,7 +133,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
-  <li class="nav-item">
+<li class="nav-item">
     <a class="nav-link" href="../../about.html">About</a>
   </li>  
   <li class="nav-item compact">
@@ -154,14 +142,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
  </a>
   </li>  
 </ul>
-              <div id="quarto-search" class="" title="Search"></div>
+<div id="quarto-search" class="" title="Search"></div>
           </div> <!-- /navcollapse -->
       </div> <!-- /container-fluid -->
-    </nav>
-</header>
-<!-- content -->
-<header id="title-block-header" class="quarto-title-block default page-columns page-full">
-  <div class="quarto-title-banner page-columns page-full">
+    </nav></header><!-- content --><header id="title-block-header" class="quarto-title-block default page-columns page-full"><div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
       <h1 class="title">Exponential Growth</h1>
                                 <div class="quarto-categories">
@@ -197,64 +181,46 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <!-- margin-sidebar -->
     
 <!-- main -->
-<main class="content quarto-banner-title-block" id="quarto-document-content">
-
-
-
-
-<p><em>The greatest shortcoming of the human race is the inability to understand the exponential function. (Al Bartlett)</em></p>
-<section id="problem" class="level1">
-<h1>Problem</h1>
+<main class="content quarto-banner-title-block" id="quarto-document-content"><p><em>The greatest shortcoming of the human race is the inability to understand the exponential function. (Al Bartlett)</em></p>
+<section id="problem" class="level1"><h1>Problem</h1>
 <p>Sie sitzen zuoberst in einem Fussball-Stadion; es hat Platz für <span class="math inline">\(6\times 10^{13}\)</span> Wassertropfen. Es beginnt mit einem Tropfen, der in der ersten Minute ins Stadion tröpfelt. Jede Minute <em>verdoppelt</em> sich die Anzahl Tropfen. Lange passiert nichts Besonderes. Sie sehen die Gefahr nicht kommen. Von der <em>Hälfte</em> bis <em>ganz</em> oben geht es plötzlich sehr schnell. Es würde auch nicht viel bringen, wenn das Stadion noch viel grösser wäre; wir haben <strong>exponentielles Wachstum</strong>.</p>
 <div class="cell">
-<details>
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>max <span class="ot">&lt;-</span> <span class="fl">3e06</span><span class="sc">*</span><span class="fl">20e06</span> <span class="do">##Volumen Allianz-Arena</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>halb <span class="ot">&lt;-</span> max<span class="sc">/</span><span class="dv">2</span></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>max2<span class="ot">&lt;-</span>max<span class="sc">*</span><span class="dv">2</span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>tmax<span class="ot">&lt;-</span><span class="dv">50</span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>t<span class="ot">&lt;-</span><span class="fu">seq</span>(<span class="dv">0</span>,tmax,<span class="at">by=</span><span class="fl">0.1</span>)</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>expwachs <span class="ot">&lt;-</span> <span class="cf">function</span>(t) {y<span class="ot">&lt;-</span><span class="dv">1</span><span class="sc">*</span><span class="dv">2</span><span class="sc">^</span>(t<span class="sc">/</span><span class="dv">1</span>)}</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(t,<span class="fu">expwachs</span>(t),<span class="at">type=</span><span class="st">"l"</span>,<span class="at">ylim=</span><span class="fu">c</span>(<span class="dv">0</span>,max2),<span class="at">main=</span><span class="st">""</span>,<span class="at">ylab=</span><span class="st">"Volumen [Wassertropfen]"</span>, <span class="at">xlab=</span><span class="st">"Minuten"</span>)</span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="fu">axis</span>(<span class="at">side =</span> <span class="dv">1</span>, <span class="at">at =</span> <span class="fu">seq</span>(<span class="dv">0</span>,tmax,<span class="at">by=</span><span class="dv">1</span>))</span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">h=</span>max,<span class="at">lty=</span><span class="dv">2</span>,<span class="at">col=</span><span class="st">"red"</span>)</span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">v=</span>t[<span class="dv">458</span>],<span class="at">lty=</span><span class="dv">2</span>,<span class="at">col=</span><span class="st">"red"</span>)</span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">h=</span>halb,<span class="at">lty=</span><span class="dv">2</span>,<span class="at">col=</span><span class="st">"blue"</span>)</span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">v=</span>t[<span class="dv">448</span>],<span class="at">lty=</span><span class="dv">2</span>,<span class="at">col=</span><span class="st">"blue"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output-display">
+<details><summary>Code</summary><div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">max</span> <span class="op">&lt;-</span> <span class="fl">3e06</span><span class="op">*</span><span class="fl">20e06</span> <span class="co">##Volumen Allianz-Arena</span></span>
+<span><span class="va">halb</span> <span class="op">&lt;-</span> <span class="va">max</span><span class="op">/</span><span class="fl">2</span></span>
+<span><span class="va">max2</span><span class="op">&lt;-</span><span class="va">max</span><span class="op">*</span><span class="fl">2</span></span>
+<span><span class="va">tmax</span><span class="op">&lt;-</span><span class="fl">50</span></span>
+<span><span class="va">t</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="fl">0</span>,<span class="va">tmax</span>,by<span class="op">=</span><span class="fl">0.1</span><span class="op">)</span></span>
+<span><span class="va">expwachs</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">t</span><span class="op">)</span> <span class="op">{</span><span class="va">y</span><span class="op">&lt;-</span><span class="fl">1</span><span class="op">*</span><span class="fl">2</span><span class="op">^</span><span class="op">(</span><span class="va">t</span><span class="op">/</span><span class="fl">1</span><span class="op">)</span><span class="op">}</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">t</span>,<span class="fu">expwachs</span><span class="op">(</span><span class="va">t</span><span class="op">)</span>,type<span class="op">=</span><span class="st">"l"</span>,ylim<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="va">max2</span><span class="op">)</span>,main<span class="op">=</span><span class="st">""</span>,ylab<span class="op">=</span><span class="st">"Volumen [Wassertropfen]"</span>, xlab<span class="op">=</span><span class="st">"Minuten"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/axis.html">axis</a></span><span class="op">(</span>side <span class="op">=</span> <span class="fl">1</span>, at <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="fl">0</span>,<span class="va">tmax</span>,by<span class="op">=</span><span class="fl">1</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/abline.html">abline</a></span><span class="op">(</span>h<span class="op">=</span><span class="va">max</span>,lty<span class="op">=</span><span class="fl">2</span>,col<span class="op">=</span><span class="st">"red"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/abline.html">abline</a></span><span class="op">(</span>v<span class="op">=</span><span class="va">t</span><span class="op">[</span><span class="fl">458</span><span class="op">]</span>,lty<span class="op">=</span><span class="fl">2</span>,col<span class="op">=</span><span class="st">"red"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/abline.html">abline</a></span><span class="op">(</span>h<span class="op">=</span><span class="va">halb</span>,lty<span class="op">=</span><span class="fl">2</span>,col<span class="op">=</span><span class="st">"blue"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/abline.html">abline</a></span><span class="op">(</span>v<span class="op">=</span><span class="va">t</span><span class="op">[</span><span class="fl">448</span><span class="op">]</span>,lty<span class="op">=</span><span class="fl">2</span>,col<span class="op">=</span><span class="st">"blue"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p></p><figcaption class="figure-caption">Exponentielles Wachstum</figcaption><p></p>
+<figure class="figure"><p></p><figcaption class="figure-caption">Exponentielles Wachstum</figcaption><p></p>
 <p><img src="index_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
 </div>
-</section>
-<section id="exponentialfunktion" class="level1">
-<h1>Exponentialfunktion</h1>
+</section><section id="exponentialfunktion" class="level1"><h1>Exponentialfunktion</h1>
 <p><strong>Jede Exponentialfunktion <span class="math inline">\(a^x\)</span> mit <span class="math inline">\(a&gt;1\)</span> wächst ab einem gewissen <span class="math inline">\(x\)</span> schneller als jede lineare Funktion <span class="math inline">\(a+bx\)</span></strong>.</p>
 <div class="cell">
-<details>
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">curve</span>(<span class="dv">10</span><span class="sc">*</span>x,<span class="at">from=</span><span class="dv">0</span>,<span class="at">to=</span><span class="dv">60</span>,<span class="at">ylab=</span><span class="st">"y"</span>)</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">curve</span>(<span class="dv">20</span><span class="sc">*</span>x,<span class="at">add=</span><span class="cn">TRUE</span>,<span class="at">lty=</span><span class="dv">2</span>)</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fu">curve</span>(<span class="dv">2</span><span class="sc">^</span>x,<span class="at">add=</span><span class="cn">TRUE</span>,<span class="at">lty=</span><span class="dv">3</span>)</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="fu">curve</span>(<span class="fl">1.2</span><span class="sc">^</span>x,<span class="at">add=</span><span class="cn">TRUE</span>,<span class="at">lty=</span><span class="dv">4</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output-display">
+<details><summary>Code</summary><div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/curve.html">curve</a></span><span class="op">(</span><span class="fl">10</span><span class="op">*</span><span class="va">x</span>,from<span class="op">=</span><span class="fl">0</span>,to<span class="op">=</span><span class="fl">60</span>,ylab<span class="op">=</span><span class="st">"y"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/curve.html">curve</a></span><span class="op">(</span><span class="fl">20</span><span class="op">*</span><span class="va">x</span>,add<span class="op">=</span><span class="cn">TRUE</span>,lty<span class="op">=</span><span class="fl">2</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/curve.html">curve</a></span><span class="op">(</span><span class="fl">2</span><span class="op">^</span><span class="va">x</span>,add<span class="op">=</span><span class="cn">TRUE</span>,lty<span class="op">=</span><span class="fl">3</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/curve.html">curve</a></span><span class="op">(</span><span class="fl">1.2</span><span class="op">^</span><span class="va">x</span>,add<span class="op">=</span><span class="cn">TRUE</span>,lty<span class="op">=</span><span class="fl">4</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p></p><figcaption class="figure-caption">Exponentialfunktion und lineare Funktion</figcaption><p></p>
+<figure class="figure"><p></p><figcaption class="figure-caption">Exponentialfunktion und lineare Funktion</figcaption><p></p>
 <p><img src="index_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
 </div>
-</section>
-<section id="exponentielles-wachstum" class="level1">
-<h1>Exponentielles Wachstum</h1>
+</section><section id="exponentielles-wachstum" class="level1"><h1>Exponentielles Wachstum</h1>
 <p><strong>Exponential growth</strong> is defined by</p>
 <p><span class="math display">\[\boxed{x(t)=x_0e^{kt}=x_0e^{t/\tau}=x_02^{t/T}},\]</span></p>
 <p>with <span class="math inline">\(t\)</span>: time, <span class="math inline">\(\tau\)</span>: <span class="math inline">\(e\)</span>-folding time, <span class="math inline">\(T\)</span>: doubling time, <span class="math inline">\(k\)</span>: growth constant. <a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></p>
@@ -264,173 +230,111 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li><p>Bei Verdoppelung alle 7 Tage: <span class="math inline">\(2^{t/7}=(2^{1/7})^t=1.1^t\)</span></p></li>
 <li><p>Bei Verdoppelung alle 10 Tage: <span class="math inline">\(2^{t/10}=(2^{1/10})^t=1.07^t\)</span></p></li>
 </ul>
-<!-- # Daten Covid-19 -->
-<!-- <https://github.com/openZH/covid_19> -->
-<!-- ```{r echo=FALSE} -->
-<!-- data<-read.csv("https://raw.githubusercontent.com/openZH/covid_19/master/COVID19_Fallzahlen_CH_total.csv") -->
-<!-- str(data) -->
-<!-- names(data)[3]<-"Kanton" -->
-<!-- data<-data[,-11] -->
-<!-- sKcases<-split(data$ncumul_conf,data$Kanton) -->
-<!-- sKfatal<-split(data$ncumul_deceased,data$Kanton) -->
-<!-- sKhosp<-split(data$ncumul_hosp,data$Kanton) -->
-<!-- sKICU<-split(data$ncumul_ICU,data$Kanton) -->
-<!-- sKvent<-split(data$ncumul_vent,data$Kanton) -->
-<!-- ``` -->
-<!-- ## Reported cases -->
-<!-- ```{r} -->
-<!-- CasesKanton<-sapply(sKcases,function(x){x[max(which(!is.na(x)))]}) -->
-<!-- CasesKanton -->
-<!-- sum(CasesKanton) -->
-<!-- ``` -->
-<!-- ## Deceased -->
-<!-- ```{r} -->
-<!-- FatKanton<-sapply(sKfatal,function(x){x[max(which(!is.na(x)))]}) -->
-<!-- FatKanton -->
-<!-- sum(FatKanton,na.rm=TRUE) -->
-<!-- ``` -->
-</section>
-<section id="covid-19" class="level1">
-<h1>Covid-19</h1>
-<section id="inzidenz-und-kumulierte-inzidenz" class="level2">
-<h2 class="anchored" data-anchor-id="inzidenz-und-kumulierte-inzidenz">Inzidenz und kumulierte Inzidenz</h2>
+<!-- # Daten Covid-19 --><!-- <https://github.com/openZH/covid_19> --><!-- ```{r echo=FALSE} --><!-- data<-read.csv("https://raw.githubusercontent.com/openZH/covid_19/master/COVID19_Fallzahlen_CH_total.csv") --><!-- str(data) --><!-- names(data)[3]<-"Kanton" --><!-- data<-data[,-11] --><!-- sKcases<-split(data$ncumul_conf,data$Kanton) --><!-- sKfatal<-split(data$ncumul_deceased,data$Kanton) --><!-- sKhosp<-split(data$ncumul_hosp,data$Kanton) --><!-- sKICU<-split(data$ncumul_ICU,data$Kanton) --><!-- sKvent<-split(data$ncumul_vent,data$Kanton) --><!-- ``` --><!-- ## Reported cases --><!-- ```{r} --><!-- CasesKanton<-sapply(sKcases,function(x){x[max(which(!is.na(x)))]}) --><!-- CasesKanton --><!-- sum(CasesKanton) --><!-- ``` --><!-- ## Deceased --><!-- ```{r} --><!-- FatKanton<-sapply(sKfatal,function(x){x[max(which(!is.na(x)))]}) --><!-- FatKanton --><!-- sum(FatKanton,na.rm=TRUE) --><!-- ``` --></section><section id="covid-19" class="level1"><h1>Covid-19</h1>
+<section id="inzidenz-und-kumulierte-inzidenz" class="level2"><h2 class="anchored" data-anchor-id="inzidenz-und-kumulierte-inzidenz">Inzidenz und kumulierte Inzidenz</h2>
 <div class="cell">
-<details>
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>data<span class="ot">&lt;-</span><span class="fu">read.csv</span>(<span class="st">"https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_confirmed_global.csv"</span>,<span class="at">check.names=</span><span class="cn">FALSE</span>)</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>sw<span class="ot">&lt;-</span>data[data<span class="sc">$</span><span class="st">"Country/Region"</span><span class="sc">==</span><span class="st">"Switzerland"</span>,<span class="sc">-</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">4</span>)]</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>cases<span class="ot">&lt;-</span><span class="fu">as.numeric</span>(sw[<span class="sc">-</span><span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">42</span>)])</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>incid<span class="ot">&lt;-</span><span class="fu">diff</span>(cases)</span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>t<span class="ot">&lt;-</span><span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(incid)</span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>ma <span class="ot">&lt;-</span> <span class="cf">function</span>(x, <span class="at">n =</span> <span class="dv">7</span>){stats<span class="sc">::</span><span class="fu">filter</span>(x, <span class="fu">rep</span>(<span class="dv">1</span> <span class="sc">/</span> n, n), <span class="at">sides =</span> <span class="dv">2</span>)}  <span class="do">##moving average over 7 days</span></span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>incidAv<span class="ot">&lt;-</span><span class="fu">ma</span>(incid)</span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(t,incid,<span class="at">type=</span><span class="st">"l"</span>,<span class="at">col=</span><span class="st">"blue"</span>,<span class="at">lty=</span><span class="dv">2</span>,<span class="at">xlab=</span><span class="st">"Tage"</span>)</span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(t,incidAv,<span class="at">col=</span><span class="st">"red"</span>,<span class="at">lwd=</span><span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output-display">
+<details><summary>Code</summary><div class="sourceCode" id="cb3"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">data</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/utils/read.table.html">read.csv</a></span><span class="op">(</span><span class="st">"https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_confirmed_global.csv"</span>,check.names<span class="op">=</span><span class="cn">FALSE</span><span class="op">)</span></span>
+<span><span class="va">sw</span><span class="op">&lt;-</span><span class="va">data</span><span class="op">[</span><span class="va">data</span><span class="op">$</span><span class="st">"Country/Region"</span><span class="op">==</span><span class="st">"Switzerland"</span>,<span class="op">-</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">2</span>,<span class="fl">3</span>,<span class="fl">4</span><span class="op">)</span><span class="op">]</span></span>
+<span><span class="va">cases</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/numeric.html">as.numeric</a></span><span class="op">(</span><span class="va">sw</span><span class="op">[</span><span class="op">-</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">42</span><span class="op">)</span><span class="op">]</span><span class="op">)</span></span>
+<span><span class="va">incid</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/diff.html">diff</a></span><span class="op">(</span><span class="va">cases</span><span class="op">)</span></span>
+<span><span class="va">t</span><span class="op">&lt;-</span><span class="fl">1</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">incid</span><span class="op">)</span></span>
+<span><span class="va">ma</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span>, <span class="va">n</span> <span class="op">=</span> <span class="fl">7</span><span class="op">)</span><span class="op">{</span><span class="fu">stats</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">x</span>, <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="fl">1</span> <span class="op">/</span> <span class="va">n</span>, <span class="va">n</span><span class="op">)</span>, sides <span class="op">=</span> <span class="fl">2</span><span class="op">)</span><span class="op">}</span>  <span class="co">##moving average over 7 days</span></span>
+<span><span class="va">incidAv</span><span class="op">&lt;-</span><span class="fu">ma</span><span class="op">(</span><span class="va">incid</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">t</span>,<span class="va">incid</span>,type<span class="op">=</span><span class="st">"l"</span>,col<span class="op">=</span><span class="st">"blue"</span>,lty<span class="op">=</span><span class="fl">2</span>,xlab<span class="op">=</span><span class="st">"Tage"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/lines.html">lines</a></span><span class="op">(</span><span class="va">t</span>,<span class="va">incidAv</span>,col<span class="op">=</span><span class="st">"red"</span>,lwd<span class="op">=</span><span class="fl">2</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p></p><figcaption class="figure-caption">Inzidenz</figcaption><p></p>
+<figure class="figure"><p></p><figcaption class="figure-caption">Inzidenz</figcaption><p></p>
 <p><img src="index_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
-<details>
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(cases),cases,<span class="at">type=</span><span class="st">"l"</span>,<span class="at">col=</span><span class="st">"blue"</span>,<span class="at">lwd=</span><span class="dv">2</span>,<span class="at">xlab=</span><span class="st">"Tage"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output-display">
+<details><summary>Code</summary><div class="sourceCode" id="cb4"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">cases</span><span class="op">)</span>,<span class="va">cases</span>,type<span class="op">=</span><span class="st">"l"</span>,col<span class="op">=</span><span class="st">"blue"</span>,lwd<span class="op">=</span><span class="fl">2</span>,xlab<span class="op">=</span><span class="st">"Tage"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p></p><figcaption class="figure-caption">kumulierte Indzidenz</figcaption><p></p>
+<figure class="figure"><p></p><figcaption class="figure-caption">kumulierte Indzidenz</figcaption><p></p>
 <p><img src="index_files/figure-html/unnamed-chunk-6-2.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
-<details>
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(cases),<span class="fu">log</span>(cases),<span class="at">type=</span><span class="st">"l"</span>,<span class="at">col=</span><span class="st">"blue"</span>,<span class="at">lwd=</span><span class="dv">2</span>,<span class="at">xlab=</span><span class="st">"Tage"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output-display">
+<details><summary>Code</summary><div class="sourceCode" id="cb5"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">cases</span><span class="op">)</span>,<span class="fu"><a href="https://rdrr.io/r/base/Log.html">log</a></span><span class="op">(</span><span class="va">cases</span><span class="op">)</span>,type<span class="op">=</span><span class="st">"l"</span>,col<span class="op">=</span><span class="st">"blue"</span>,lwd<span class="op">=</span><span class="fl">2</span>,xlab<span class="op">=</span><span class="st">"Tage"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p></p><figcaption class="figure-caption">log kumulierte Indzidenz</figcaption><p></p>
+<figure class="figure"><p></p><figcaption class="figure-caption">log kumulierte Indzidenz</figcaption><p></p>
 <p><img src="index_files/figure-html/unnamed-chunk-6-3.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
 </div>
-</section>
-<section id="erste-welle-covid-19" class="level2">
-<h2 class="anchored" data-anchor-id="erste-welle-covid-19">Erste Welle Covid-19</h2>
+</section><section id="erste-welle-covid-19" class="level2"><h2 class="anchored" data-anchor-id="erste-welle-covid-19">Erste Welle Covid-19</h2>
 <div class="cell">
-<details>
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>swisspop<span class="ot">&lt;-</span><span class="fl">8e6</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>time<span class="ot">&lt;-</span><span class="fu">seq</span>(<span class="dv">1</span>,<span class="dv">60</span>,<span class="at">by=</span><span class="dv">1</span>)</span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>tag<span class="ot">&lt;-</span><span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(cases)</span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>T1<span class="ot">&lt;-</span><span class="dv">1</span></span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>T2<span class="ot">&lt;-</span><span class="dv">2</span></span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>T3<span class="ot">&lt;-</span><span class="dv">3</span></span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>T7<span class="ot">&lt;-</span><span class="dv">7</span></span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>x0<span class="ot">&lt;-</span><span class="dv">100</span></span>
-<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>Y1<span class="ot">&lt;-</span>x0<span class="sc">*</span><span class="dv">2</span><span class="sc">^</span>(time<span class="sc">/</span>T1)</span>
-<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>Y2<span class="ot">&lt;-</span>x0<span class="sc">*</span><span class="dv">2</span><span class="sc">^</span>(time<span class="sc">/</span>T2)</span>
-<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>Y3<span class="ot">&lt;-</span>x0<span class="sc">*</span><span class="dv">2</span><span class="sc">^</span>(time<span class="sc">/</span>T3)</span>
-<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>Y7<span class="ot">&lt;-</span>x0<span class="sc">*</span><span class="dv">2</span><span class="sc">^</span>(time<span class="sc">/</span>T7)</span>
-<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>time<span class="ot">&lt;-</span>time<span class="sc">+</span><span class="dv">1</span></span>
-<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(time,Y1,<span class="at">type=</span><span class="st">"l"</span>,<span class="at">ylab=</span><span class="st">"cases"</span>,<span class="at">ylim=</span><span class="fu">c</span>(<span class="dv">100</span>,<span class="dv">10000</span>),<span class="at">xlab=</span><span class="st">"days"</span>,<span class="at">las=</span><span class="dv">1</span>)</span>
-<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(time,Y3,<span class="at">col=</span><span class="st">"red"</span>,<span class="at">lty=</span><span class="dv">2</span>)</span>
-<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(time,Y2,<span class="at">lty=</span><span class="dv">2</span>)</span>
-<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(time,Y7,<span class="at">lty=</span><span class="dv">3</span>)</span>
-<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">h=</span>swisspop,<span class="at">lty=</span><span class="dv">5</span>,<span class="at">col=</span><span class="st">"red"</span>) </span>
-<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a><span class="fu">points</span>(tag,cases,<span class="at">type=</span><span class="st">"l"</span>,<span class="at">col=</span><span class="st">"red"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output-display">
+<details><summary>Code</summary><div class="sourceCode" id="cb6"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">swisspop</span><span class="op">&lt;-</span><span class="fl">8e6</span></span>
+<span><span class="va">time</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">60</span>,by<span class="op">=</span><span class="fl">1</span><span class="op">)</span></span>
+<span><span class="va">tag</span><span class="op">&lt;-</span><span class="fl">1</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">cases</span><span class="op">)</span></span>
+<span><span class="va">T1</span><span class="op">&lt;-</span><span class="fl">1</span></span>
+<span><span class="va">T2</span><span class="op">&lt;-</span><span class="fl">2</span></span>
+<span><span class="va">T3</span><span class="op">&lt;-</span><span class="fl">3</span></span>
+<span><span class="va">T7</span><span class="op">&lt;-</span><span class="fl">7</span></span>
+<span><span class="va">x0</span><span class="op">&lt;-</span><span class="fl">100</span></span>
+<span><span class="va">Y1</span><span class="op">&lt;-</span><span class="va">x0</span><span class="op">*</span><span class="fl">2</span><span class="op">^</span><span class="op">(</span><span class="va">time</span><span class="op">/</span><span class="va">T1</span><span class="op">)</span></span>
+<span><span class="va">Y2</span><span class="op">&lt;-</span><span class="va">x0</span><span class="op">*</span><span class="fl">2</span><span class="op">^</span><span class="op">(</span><span class="va">time</span><span class="op">/</span><span class="va">T2</span><span class="op">)</span></span>
+<span><span class="va">Y3</span><span class="op">&lt;-</span><span class="va">x0</span><span class="op">*</span><span class="fl">2</span><span class="op">^</span><span class="op">(</span><span class="va">time</span><span class="op">/</span><span class="va">T3</span><span class="op">)</span></span>
+<span><span class="va">Y7</span><span class="op">&lt;-</span><span class="va">x0</span><span class="op">*</span><span class="fl">2</span><span class="op">^</span><span class="op">(</span><span class="va">time</span><span class="op">/</span><span class="va">T7</span><span class="op">)</span></span>
+<span><span class="va">time</span><span class="op">&lt;-</span><span class="va">time</span><span class="op">+</span><span class="fl">1</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">time</span>,<span class="va">Y1</span>,type<span class="op">=</span><span class="st">"l"</span>,ylab<span class="op">=</span><span class="st">"cases"</span>,ylim<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">100</span>,<span class="fl">10000</span><span class="op">)</span>,xlab<span class="op">=</span><span class="st">"days"</span>,las<span class="op">=</span><span class="fl">1</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/lines.html">lines</a></span><span class="op">(</span><span class="va">time</span>,<span class="va">Y3</span>,col<span class="op">=</span><span class="st">"red"</span>,lty<span class="op">=</span><span class="fl">2</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/lines.html">lines</a></span><span class="op">(</span><span class="va">time</span>,<span class="va">Y2</span>,lty<span class="op">=</span><span class="fl">2</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/lines.html">lines</a></span><span class="op">(</span><span class="va">time</span>,<span class="va">Y7</span>,lty<span class="op">=</span><span class="fl">3</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/abline.html">abline</a></span><span class="op">(</span>h<span class="op">=</span><span class="va">swisspop</span>,lty<span class="op">=</span><span class="fl">5</span>,col<span class="op">=</span><span class="st">"red"</span><span class="op">)</span> </span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/points.html">points</a></span><span class="op">(</span><span class="va">tag</span>,<span class="va">cases</span>,type<span class="op">=</span><span class="st">"l"</span>,col<span class="op">=</span><span class="st">"red"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p></p><figcaption class="figure-caption">Inzidenz</figcaption><p></p>
+<figure class="figure"><p></p><figcaption class="figure-caption">Inzidenz</figcaption><p></p>
 <p><img src="index_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
-<details>
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(time,Y1,<span class="at">log=</span><span class="st">"y"</span>,<span class="at">type=</span><span class="st">"l"</span>,<span class="at">ylab=</span><span class="st">"cases"</span>,<span class="at">xlab=</span><span class="st">"days"</span>,<span class="at">axes=</span><span class="cn">FALSE</span>,<span class="at">ylim=</span><span class="fu">c</span>(<span class="dv">100</span>,<span class="dv">40000</span>))</span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>at.y <span class="ot">&lt;-</span> <span class="fu">outer</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">9</span>, <span class="dv">10</span><span class="sc">^</span>(<span class="dv">2</span><span class="sc">:</span><span class="dv">9</span>))</span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>lab.y <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(<span class="fu">log10</span>(at.y) <span class="sc">%%</span> <span class="dv">1</span> <span class="sc">==</span> <span class="dv">0</span>, at.y, <span class="cn">NA</span>)</span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="fu">axis</span>(<span class="dv">2</span>, <span class="at">at=</span>at.y, <span class="at">labels=</span>lab.y, <span class="at">las=</span><span class="dv">2</span>)</span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="fu">axis</span>(<span class="dv">1</span>,time)</span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(time,Y2,<span class="at">lty=</span><span class="dv">2</span>)</span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(time,Y7,<span class="at">lty=</span><span class="dv">3</span>)</span>
-<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(time,Y3,<span class="at">col=</span><span class="st">"red"</span>,<span class="at">lty=</span><span class="dv">2</span>)</span>
-<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">h=</span>swisspop,<span class="at">col=</span><span class="st">"red"</span>,<span class="at">lty=</span><span class="dv">3</span>)</span>
-<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a><span class="fu">points</span>(tag,cases,<span class="at">type=</span><span class="st">"l"</span>,<span class="at">col=</span><span class="st">"red"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output-display">
+<details><summary>Code</summary><div class="sourceCode" id="cb7"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">time</span>,<span class="va">Y1</span>,log<span class="op">=</span><span class="st">"y"</span>,type<span class="op">=</span><span class="st">"l"</span>,ylab<span class="op">=</span><span class="st">"cases"</span>,xlab<span class="op">=</span><span class="st">"days"</span>,axes<span class="op">=</span><span class="cn">FALSE</span>,ylim<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">100</span>,<span class="fl">40000</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">at.y</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/outer.html">outer</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">9</span>, <span class="fl">10</span><span class="op">^</span><span class="op">(</span><span class="fl">2</span><span class="op">:</span><span class="fl">9</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">lab.y</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html">ifelse</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html">log10</a></span><span class="op">(</span><span class="va">at.y</span><span class="op">)</span> <span class="op"><a href="https://rdrr.io/r/base/Arithmetic.html">%%</a></span> <span class="fl">1</span> <span class="op">==</span> <span class="fl">0</span>, <span class="va">at.y</span>, <span class="cn">NA</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/axis.html">axis</a></span><span class="op">(</span><span class="fl">2</span>, at<span class="op">=</span><span class="va">at.y</span>, labels<span class="op">=</span><span class="va">lab.y</span>, las<span class="op">=</span><span class="fl">2</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/axis.html">axis</a></span><span class="op">(</span><span class="fl">1</span>,<span class="va">time</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/lines.html">lines</a></span><span class="op">(</span><span class="va">time</span>,<span class="va">Y2</span>,lty<span class="op">=</span><span class="fl">2</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/lines.html">lines</a></span><span class="op">(</span><span class="va">time</span>,<span class="va">Y7</span>,lty<span class="op">=</span><span class="fl">3</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/lines.html">lines</a></span><span class="op">(</span><span class="va">time</span>,<span class="va">Y3</span>,col<span class="op">=</span><span class="st">"red"</span>,lty<span class="op">=</span><span class="fl">2</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/abline.html">abline</a></span><span class="op">(</span>h<span class="op">=</span><span class="va">swisspop</span>,col<span class="op">=</span><span class="st">"red"</span>,lty<span class="op">=</span><span class="fl">3</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/points.html">points</a></span><span class="op">(</span><span class="va">tag</span>,<span class="va">cases</span>,type<span class="op">=</span><span class="st">"l"</span>,col<span class="op">=</span><span class="st">"red"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p></p><figcaption class="figure-caption">log Inzidenz</figcaption><p></p>
+<figure class="figure"><p></p><figcaption class="figure-caption">log Inzidenz</figcaption><p></p>
 <p><img src="index_files/figure-html/unnamed-chunk-8-2.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
 </div>
 <p><strong>Erste Welle. Example of doubling times: 1 day (solid), 2 days (dashed), 3 days (red), seven days (dotted), with reported cases Covid19 in Switzerland. Horizontal line: swiss population. On a logarithmic scale, a straight line indicates exponential growth. <a href="https://www.arcgis.com/apps/opsdashboard/index.html#/bda7594740fd40299423467b48e9ecf6">Quelle</a></strong>.</p>
-</section>
-<section id="auswirkung-vorfaktor" class="level2">
-<h2 class="anchored" data-anchor-id="auswirkung-vorfaktor">Auswirkung Vorfaktor</h2>
+</section><section id="auswirkung-vorfaktor" class="level2"><h2 class="anchored" data-anchor-id="auswirkung-vorfaktor">Auswirkung Vorfaktor</h2>
 <p>Annahme: Verdoppelung alle drei Tage, 10 Prozent der Infizierten müssen ins Spital. Die Anzahl Cases von heute sind die Anzahl Spitalpatienten in 9 Tagen, <strong>wenn mann nichts macht</strong>.</p>
 <p><span class="math inline">\(0.1\times 2^{0.33t}=0.1\times (2^{0.33})^t=0.1\times 1.3^t=1.3^{\log_{1.3}0.1}1.3^t=1.3^{t+\log_{1.3}0.1}=1.3^{t-8.776}\)</span></p>
 <p>Analog kann man zeigen: Wenn die Mortalitätsrate bei einem Prozent der bestätigten Fälle liegt, dann ist die Anzahl der bestätigten Fälle die zu erwartende Anzahl der Todesfälle ca. 18 Tage später, <strong>wenn man nichts macht</strong>.</p>
 <p><span class="math inline">\(0.01\times 2^{0.33t}=0.01\times (2^{0.33})^t=0.01\times 1.3^t=1.3^{\log_{1.3}0.01}1.3^t=1.3^{t+\log_{1.3}0.01}=1.3^{t-17.553}\)</span></p>
 <div class="cell">
-<details>
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>delay<span class="ot">&lt;-</span><span class="fu">log</span>(<span class="fl">0.1</span>)<span class="sc">/</span><span class="fu">log</span>(<span class="fl">1.3</span>)</span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>delay</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-stdout">
+<details><summary>Code</summary><div class="sourceCode" id="cb8"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">delay</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html">log</a></span><span class="op">(</span><span class="fl">0.1</span><span class="op">)</span><span class="op">/</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html">log</a></span><span class="op">(</span><span class="fl">1.3</span><span class="op">)</span></span>
+<span><span class="va">delay</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output cell-output-stdout">
 <pre><code>[1] -8.776291</code></pre>
 </div>
-<details>
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>delay2<span class="ot">&lt;-</span><span class="fu">log</span>(<span class="fl">0.01</span>)<span class="sc">/</span><span class="fu">log</span>(<span class="fl">1.3</span>)</span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>delay2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-stdout">
+<details><summary>Code</summary><div class="sourceCode" id="cb10"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">delay2</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html">log</a></span><span class="op">(</span><span class="fl">0.01</span><span class="op">)</span><span class="op">/</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html">log</a></span><span class="op">(</span><span class="fl">1.3</span><span class="op">)</span></span>
+<span><span class="va">delay2</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output cell-output-stdout">
 <pre><code>[1] -17.55258</code></pre>
 </div>
-<details>
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(time,<span class="dv">2</span><span class="sc">^</span>(<span class="fl">0.33</span><span class="sc">*</span>time),<span class="at">ylab=</span><span class="st">"cases"</span>,<span class="at">xlab=</span><span class="st">"days"</span>,<span class="at">type=</span><span class="st">"l"</span>,<span class="at">ylim=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">10000</span>),<span class="at">col=</span><span class="dv">3</span>)</span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(time,<span class="fl">0.1</span><span class="sc">*</span><span class="dv">2</span><span class="sc">^</span>(time<span class="sc">/</span><span class="dv">3</span>),<span class="at">lty=</span><span class="dv">1</span>,<span class="at">col=</span><span class="dv">1</span>)</span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(time,<span class="fl">0.01</span><span class="sc">*</span><span class="dv">2</span><span class="sc">^</span>(time<span class="sc">/</span><span class="dv">3</span>),<span class="at">lty=</span><span class="dv">1</span>,<span class="at">col=</span><span class="dv">2</span>,<span class="at">lwd=</span><span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output-display">
+<details><summary>Code</summary><div class="sourceCode" id="cb12"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">time</span>,<span class="fl">2</span><span class="op">^</span><span class="op">(</span><span class="fl">0.33</span><span class="op">*</span><span class="va">time</span><span class="op">)</span>,ylab<span class="op">=</span><span class="st">"cases"</span>,xlab<span class="op">=</span><span class="st">"days"</span>,type<span class="op">=</span><span class="st">"l"</span>,ylim<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">10000</span><span class="op">)</span>,col<span class="op">=</span><span class="fl">3</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/lines.html">lines</a></span><span class="op">(</span><span class="va">time</span>,<span class="fl">0.1</span><span class="op">*</span><span class="fl">2</span><span class="op">^</span><span class="op">(</span><span class="va">time</span><span class="op">/</span><span class="fl">3</span><span class="op">)</span>,lty<span class="op">=</span><span class="fl">1</span>,col<span class="op">=</span><span class="fl">1</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/lines.html">lines</a></span><span class="op">(</span><span class="va">time</span>,<span class="fl">0.01</span><span class="op">*</span><span class="fl">2</span><span class="op">^</span><span class="op">(</span><span class="va">time</span><span class="op">/</span><span class="fl">3</span><span class="op">)</span>,lty<span class="op">=</span><span class="fl">1</span>,col<span class="op">=</span><span class="fl">2</span>,lwd<span class="op">=</span><span class="fl">2</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p></p><figcaption class="figure-caption">Auswirkung Vorfaktor</figcaption><p></p>
+<figure class="figure"><p></p><figcaption class="figure-caption">Auswirkung Vorfaktor</figcaption><p></p>
 <p><img src="index_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
@@ -438,17 +342,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 
 
-</section>
-</section>
-
-
-<div id="quarto-appendix" class="default"><section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
-
+</section></section><div id="quarto-appendix" class="default"><section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
 <ol>
 <li id="fn1"><p>Proof: <span class="math display">\[x(t)=x_0e^{kt}=x_0e^{t/\tau}=x_0 2^{\frac{t}{\tau}\log_2e}=x_02^{\frac{t}{\tau} \frac{1}{\log 2 }}=x_02^{t/T}\]</span><a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-</ol>
-</section></div></main> <!-- /main -->
-<script id="quarto-html-after-body" type="application/javascript">
+</ol></section></div></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
     const mode = bsSheetEl.getAttribute("data-mode");

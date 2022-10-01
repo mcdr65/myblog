@@ -4,17 +4,21 @@ project:
 
 website:
   title: "Stats and other things"
+  site-url: https://mcdr65.github.io/myblog/
+  description: "Blog about stats"
   navbar:
     right:
       - about.qmd
       - icon: github
         href: https://github.com/
+      - icon: rss
+        href: index.xml
     
 format:
   html:
-    theme: default
+    theme: vapor
     css: styles.css
-
+    code-link: true
 
 
 
