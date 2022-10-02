@@ -3,7 +3,7 @@ project:
   output-dir: docs
 
 website:
-  title: "André Meichtry"
+  title: "Philosophie, Statistik, Physik"
   site-url: "https://mcdr65.github.io/myblog/"
   description: "This is André Meichtry's personal Blog"
   navbar:
