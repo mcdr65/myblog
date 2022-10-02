@@ -1,6 +1,5 @@
 ---
 title: "Welcome To My Blog"
-author: "André Meichtry"
 date: "2022-09-26"
 categories: [news]
 ---

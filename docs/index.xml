@@ -8,13 +8,13 @@
 <title>André Meichtry</title>
 <link>https://mcdr65.github.io/myblog/index.html</link>
 <atom:link href="https://mcdr65.github.io/myblog/index.xml" rel="self" type="application/rss+xml"/>
-<description>Blog about stats</description>
+<description>This is André Meichtry's personal Blog</description>
 <generator>quarto-1.1.251</generator>
 <lastBuildDate>Wed, 28 Sep 2022 22:00:00 GMT</lastBuildDate>
 <item>
   <title>Exponential Growth</title>
   <dc:creator>André Meichtry</dc:creator>
-  <link>https://mcdr65.github.io/myblog/posts/post-with-code/index.html</link>
+  <link>https://mcdr65.github.io/myblog/posts/exponentialGrowth/index.html</link>
   <description><![CDATA[ <p><em>The greatest shortcoming of the human race is the inability to understand the exponential function. (Al Bartlett)</em></p>
 <section id="problem" class="level1"><h1>Problem</h1>
 <p>Sie sitzen zuoberst in einem Fussball-Stadion; es hat Platz für <img src="https://latex.codecogs.com/png.latex?6%5Ctimes%2010%5E%7B13%7D"> Wassertropfen. Es beginnt mit einem Tropfen, der in der ersten Minute ins Stadion tröpfelt. Jede Minute <em>verdoppelt</em> sich die Anzahl Tropfen. Lange passiert nichts Besonderes. Sie sehen die Gefahr nicht kommen. Von der <em>Hälfte</em> bis <em>ganz</em> oben geht es plötzlich sehr schnell. Es würde auch nicht viel bringen, wenn das Stadion noch viel grösser wäre; wir haben <strong>exponentielles Wachstum</strong>.</p>
@@ -34,7 +34,7 @@
 </details><div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure"><p></p><figcaption class="figure-caption">Exponentielles Wachstum</figcaption><p></p>
-<p><img src="https://mcdr65.github.io/myblog/posts/post-with-code/index_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="https://mcdr65.github.io/myblog/posts/exponentialGrowth/index_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -49,7 +49,7 @@
 </details><div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure"><p></p><figcaption class="figure-caption">Exponentialfunktion und lineare Funktion</figcaption><p></p>
-<p><img src="https://mcdr65.github.io/myblog/posts/post-with-code/index_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="https://mcdr65.github.io/myblog/posts/exponentialGrowth/index_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -79,7 +79,7 @@
 </details><div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure"><p></p><figcaption class="figure-caption">Inzidenz</figcaption><p></p>
-<p><img src="https://mcdr65.github.io/myblog/posts/post-with-code/index_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="https://mcdr65.github.io/myblog/posts/exponentialGrowth/index_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -87,7 +87,7 @@
 </details><div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure"><p></p><figcaption class="figure-caption">kumulierte Indzidenz</figcaption><p></p>
-<p><img src="https://mcdr65.github.io/myblog/posts/post-with-code/index_files/figure-html/unnamed-chunk-6-2.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="https://mcdr65.github.io/myblog/posts/exponentialGrowth/index_files/figure-html/unnamed-chunk-6-2.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -95,7 +95,7 @@
 </details><div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure"><p></p><figcaption class="figure-caption">log kumulierte Indzidenz</figcaption><p></p>
-<p><img src="https://mcdr65.github.io/myblog/posts/post-with-code/index_files/figure-html/unnamed-chunk-6-3.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="https://mcdr65.github.io/myblog/posts/exponentialGrowth/index_files/figure-html/unnamed-chunk-6-3.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -124,7 +124,7 @@
 </details><div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure"><p></p><figcaption class="figure-caption">Inzidenz</figcaption><p></p>
-<p><img src="https://mcdr65.github.io/myblog/posts/post-with-code/index_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="https://mcdr65.github.io/myblog/posts/exponentialGrowth/index_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -141,7 +141,7 @@
 </details><div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure"><p></p><figcaption class="figure-caption">log Inzidenz</figcaption><p></p>
-<p><img src="https://mcdr65.github.io/myblog/posts/post-with-code/index_files/figure-html/unnamed-chunk-8-2.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="https://mcdr65.github.io/myblog/posts/exponentialGrowth/index_files/figure-html/unnamed-chunk-8-2.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -169,7 +169,7 @@
 </details><div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure"><p></p><figcaption class="figure-caption">Auswirkung Vorfaktor</figcaption><p></p>
-<p><img src="https://mcdr65.github.io/myblog/posts/post-with-code/index_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="https://mcdr65.github.io/myblog/posts/exponentialGrowth/index_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -183,16 +183,15 @@
   <category>news</category>
   <category>code</category>
   <category>analysis</category>
-  <guid>https://mcdr65.github.io/myblog/posts/post-with-code/index.html</guid>
+  <guid>https://mcdr65.github.io/myblog/posts/exponentialGrowth/index.html</guid>
   <pubDate>Wed, 28 Sep 2022 22:00:00 GMT</pubDate>
-  <media:content url="https://mcdr65.github.io/myblog/posts/post-with-code/image.png" medium="image" type="image/png" height="103" width="144"/>
+  <media:content url="https://mcdr65.github.io/myblog/posts/exponentialGrowth/image.png" medium="image" type="image/png" height="103" width="144"/>
 </item>
 <item>
   <title>Welcome To My Blog</title>
   <dc:creator>André Meichtry</dc:creator>
   <link>https://mcdr65.github.io/myblog/posts/welcome/index.html</link>
   <description><![CDATA[ 
-
 
 
 

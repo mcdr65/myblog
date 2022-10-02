@@ -121,7 +121,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   }
 }</script><script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script><link rel="stylesheet" href="../../styles.css">
 </head>
-<body class="nav-fixed fullcontent">
+<body class="nav-fixed">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top"><nav class="navbar navbar-expand-lg navbar-dark "><div class="navbar-container container-fluid">
@@ -148,6 +148,22 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </i> 
  </a>
   </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-ressources" role="button" data-bs-toggle="dropdown" aria-expanded="false">Ressources</a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-ressources">
+<li>
+    <a class="dropdown-item" href="https://rweekly.org/">
+ <span class="dropdown-text">R Weekly</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="https://www.r-bloggers.com/">
+ <span class="dropdown-text">R Bloggers</span></a>
+  </li>  
+    </ul>
+</li>
+  <li class="nav-item">
+    <a class="nav-link" href="../../archive.html">Archive</a>
+  </li>  
 </ul>
 <div class="quarto-toggle-container">
                   <a href="" class="quarto-color-scheme-toggle nav-link" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
@@ -155,43 +171,58 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
               <div id="quarto-search" class="" title="Search"></div>
           </div> <!-- /navcollapse -->
       </div> <!-- /container-fluid -->
-    </nav></header><!-- content --><header id="title-block-header" class="quarto-title-block default page-columns page-full"><div class="quarto-title-banner page-columns page-full">
-    <div class="quarto-title column-body">
-      <h1 class="title">Exponential Growth</h1>
-                                <div class="quarto-categories">
-                <div class="quarto-category">news</div>
-                <div class="quarto-category">code</div>
-                <div class="quarto-category">analysis</div>
-              </div>
-                  </div>
-  </div>
-    
-  
-  <div class="quarto-title-meta">
-
-      <div>
-      <div class="quarto-title-meta-heading">Author</div>
-      <div class="quarto-title-meta-contents">
-               <p>André Meichtry </p>
-            </div>
-    </div>
-      
-      <div>
-      <div class="quarto-title-meta-heading">Published</div>
-      <div class="quarto-title-meta-contents">
-        <p class="date">September 29, 2022</p>
-      </div>
-    </div>
-      
-    </div>
-    
-  
-  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+    </nav></header><!-- content --><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active"><h2 id="toc-title">On this page</h2>
+   
+  <ul>
+<li><a href="#problem" id="toc-problem" class="nav-link active" data-scroll-target="#problem">Problem</a></li>
+  <li><a href="#exponentialfunktion" id="toc-exponentialfunktion" class="nav-link" data-scroll-target="#exponentialfunktion">Exponentialfunktion</a></li>
+  <li><a href="#exponentielles-wachstum" id="toc-exponentielles-wachstum" class="nav-link" data-scroll-target="#exponentielles-wachstum">Exponentielles Wachstum</a></li>
+  <li>
+<a href="#covid-19" id="toc-covid-19" class="nav-link" data-scroll-target="#covid-19">Covid-19</a>
+  <ul class="collapse">
+<li><a href="#inzidenz-und-kumulierte-inzidenz" id="toc-inzidenz-und-kumulierte-inzidenz" class="nav-link" data-scroll-target="#inzidenz-und-kumulierte-inzidenz">Inzidenz und kumulierte Inzidenz</a></li>
+  <li><a href="#erste-welle-covid-19" id="toc-erste-welle-covid-19" class="nav-link" data-scroll-target="#erste-welle-covid-19">Erste Welle Covid-19</a></li>
+  <li><a href="#auswirkung-vorfaktor" id="toc-auswirkung-vorfaktor" class="nav-link" data-scroll-target="#auswirkung-vorfaktor">Auswirkung Vorfaktor</a></li>
+  </ul>
+</li>
+  </ul></nav>
+    </div>
 <!-- main -->
-<main class="content quarto-banner-title-block" id="quarto-document-content"><p><em>The greatest shortcoming of the human race is the inability to understand the exponential function. (Al Bartlett)</em></p>
+<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><div class="quarto-title">
+<h1 class="title">Exponential Growth</h1>
+  <div class="quarto-categories">
+    <div class="quarto-category">news</div>
+    <div class="quarto-category">code</div>
+    <div class="quarto-category">analysis</div>
+  </div>
+  </div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>André Meichtry </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">September 29, 2022</p>
+    </div>
+  </div>
+    
+  </div>
+  
+
+</header><p><em>The greatest shortcoming of the human race is the inability to understand the exponential function. (Al Bartlett)</em></p>
 <section id="problem" class="level1"><h1>Problem</h1>
 <p>Sie sitzen zuoberst in einem Fussball-Stadion; es hat Platz für <span class="math inline">\(6\times 10^{13}\)</span> Wassertropfen. Es beginnt mit einem Tropfen, der in der ersten Minute ins Stadion tröpfelt. Jede Minute <em>verdoppelt</em> sich die Anzahl Tropfen. Lange passiert nichts Besonderes. Sie sehen die Gefahr nicht kommen. Von der <em>Hälfte</em> bis <em>ganz</em> oben geht es plötzlich sehr schnell. Es würde auch nicht viel bringen, wenn das Stadion noch viel grösser wäre; wir haben <strong>exponentielles Wachstum</strong>.</p>
 <div class="cell">

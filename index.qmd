@@ -1,5 +1,5 @@
 ---
-title: "Wissenschaftsphilosophie und Statistik"
+title: "Statistik und anderes"
 listing:
   contents: posts
   sort: "date desc"
@@ -7,9 +7,12 @@ listing:
   categories: true
   sort-ui: true
   filter-ui: true
+  fields: [date, title, description, categories,image]
   feed: true
 page-layout: full
-title-block-banner: true
+title-block-banner: false
 ---
+
+Statistik, Philosophie, Physik und anderes...
 
 

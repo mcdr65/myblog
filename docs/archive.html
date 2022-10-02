@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>André Meichtry - Statistik und anderes</title>
+<title>André Meichtry - Archive</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -72,9 +72,9 @@ ul.task-list li input[type="checkbox"] {
     }
 
     const options = {
-      valueNames: ['listing-date','listing-title','listing-description','listing-categories','listing-image',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-file-modified-sort'] }],
+      valueNames: ['listing-date','listing-title',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-file-modified-sort'] }],
       
-      searchColumns: ["listing-date","listing-title","listing-author","listing-image","listing-description","listing-categories"],
+      searchColumns: ["listing-date","listing-title","listing-author","listing-image","listing-description"],
     };
 
     window['quarto-listings'] = window['quarto-listings'] || {};
@@ -95,7 +95,7 @@ ul.task-list li input[type="checkbox"] {
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
 <link rel="stylesheet" href="styles.css">
-<link rel="alternate" type="application/rss+xml" title="André Meichtry" href="index.xml"></head>
+</head>
 
 <body class="nav-fixed">
 
@@ -140,7 +140,7 @@ ul.task-list li input[type="checkbox"] {
     </ul>
   </li>
   <li class="nav-item">
-    <a class="nav-link" href="./archive.html">Archive</a>
+    <a class="nav-link active" href="./archive.html" aria-current="page">Archive</a>
   </li>  
 </ul>
               <div class="quarto-toggle-container">
@@ -155,15 +155,13 @@ ul.task-list li input[type="checkbox"] {
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        
-    <h5 class="quarto-listing-category-title">Categories</h5><div class="quarto-listing-category category-default"><div class="category" data-category="">All <span class="quarto-category-count">(2)</span></div><div class="category" data-category="analysis">analysis <span class="quarto-category-count">(1)</span></div><div class="category" data-category="code">code <span class="quarto-category-count">(1)</span></div><div class="category" data-category="news">news <span class="quarto-category-count">(2)</span></div></div></div>
+    
 <!-- main -->
-<main class="content column-page-left" id="quarto-document-content">
+<main class="content column-page" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Statistik und anderes</h1>
+<h1 class="title">Archive</h1>
 </div>
 
 
@@ -177,39 +175,13 @@ ul.task-list li input[type="checkbox"] {
 
 </header>
 
-<p>Statistik, Philosophie, Physik und anderes…</p>
 
 
 
 
 <div class="quarto-listing quarto-listing-container-default" id="listing-listing">
-<div class="listing-actions-group">
-   <div class="input-group input-group-sm quarto-listing-sort">
-     <span class="input-group-text"><i class="bi bi-sort-down"></i></span>
-     <select id="listing-listing-sort" class="form-select" aria-label="Order By" onchange="window['quarto-listings']['listing-listing'].sort(this.options[this.selectedIndex].value, { order: this.options[this.selectedIndex].getAttribute('data-direction')})">
-       <option value="" disabled="" selected="" hidden="">Order By</option>
-       <option value="index" data-direction="asc">Default</option>
-         <option value="listing-title" data-direction="asc">
-          Title
-        </option>
-         <option value="listing-date-sort" data-direction="asc">
-          Date - Oldest
-        </option>
-         <option value="listing-date-sort" data-direction="desc">
-          Date - Newest
-        </option>
-     </select>
-  </div>
-    <div class="input-group input-group-sm quarto-listing-filter">
-      <span class="input-group-text"><i class="bi bi-search"></i></span>
-      <input type="text" class="search form-control" placeholder="Filter">
-    </div>
-</div>
 <div class="list quarto-listing-default">
 <div class="quarto-post image-right" data-index="0" data-categories="news,code,analysis" data-listing-date-sort="1664402400000" data-listing-file-modified-sort="1664722929627" data-listing-reading-time-sort="1.985">
-<div class="thumbnail">
-<p><a href="./posts/exponentialGrowth/index.html"> <img src="./posts/exponentialGrowth/image.png" class="thumnail-image"> </a></p>
-</div>
 <div class="body">
 <a href="./posts/exponentialGrowth/index.html">
 <h3 class="no-anchor listing-title">
@@ -217,22 +189,6 @@ Exponential Growth
 </h3>
 <div class="listing-subtitle">
 
-</div>
-</a>
-<div class="listing-categories">
-<div class="listing-category" onclick="window.quartoListingCategory('news'); return false;">
-news
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('code'); return false;">
-code
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('analysis'); return false;">
-analysis
-</div>
-</div>
-<a href="./posts/exponentialGrowth/index.html">
-<div class="listing-description">
-<em>The greatest shortcoming of the human race is the inability to understand the exponential function. (Al Bartlett)</em>
 </div>
 </a>
 </div>
@@ -245,9 +201,6 @@ Sep 29, 2022
 </div>
 </div>
 <div class="quarto-post image-right" data-index="1" data-categories="news" data-listing-date-sort="1664143200000" data-listing-file-modified-sort="1664723244048" data-listing-reading-time-sort="0.03">
-<div class="thumbnail">
-<p><a href="./posts/welcome/index.html"> <img src="./posts/welcome/profile.png" class="thumnail-image"> </a></p>
-</div>
 <div class="body">
 <a href="./posts/welcome/index.html">
 <h3 class="no-anchor listing-title">
@@ -255,16 +208,6 @@ Welcome To My Blog
 </h3>
 <div class="listing-subtitle">
 
-</div>
-</a>
-<div class="listing-categories">
-<div class="listing-category" onclick="window.quartoListingCategory('news'); return false;">
-news
-</div>
-</div>
-<a href="./posts/welcome/index.html">
-<div class="listing-description">
-Welcome!
 </div>
 </a>
 </div>

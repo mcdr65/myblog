@@ -5,7 +5,7 @@ project:
 website:
   title: "André Meichtry"
   site-url: "https://mcdr65.github.io/myblog/"
-  description: "Blog about stats"
+  description: "This is André Meichtry's personal Blog"
   navbar:
     right:
       - about.qmd
@@ -13,7 +13,15 @@ website:
         href: https://github.com/mcdr65
       - icon: rss
         href: index.xml
-    
+      - text: Ressources
+        menu:
+          - text: R Weekly
+            href: https://rweekly.org/
+          - text: R Bloggers
+            href: https://www.r-bloggers.com/
+      - text: Archive
+        href: archive.qmd
+
 format:
   html:
     theme:
@@ -21,6 +29,3 @@ format:
       dark: cyborg
     css: styles.css
     code-link: true
-
-
-

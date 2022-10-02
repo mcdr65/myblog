@@ -2,14 +2,18 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://mcdr65.github.io/myblog/index.html</loc>
-    <lastmod>2022-10-02T07:03:02.499Z</lastmod>
-  </url>
-  <url>
-    <loc>https://mcdr65.github.io/myblog/posts/post-with-code/index.html</loc>
-    <lastmod>2022-10-02T07:03:06.003Z</lastmod>
+    <lastmod>2022-10-02T15:59:14.917Z</lastmod>
   </url>
   <url>
     <loc>https://mcdr65.github.io/myblog/posts/welcome/index.html</loc>
-    <lastmod>2022-10-02T06:39:50.849Z</lastmod>
+    <lastmod>2022-10-02T15:55:51.740Z</lastmod>
+  </url>
+  <url>
+    <loc>https://mcdr65.github.io/myblog/posts/exponentialGrowth/index.html</loc>
+    <lastmod>2022-10-02T15:56:15.248Z</lastmod>
+  </url>
+  <url>
+    <loc>https://mcdr65.github.io/myblog/archive.html</loc>
+    <lastmod>2022-10-02T15:55:53.676Z</lastmod>
   </url>
 </urlset>
