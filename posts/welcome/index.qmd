@@ -6,6 +6,6 @@ categories: [news]
 
 Welcome! 
 
-![Cosmic Cliffs from James-Webb telescope](profile.png)
+![Non-central $t$-distributions](profile.png)
 
 

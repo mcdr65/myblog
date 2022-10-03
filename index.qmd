@@ -1,5 +1,5 @@
 ---
-title: "Blog"
+title: "StatBlog"
 listing:
   contents: posts
   sort: "date desc"
@@ -14,5 +14,4 @@ title-block-banner: false
 ---
 
 Statistik, Philosophie, Physik und anderes...
-
 

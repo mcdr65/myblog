@@ -199,7 +199,7 @@
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="https://mcdr65.github.io/myblog/posts/welcome/profile.png" class="img-fluid figure-img"></p>
-<p></p><figcaption class="figure-caption">Cosmic Cliffs from James-Webb telescope</figcaption><p></p>
+<p></p><figcaption class="figure-caption">Non-central <img src="https://latex.codecogs.com/png.latex?t">-distributions</figcaption><p></p>
 </figure>
 </div>
 
@@ -209,7 +209,7 @@
   <category>news</category>
   <guid>https://mcdr65.github.io/myblog/posts/welcome/index.html</guid>
   <pubDate>Sun, 25 Sep 2022 22:00:00 GMT</pubDate>
-  <media:content url="https://mcdr65.github.io/myblog/posts/welcome/profile.png" medium="image" type="image/png" height="83" width="144"/>
+  <media:content url="https://mcdr65.github.io/myblog/posts/welcome/profile.png" medium="image" type="image/png" height="144" width="144"/>
 </item>
 </channel>
 </rss>
