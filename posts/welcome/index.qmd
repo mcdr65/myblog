@@ -6,6 +6,6 @@ categories: [news]
 
 Welcome! 
 
-![Non-central $t$-distributions](profile.png)
+![Generalized Additive Model for bone mineral density on age and BMI](profile.png)
 
 
