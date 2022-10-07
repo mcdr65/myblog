@@ -8,6 +8,7 @@ fig-cap-location: top
 
 
 
+
 # Data
 
 Triceps skinfold thickness dataset: The data are derived from an anthropometric study of 892 females under 50 years in three Gambian villages in West Africa.
@@ -17,7 +18,6 @@ library(MultiKink)
 library(ggplot2)
 library(psych)
 ```
-
 
 
 ```{r}
@@ -37,14 +37,10 @@ tri.age.plot
 
 
 ```{r polynomial}
-model.cubic <- lm(triceps~age + I(age^2) + I(age^3),
-                  data=triceps)
-summary(model.cubic)
-
-model.cubic.poly <- lm(triceps~poly(age,3),
-                       data=triceps)
-summary(model.cubic.poly)
-## plot(predict(model.cubic.poly), predict(model.cubic)) # the same
+model.cubic.poly <- lm(triceps~poly(age,3,raw=TRUE),data=triceps)
+## the same model:
+## model.cubic <- lm(triceps~age + I(age^2) + I(age^3),
+##                   data=triceps)
 tri.age.plot + 
    stat_smooth(method = "lm", 
                formula = y~poly(x,3,raw=T), size = 1)
@@ -59,7 +55,6 @@ tri.age.plot +
 ```{r}
 library(caret)
 set.seed(1234)
-#repeated CV for the MSE
 trC.lm <- trainControl(method = "repeatedcv", 
                        number = 10,         
                        repeats = 10)        
@@ -123,37 +118,29 @@ tri.age.plot +
             aes(y = pred6, x=age), size = 1, col="blue")
 ```
 
-## Connecting the lines 
-
-
-We want continuity in the knots, this will be the model:
+## Continuous piecewise
 
 $$Y_i=\beta_0+\beta_1x_i+\beta_2I_{x_i\geq 5}(x_i-5)+\cdots+\beta_6I_{x_i \geq 40}(x_i-40) + \epsilon_i$$
-
 
 
 By "hand" or with B-splines: `splines::bs()`
 
 
-```{r connect lines}
+```{r}
 pred7 <- predict(lm(triceps~ age + I((age-5)*(age>=5)) +
                                    I((age-10)*(age >= 10)) +
                                    I((age-20)*(age >= 20)) +
                                    I((age-30)*(age >= 30)) +
                                   I((age-40)*(age >= 40)),
                     data = triceps))
-tri.age.plot +
-  geom_line(data=triceps, 
-            aes(y = pred7, x=age), size = 1, col="red")
-```
-
-```{r}
 library(splines)
 pred.lm.bs <- predict(lm(triceps ~ bs(age, knots = c(5,10,20,30,40),degree=1), data=triceps))
-
 tri.age.plot +
   geom_line(data=triceps, 
-            aes(y = pred.lm.bs, x=age), size = 1, col="red")
+            aes(y = pred.lm.bs, x=age), size = 1, col="blue")+
+  geom_line(data=triceps, 
+            aes(y = pred7+.2, x=age), size = 1, col="red")
+
 ```
 
 
@@ -183,34 +170,32 @@ pred.quadsmooth <- predict(lm(triceps~ age + I(age^2) +
                     I((age-30)^2*(age>=30)) +
                     I((age-40)^2*(age>=40)),
                     data = triceps))
-```
-
-This is again much simpler with `bs()`:
-
-```{r}
 pred.quadsmooth2 <- predict(lm(triceps ~ bs(age, knots = c(5,10,20,30,40),degree=2), data=triceps))                        
 tri.age.plot +
   geom_line(data=triceps, 
-            aes(y = pred.quadsmooth2, x=age), size = 1, col="blue")
+            aes(y = pred.quadsmooth, x=age), size = 1, col="blue")+
+  geom_line(data=triceps, 
+            aes(y = pred.quadsmooth2+.2, x=age), size = 1, col="red")
 
 ```
 
 
 # Splines
 
-## B-splines
+## Cubic B-splines
 
 
-```{r splines}
+$$Y_i=\beta_0+\beta_1x_i+\beta_2x^2+\beta_3x^3+\beta_4I_{x_i\geq 5}(x_i-5)^3+\cdots+\beta_9I_{x_i \geq 40}(x_i-40)^3 + \epsilon_i$$
+
+
+```{r bs}
 cub.splines.bs <- lm(triceps ~ bs(age, knots = c(5,10,20,30,40),degree = 3), data=triceps)
-summary(cub.splines.bs)
 ```
 
 ## Natural splines, restriction that the fitted curve linear at the extremes
 
-```{r}
+```{r ns}
 cub.splines.ns <- lm(triceps ~ ns(age, knots = c(5,10,20,30,40)), data=triceps)
-summary(cub.splines.ns)
 ```
 
 
