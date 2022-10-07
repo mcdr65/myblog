@@ -243,7 +243,8 @@ where the $N_j(x)$ are an $N$-dimensional set of basis functions for
 representing this family of natural splines.
 
 
-```{r smoothing splines}
+
+```{r}
 sspline <- smooth.spline(x=triceps$age, y=triceps$triceps, cv=TRUE)
 plot(triceps$age, triceps$triceps)
 lines(sspline, lwd=3,col="red")

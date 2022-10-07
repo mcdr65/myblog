@@ -470,10 +470,9 @@ Attaching package: 'psych'</code></pre>
 seems doubtful</code></pre>
 </div>
 <details><summary>Code</summary><div class="sourceCode" id="cb24"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">triceps</span><span class="op">$</span><span class="va">age</span>, <span class="va">triceps</span><span class="op">$</span><span class="va">triceps</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/graphics/lines.html">lines</a></span><span class="op">(</span><span class="va">sspline</span>, col<span class="op">=</span><span class="st">"blue"</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/graphics/lines.html">lines</a></span><span class="op">(</span><span class="va">triceps</span><span class="op">$</span><span class="va">age</span>,<span class="fu"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span><span class="op">(</span><span class="va">cub.splines.ns</span><span class="op">)</span>,type<span class="op">=</span><span class="st">"p"</span>,col<span class="op">=</span><span class="st">"red"</span><span class="op">)</span>   <span class="co"># compare with cubic spline</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/lines.html">lines</a></span><span class="op">(</span><span class="va">sspline</span>, lwd<span class="op">=</span><span class="fl">3</span>,col<span class="op">=</span><span class="st">"red"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output-display">
-<p><img src="index_files/figure-html/smoothing%20splines-1.png" class="img-fluid" width="672"></p>
+<p><img src="index_files/figure-html/unnamed-chunk-22-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <div class="cell">
@@ -1026,36 +1025,36 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb31-261"><a href="#cb31-261" aria-hidden="true" tabindex="-1"></a>representing this family of natural splines.</span>
 <span id="cb31-262"><a href="#cb31-262" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb31-263"><a href="#cb31-263" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb31-264"><a href="#cb31-264" aria-hidden="true" tabindex="-1"></a><span class="in">```{r smoothing splines}</span></span>
-<span id="cb31-265"><a href="#cb31-265" aria-hidden="true" tabindex="-1"></a>sspline <span class="ot">&lt;-</span> <span class="fu">smooth.spline</span>(<span class="at">x=</span>triceps<span class="sc">$</span>age, <span class="at">y=</span>triceps<span class="sc">$</span>triceps, <span class="at">cv=</span><span class="cn">TRUE</span>)</span>
-<span id="cb31-266"><a href="#cb31-266" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(triceps<span class="sc">$</span>age, triceps<span class="sc">$</span>triceps)</span>
-<span id="cb31-267"><a href="#cb31-267" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(sspline, <span class="at">col=</span><span class="st">"blue"</span>)</span>
-<span id="cb31-268"><a href="#cb31-268" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(triceps<span class="sc">$</span>age,<span class="fu">predict</span>(cub.splines.ns),<span class="at">type=</span><span class="st">"p"</span>,<span class="at">col=</span><span class="st">"red"</span>)   <span class="co"># compare with cubic spline</span></span>
-<span id="cb31-269"><a href="#cb31-269" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb31-270"><a href="#cb31-270" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb31-271"><a href="#cb31-271" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-264"><a href="#cb31-264" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-267"><a href="#cb31-267" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb31-268"><a href="#cb31-268" aria-hidden="true" tabindex="-1"></a>sspline <span class="ot">&lt;-</span> <span class="fu">smooth.spline</span>(<span class="at">x=</span>triceps<span class="sc">$</span>age, <span class="at">y=</span>triceps<span class="sc">$</span>triceps, <span class="at">cv=</span><span class="cn">TRUE</span>)</span>
+<span id="cb31-269"><a href="#cb31-269" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(triceps<span class="sc">$</span>age, triceps<span class="sc">$</span>triceps)</span>
+<span id="cb31-270"><a href="#cb31-270" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(sspline, <span class="at">lwd=</span><span class="dv">3</span>,<span class="at">col=</span><span class="st">"red"</span>)</span>
+<span id="cb31-271"><a href="#cb31-271" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb31-272"><a href="#cb31-272" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb31-273"><a href="#cb31-273" aria-hidden="true" tabindex="-1"></a><span class="in">```{r eval=FALSE,echo=FALSE}</span></span>
-<span id="cb31-274"><a href="#cb31-274" aria-hidden="true" tabindex="-1"></a>ssplinecv <span class="ot">&lt;-</span> <span class="fu">smooth.spline</span>(<span class="at">x=</span>triceps<span class="sc">$</span>age, <span class="at">y=</span>triceps<span class="sc">$</span>triceps, <span class="at">cv=</span>T)</span>
-<span id="cb31-275"><a href="#cb31-275" aria-hidden="true" tabindex="-1"></a>ssplinelambda <span class="ot">&lt;-</span> <span class="fu">smooth.spline</span>(triceps<span class="sc">$</span>age, </span>
-<span id="cb31-276"><a href="#cb31-276" aria-hidden="true" tabindex="-1"></a>                         triceps<span class="sc">$</span>triceps, <span class="at">lambda=</span>.<span class="dv">0</span>) </span>
-<span id="cb31-277"><a href="#cb31-277" aria-hidden="true" tabindex="-1"></a>ssplinedf <span class="ot">&lt;-</span> <span class="fu">smooth.spline</span>(triceps<span class="sc">$</span>age, </span>
-<span id="cb31-278"><a href="#cb31-278" aria-hidden="true" tabindex="-1"></a>                         triceps<span class="sc">$</span>triceps, <span class="at">df=</span><span class="dv">6</span>) </span>
-<span id="cb31-279"><a href="#cb31-279" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(triceps<span class="sc">$</span>age, triceps<span class="sc">$</span>triceps)</span>
-<span id="cb31-280"><a href="#cb31-280" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(ssplinecv, <span class="at">col=</span><span class="st">"red"</span>)</span>
-<span id="cb31-281"><a href="#cb31-281" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(ssplinelambda, <span class="at">col=</span><span class="st">"blue"</span>)</span>
-<span id="cb31-282"><a href="#cb31-282" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(ssplinedf, <span class="at">col=</span><span class="st">"green"</span>)</span>
-<span id="cb31-283"><a href="#cb31-283" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb31-284"><a href="#cb31-284" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb31-285"><a href="#cb31-285" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb31-286"><a href="#cb31-286" aria-hidden="true" tabindex="-1"></a><span class="fu"># Generalized additive model </span></span>
+<span id="cb31-273"><a href="#cb31-273" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-274"><a href="#cb31-274" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-275"><a href="#cb31-275" aria-hidden="true" tabindex="-1"></a><span class="in">```{r eval=FALSE,echo=FALSE}</span></span>
+<span id="cb31-276"><a href="#cb31-276" aria-hidden="true" tabindex="-1"></a>ssplinecv <span class="ot">&lt;-</span> <span class="fu">smooth.spline</span>(<span class="at">x=</span>triceps<span class="sc">$</span>age, <span class="at">y=</span>triceps<span class="sc">$</span>triceps, <span class="at">cv=</span>T)</span>
+<span id="cb31-277"><a href="#cb31-277" aria-hidden="true" tabindex="-1"></a>ssplinelambda <span class="ot">&lt;-</span> <span class="fu">smooth.spline</span>(triceps<span class="sc">$</span>age, </span>
+<span id="cb31-278"><a href="#cb31-278" aria-hidden="true" tabindex="-1"></a>                         triceps<span class="sc">$</span>triceps, <span class="at">lambda=</span>.<span class="dv">0</span>) </span>
+<span id="cb31-279"><a href="#cb31-279" aria-hidden="true" tabindex="-1"></a>ssplinedf <span class="ot">&lt;-</span> <span class="fu">smooth.spline</span>(triceps<span class="sc">$</span>age, </span>
+<span id="cb31-280"><a href="#cb31-280" aria-hidden="true" tabindex="-1"></a>                         triceps<span class="sc">$</span>triceps, <span class="at">df=</span><span class="dv">6</span>) </span>
+<span id="cb31-281"><a href="#cb31-281" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(triceps<span class="sc">$</span>age, triceps<span class="sc">$</span>triceps)</span>
+<span id="cb31-282"><a href="#cb31-282" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(ssplinecv, <span class="at">col=</span><span class="st">"red"</span>)</span>
+<span id="cb31-283"><a href="#cb31-283" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(ssplinelambda, <span class="at">col=</span><span class="st">"blue"</span>)</span>
+<span id="cb31-284"><a href="#cb31-284" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(ssplinedf, <span class="at">col=</span><span class="st">"green"</span>)</span>
+<span id="cb31-285"><a href="#cb31-285" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb31-286"><a href="#cb31-286" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb31-287"><a href="#cb31-287" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb31-288"><a href="#cb31-288" aria-hidden="true" tabindex="-1"></a><span class="in">```{r GAM}</span></span>
-<span id="cb31-289"><a href="#cb31-289" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(mgcv)</span>
-<span id="cb31-290"><a href="#cb31-290" aria-hidden="true" tabindex="-1"></a>gamtri<span class="ot">&lt;-</span><span class="fu">gam</span>(triceps<span class="sc">~</span><span class="fu">s</span>(age,<span class="at">bs=</span><span class="st">"cr"</span>),<span class="at">data=</span>triceps)</span>
-<span id="cb31-291"><a href="#cb31-291" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(gamtri)</span>
-<span id="cb31-292"><a href="#cb31-292" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(gamtri)</span>
-<span id="cb31-293"><a href="#cb31-293" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb31-288"><a href="#cb31-288" aria-hidden="true" tabindex="-1"></a><span class="fu"># Generalized additive model </span></span>
+<span id="cb31-289"><a href="#cb31-289" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-290"><a href="#cb31-290" aria-hidden="true" tabindex="-1"></a><span class="in">```{r GAM}</span></span>
+<span id="cb31-291"><a href="#cb31-291" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(mgcv)</span>
+<span id="cb31-292"><a href="#cb31-292" aria-hidden="true" tabindex="-1"></a>gamtri<span class="ot">&lt;-</span><span class="fu">gam</span>(triceps<span class="sc">~</span><span class="fu">s</span>(age,<span class="at">bs=</span><span class="st">"cr"</span>),<span class="at">data=</span>triceps)</span>
+<span id="cb31-293"><a href="#cb31-293" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(gamtri)</span>
+<span id="cb31-294"><a href="#cb31-294" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(gamtri)</span>
+<span id="cb31-295"><a href="#cb31-295" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 </code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
