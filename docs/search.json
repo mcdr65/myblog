@@ -2,16 +2,16 @@
   {
     "objectID": "index.html",
     "href": "index.html",
-    "title": "StatBlog",
+    "title": "Posts",
     "section": "",
-    "text": "Order By\n       Default\n         \n          Title\n        \n         \n          Date - Oldest\n        \n         \n          Date - Newest\n        \n     \n  \n    \n      \n      \n    \n\n\n\n\n  \n\n\n\n\nExponential Growth\n\n\n\n\n\n\n\nnews\n\n\ncode\n\n\nanalysis\n\n\n\n\n\n\n\n\n\n\n\nSep 29, 2022\n\n\n\n\n\n\n  \n\n\n\n\nWelcome To My Blog\n\n\n\n\n\n\n\nnews\n\n\n\n\n\n\n\n\n\n\n\nSep 26, 2022\n\n\n\n\n\n\nNo matching items"
+    "text": "Order By\n       Default\n         \n          Date - Oldest\n        \n         \n          Date - Newest\n        \n         \n          Title\n        \n     \n  \n    \n      \n      \n    \n\n\n\n\n\n\nDate\n\n\nTitle\n\n\nDescription\n\n\nCategories\n\n\n\n\n\n\nOct 6, 2022\n\n\nSplines are beautiful\n\n\nFrom linear model to GAM\n\n\ncode,analysis\n\n\n\n\nSep 29, 2022\n\n\nExponential Growth\n\n\n\n\n\nnews,code,analysis\n\n\n\n\nSep 26, 2022\n\n\nWelcome To My Blog\n\n\n\n\n\nnews\n\n\n\n\n\n\nNo matching items"
   },
   {
     "objectID": "posts/welcome/index.html",
     "href": "posts/welcome/index.html",
     "title": "Welcome To My Blog",
     "section": "",
-    "text": "Generalized Additive Model for bone mineral density on age and BMI"
+    "text": "Welcome!"
   },
   {
     "objectID": "posts/exponentialGrowth/index.html",
@@ -46,13 +46,97 @@
     "href": "archive.html",
     "title": "Archive",
     "section": "",
-    "text": "Sep 29, 2022\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nSep 26, 2022\n\n\n\n\n\n\nNo matching items"
+    "text": "Oct 6, 2022\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nSep 29, 2022\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nSep 26, 2022\n\n\n\n\n\n\nNo matching items"
   },
   {
     "objectID": "about.html",
     "href": "about.html",
     "title": "About",
     "section": "",
-    "text": "👀 I’m interested in philosophy, physics, quantitative research methodology and biostatistics.\n🌱 I’m currently working as a statistics consultant at the Institute of Physiotherapy, Zurich University of Applied Sciences.\n❤️ I like 🏃.\n🏢 André Meichtry, Dozent Institut für Physiotherapie, Zürcher Hochschule für Angewandte Wissenschaften ZHAW, Technikumstr. 71, 8401 Winterthur, Tel: 058 934 64 86"
+    "text": "👀 I’m interested in philosophy, physics, quantitative research methodology and biostatistics.\n🌱 I’m currently working as a statistics consultant at the Institute of Physiotherapy, Zurich University of Applied Sciences.\n❤️ I like 🏃.\n🏢 André Meichtry, Dozent Institut für Physiotherapie\nZürcher Hochschule für Angewandte Wissenschaften ZHAW\nTechnikumstr. 71, 8401 Winterthur\nTel: 058 934 64 86"
+  },
+  {
+    "objectID": "posts/fromLMtoSplines/index.html",
+    "href": "posts/fromLMtoSplines/index.html",
+    "title": "Splines are beautiful",
+    "section": "",
+    "text": "Triceps skinfold thickness dataset: The data are derived from an anthropometric study of 892 females under 50 years in three Gambian villages in West Africa.\n\nCodelibrary(MultiKink)\nlibrary(ggplot2)\nlibrary(psych)\n\n\nAttaching package: 'psych'\n\n\nThe following objects are masked from 'package:ggplot2':\n\n    %+%, alpha\n\n\n\nCodedata(\"triceps\")\nheadTail(triceps)\n\n      age lntriceps triceps\n1   12.05      1.22     3.4\n2    9.91      1.39       4\n3   10.04      1.44     4.2\n4   11.49      1.44     4.2\n...   ...       ...     ...\n889  7.91      1.92     6.8\n890  7.99      1.44     4.2\n891 14.63       2.2       9\n892 30.14       2.1     8.2\n\nCodetri.age.plot <- ggplot(triceps, aes(x=age, y=triceps)) +\n                 geom_point(alpha=0.55, color=\"black\") + \n                 theme_minimal() \ntri.age.plot"
+  },
+  {
+    "objectID": "posts/fromLMtoSplines/index.html#rmse-for-quadratic",
+    "href": "posts/fromLMtoSplines/index.html#rmse-for-quadratic",
+    "title": "Splines are beautiful",
+    "section": "RMSE for quadratic",
+    "text": "RMSE for quadratic\n\nCodelibrary(caret)\n\nLoading required package: lattice\n\nCodeset.seed(1234)\n#repeated CV for the MSE\ntrC.lm <- trainControl(method = \"repeatedcv\", \n                       number = 10,         \n                       repeats = 10)        \npol.model <- train(triceps ~ poly(age,3),\n                       data = triceps, \n                       method = \"lm\",\n                       trControl = trC.lm)    \npol.model$results[2]\n\n      RMSE\n1 3.865866"
+  },
+  {
+    "objectID": "posts/fromLMtoSplines/index.html#rmse-for-different-degrees",
+    "href": "posts/fromLMtoSplines/index.html#rmse-for-different-degrees",
+    "title": "Splines are beautiful",
+    "section": "RMSE for different degrees",
+    "text": "RMSE for different degrees\n\nCodemy.pol.f <- function(x){\n    xx<-poly(triceps$age, x, raw=T)    \n    new.data  <- cbind(triceps=triceps$triceps, xx)                                 \n    pol.model <- train(triceps~., data = new.data,method = \"lm\")    \n    RMSE.cv = pol.model$results[2]\n  }\n\nt(sapply(1:10, my.pol.f))\n\n     RMSE     RMSE     RMSE     RMSE    RMSE     RMSE     RMSE     RMSE     RMSE     RMSE    \n[1,] 3.984711 4.083302 3.830449 3.77627 3.787051 3.740982 3.847184 3.803367 3.866925 3.803712\n\n\n\nCodetri.age.plot + \n   stat_smooth(method = \"lm\", \n               formula = y~poly(x,6,raw=T), size = 1)"
+  },
+  {
+    "objectID": "posts/fromLMtoSplines/index.html#natural-cubic-splines-restriction-that-the-fitted-curve-linear-at-the-extremes",
+    "href": "posts/fromLMtoSplines/index.html#natural-cubic-splines-restriction-that-the-fitted-curve-linear-at-the-extremes",
+    "title": "Splines are beautiful",
+    "section": "Natural cubic splines, restriction that the fitted curve linear at the extremes",
+    "text": "Natural cubic splines, restriction that the fitted curve linear at the extremes\n\ncub.splines.ns <- lm(triceps ~ ns(age, knots = c(5,10,20,30,40)), \n                   data=triceps)\nsummary(cub.splines.ns)\n\n\nCall:\nlm(formula = triceps ~ ns(age, knots = c(5, 10, 20, 30, 40)), \n    data = triceps)\n\nResiduals:\n     Min       1Q   Median       3Q      Max \n-10.4875  -1.6873  -0.3665   1.1146  22.8643 \n\nCoefficients:\n                                       Estimate Std. Error t value Pr(>|t|)\n(Intercept)                              8.3811     0.5219  16.059  < 2e-16\nns(age, knots = c(5, 10, 20, 30, 40))1  -3.5592     0.6712  -5.303 1.44e-07\nns(age, knots = c(5, 10, 20, 30, 40))2   5.7803     1.0379   5.569 3.39e-08\nns(age, knots = c(5, 10, 20, 30, 40))3   5.5118     0.9416   5.853 6.78e-09\nns(age, knots = c(5, 10, 20, 30, 40))4   6.9070     0.9050   7.632 5.99e-14\nns(age, knots = c(5, 10, 20, 30, 40))5   5.4136     1.3783   3.928 9.24e-05\nns(age, knots = c(5, 10, 20, 30, 40))6   6.6460     1.0829   6.137 1.27e-09\n\nResidual standard error: 3.759 on 885 degrees of freedom\nMultiple R-squared:  0.4199,    Adjusted R-squared:  0.416 \nF-statistic: 106.8 on 6 and 885 DF,  p-value: < 2.2e-16\n\n\n\ntri.age.plot <- ggplot(triceps, aes(x=age, y=triceps)) +\n                 geom_point(alpha=0.55, color=\"black\") + \n                 theme_minimal() \ntri.age.plot +\n    stat_smooth(method = \"lm\", \n               formula = y~bs(x,knots = c(5,10,20,30,40)), \n               lty = 1, col = \"green\") + \n    stat_smooth(method = \"lm\", \n               formula = y~ns(x,knots = c(5,10,20,30,40)), \n               lty = 1, col = \"red\")\n\n\npolynomial cubic splines, natural cubic splines"
+  },
+  {
+    "objectID": "posts/fromLMtoSplines/index.html#connecting-the-lines",
+    "href": "posts/fromLMtoSplines/index.html#connecting-the-lines",
+    "title": "Splines are beautiful",
+    "section": "Connecting the lines",
+    "text": "Connecting the lines\nWe want continuity in the knots, this will be the model:\n\\[Y_i=\\beta_0+\\beta_1x_i+\\beta_2I_{x_i\\geq 5}(x_i-5)+\\cdots+\\beta_6I_{x_i \\geq 40}(x_i-40) + \\epsilon_i\\]\nBy “hand” or with B-splines: splines::bs()\n\nCodepred7 <- predict(lm(triceps~ age + I((age-5)*(age>=5)) +\n                                   I((age-10)*(age >= 10)) +\n                                   I((age-20)*(age >= 20)) +\n                                   I((age-30)*(age >= 30)) +\n                                  I((age-40)*(age >= 40)),\n                    data = triceps))\ntri.age.plot +\n  geom_line(data=triceps, \n            aes(y = pred7, x=age), size = 1, col=\"red\")\n\n\n\n\n\nCodelibrary(splines)\npred.lm.bs <- predict(lm(triceps ~ bs(age, knots = c(5,10,20,30,40),degree=1), data=triceps))\n\ntri.age.plot +\n  geom_line(data=triceps, \n            aes(y = pred.lm.bs, x=age), size = 1, col=\"red\")"
+  },
+  {
+    "objectID": "posts/fromLMtoSplines/index.html#piecewise-quadratic",
+    "href": "posts/fromLMtoSplines/index.html#piecewise-quadratic",
+    "title": "Splines are beautiful",
+    "section": "Piecewise quadratic",
+    "text": "Piecewise quadratic\n\npred.quad <- predict(lm(triceps~ age + I(age^2) + \n                    I((age-5)*(age>=5)) + I((age-5)^2*(age>=5)) +\n                    I((age-10)*(age >= 10)) + I((age-10)^2*(age>=10)) +\n                    I((age-20)*(age >= 20)) + I((age-20)^2*(age>=20)) +\n                    I((age-30)*(age >= 30)) + I((age-30)^2*(age>=30)) +\n                    I((age-40)*(age >= 40)) + I((age-40)^2*(age>=40)),\n                    data = triceps))\ntri.age.plot +\n  geom_line(data=triceps, \n            aes(y = pred.quad, x=age), size = 1, col=\"red\")"
+  },
+  {
+    "objectID": "posts/fromLMtoSplines/index.html#einfacher-mit-bs",
+    "href": "posts/fromLMtoSplines/index.html#einfacher-mit-bs",
+    "title": "Splines are beautiful",
+    "section": "einfacher mit bs()!",
+    "text": "einfacher mit bs()!\n\nlibrary(splines)\npred.lm.bs <- predict(lm(triceps ~ bs(age, knots = c(5,10,20,30,40),degree=1), data=triceps))\n\ntri.age.plot +\n  geom_line(data=triceps, \n            aes(y = pred.lm.bs, x=age), size = 1, col=\"red\")"
+  },
+  {
+    "objectID": "posts/fromLMtoSplines/index.html#not-smooth-yet-only-quadratic-terms",
+    "href": "posts/fromLMtoSplines/index.html#not-smooth-yet-only-quadratic-terms",
+    "title": "Splines are beautiful",
+    "section": "Not smooth yet, only quadratic terms",
+    "text": "Not smooth yet, only quadratic terms\n\npred.quadsmooth <- predict(lm(triceps~ age + I(age^2) + \n                    I((age-5)^2*(age>=5)) +\n                    I((age-10)^2*(age>=10)) +\n                    I((age-20)^2*(age>=20)) +\n                    I((age-30)^2*(age>=30)) +\n                    I((age-40)^2*(age>=40)),\n                    data = triceps))\n#einfacher mit `bs()`!\nlibrary(splines)\npred.quadsmooth2 <- predict(lm(triceps ~ bs(age, knots = c(5,10,20,30,40),degree=2), data=triceps))                        \ntri.age.plot +\n  geom_line(data=triceps, \n            aes(y = pred.quadsmooth2, x=age), size = 1, col=\"blue\")"
+  },
+  {
+    "objectID": "posts/fromLMtoSplines/index.html#b-splines",
+    "href": "posts/fromLMtoSplines/index.html#b-splines",
+    "title": "Splines are beautiful",
+    "section": "B-splines",
+    "text": "B-splines\n\nCodecub.splines.bs <- lm(triceps ~ bs(age, knots = c(5,10,20,30,40),degree = 3), data=triceps)\nsummary(cub.splines.bs)\n\n\nCall:\nlm(formula = triceps ~ bs(age, knots = c(5, 10, 20, 30, 40), \n    degree = 3), data = triceps)\n\nResiduals:\n     Min       1Q   Median       3Q      Max \n-11.5234  -1.6912  -0.2917   1.1356  23.0922 \n\nCoefficients:\n                                                   Estimate Std. Error t value Pr(>|t|)\n(Intercept)                                          6.9598     0.9729   7.154 1.77e-12\nbs(age, knots = c(5, 10, 20, 30, 40), degree = 3)1   2.5367     1.7154   1.479   0.1396\nbs(age, knots = c(5, 10, 20, 30, 40), degree = 3)2  -0.3032     0.9629  -0.315   0.7529\nbs(age, knots = c(5, 10, 20, 30, 40), degree = 3)3  -1.9092     1.2993  -1.469   0.1421\nbs(age, knots = c(5, 10, 20, 30, 40), degree = 3)4   7.4056     1.2179   6.081 1.78e-09\nbs(age, knots = c(5, 10, 20, 30, 40), degree = 3)5   6.1050     1.4043   4.347 1.54e-05\nbs(age, knots = c(5, 10, 20, 30, 40), degree = 3)6  10.1770     1.5427   6.597 7.23e-11\nbs(age, knots = c(5, 10, 20, 30, 40), degree = 3)7   3.9428     1.9082   2.066   0.0391\nbs(age, knots = c(5, 10, 20, 30, 40), degree = 3)8  10.1473     1.7545   5.784 1.01e-08\n\nResidual standard error: 3.743 on 883 degrees of freedom\nMultiple R-squared:  0.4261,    Adjusted R-squared:  0.4209 \nF-statistic: 81.94 on 8 and 883 DF,  p-value: < 2.2e-16"
+  },
+  {
+    "objectID": "posts/fromLMtoSplines/index.html#natural-splines-restriction-that-the-fitted-curve-linear-at-the-extremes",
+    "href": "posts/fromLMtoSplines/index.html#natural-splines-restriction-that-the-fitted-curve-linear-at-the-extremes",
+    "title": "Splines are beautiful",
+    "section": "Natural splines, restriction that the fitted curve linear at the extremes",
+    "text": "Natural splines, restriction that the fitted curve linear at the extremes\n\nCodecub.splines.ns <- lm(triceps ~ ns(age, knots = c(5,10,20,30,40)), data=triceps)\nsummary(cub.splines.ns)\n\n\nCall:\nlm(formula = triceps ~ ns(age, knots = c(5, 10, 20, 30, 40)), \n    data = triceps)\n\nResiduals:\n     Min       1Q   Median       3Q      Max \n-10.4875  -1.6873  -0.3665   1.1146  22.8643 \n\nCoefficients:\n                                       Estimate Std. Error t value Pr(>|t|)\n(Intercept)                              8.3811     0.5219  16.059  < 2e-16\nns(age, knots = c(5, 10, 20, 30, 40))1  -3.5592     0.6712  -5.303 1.44e-07\nns(age, knots = c(5, 10, 20, 30, 40))2   5.7803     1.0379   5.569 3.39e-08\nns(age, knots = c(5, 10, 20, 30, 40))3   5.5118     0.9416   5.853 6.78e-09\nns(age, knots = c(5, 10, 20, 30, 40))4   6.9070     0.9050   7.632 5.99e-14\nns(age, knots = c(5, 10, 20, 30, 40))5   5.4136     1.3783   3.928 9.24e-05\nns(age, knots = c(5, 10, 20, 30, 40))6   6.6460     1.0829   6.137 1.27e-09\n\nResidual standard error: 3.759 on 885 degrees of freedom\nMultiple R-squared:  0.4199,    Adjusted R-squared:  0.416 \nF-statistic: 106.8 on 6 and 885 DF,  p-value: < 2.2e-16\n\n\n\nCodetri.age.plot <- ggplot(triceps, aes(x=age, y=triceps)) +\n                 geom_point(alpha=0.55, color=\"black\") + \n                 theme_minimal() \ntri.age.plot +\n    stat_smooth(method = \"lm\", \n               formula = y~bs(x,knots = c(5,10,20,30,40)), \n               lty = 1, col = \"green\") + \n    stat_smooth(method = \"lm\", \n               formula = y~ns(x,knots = c(5,10,20,30,40)), \n               lty = 1, col = \"red\")\n\n\npolynomial cubic splines, natural cubic splines"
+  },
+  {
+    "objectID": "posts/fromLMtoSplines/index.html#with-b-splines-splinesbs",
+    "href": "posts/fromLMtoSplines/index.html#with-b-splines-splinesbs",
+    "title": "Splines are beautiful",
+    "section": "With B-splines: splines::bs()\n",
+    "text": "With B-splines: splines::bs()\n\n\nlibrary(splines)\npred.lm.bs <- predict(lm(triceps ~ bs(age, knots = c(5,10,20,30,40),degree=1), data=triceps))\n\ntri.age.plot +\n  geom_line(data=triceps, \n            aes(y = pred.lm.bs, x=age), size = 1, col=\"red\")"
+  },
+  {
+    "objectID": "posts/fromLMtoSplines/index.html#piecewise-quadratic-polynomial",
+    "href": "posts/fromLMtoSplines/index.html#piecewise-quadratic-polynomial",
+    "title": "Splines are beautiful",
+    "section": "Piecewise quadratic polynomial",
+    "text": "Piecewise quadratic polynomial\n\nCodepred.quad <- predict(lm(triceps~ age + I(age^2) + \n                    I((age-5)*(age>=5)) + I((age-5)^2*(age>=5)) +\n                    I((age-10)*(age >= 10)) + I((age-10)^2*(age>=10)) +\n                    I((age-20)*(age >= 20)) + I((age-20)^2*(age>=20)) +\n                    I((age-30)*(age >= 30)) + I((age-30)^2*(age>=30)) +\n                    I((age-40)*(age >= 40)) + I((age-40)^2*(age>=40)),\n                    data = triceps))\ntri.age.plot +\n  geom_line(data=triceps, \n            aes(y = pred.quad, x=age), size = 1, col=\"red\")\n\n\n\n\nNot smooth yet, let us use only quadratic terms\n\nCodepred.quadsmooth <- predict(lm(triceps~ age + I(age^2) + \n                    I((age-5)^2*(age>=5)) +\n                    I((age-10)^2*(age>=10)) +\n                    I((age-20)^2*(age>=20)) +\n                    I((age-30)^2*(age>=30)) +\n                    I((age-40)^2*(age>=40)),\n                    data = triceps))\n\n\nThis is again much simpler with bs():\n\nCodepred.quadsmooth2 <- predict(lm(triceps ~ bs(age, knots = c(5,10,20,30,40),degree=2), data=triceps))                        \ntri.age.plot +\n  geom_line(data=triceps, \n            aes(y = pred.quadsmooth2, x=age), size = 1, col=\"blue\")"
   }
 ]

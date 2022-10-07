@@ -5,7 +5,3 @@ categories: [news]
 ---
 
 Welcome! 
-
-![Generalized Additive Model for bone mineral density on age and BMI](profile.png)
-
-

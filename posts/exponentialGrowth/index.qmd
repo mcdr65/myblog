@@ -2,11 +2,6 @@
 title: "Exponential Growth"
 date: "2022-09-29"
 categories: [news, code, analysis]
-image: "image.png"
-fig-cap-location: top
-format:
-  html:
-    code-fold: true
 ---
 
 

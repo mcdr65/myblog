@@ -3,7 +3,7 @@ project:
   output-dir: docs
 
 website:
-  title: "Philosophie, Statistik, Physik"
+  title: "Physio-Stat-Blog"
   site-url: "https://mcdr65.github.io/myblog/"
   description: "This is André Meichtry's personal Blog"
   navbar:
@@ -29,3 +29,7 @@ format:
       dark: cyborg
     css: styles.css
     code-link: true
+    code-fold: true
+    code-tools:
+      source: true
+      toggle: true

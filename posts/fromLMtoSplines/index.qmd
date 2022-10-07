@@ -1,0 +1,290 @@
+---
+title: "Splines are beautiful"
+date: "2022-10-06"
+description: "From linear model to GAM"
+categories: [code, analysis]
+fig-cap-location: top
+---
+
+
+
+# Data
+
+Triceps skinfold thickness dataset: The data are derived from an anthropometric study of 892 females under 50 years in three Gambian villages in West Africa.
+
+```{r results="hide"}
+library(MultiKink)
+library(ggplot2)
+library(psych)
+```
+
+
+
+```{r}
+data("triceps")
+headTail(triceps)
+tri.age.plot <- ggplot(triceps, aes(x=age, y=triceps)) +
+                 geom_point(alpha=0.55, color="black") + 
+                 theme_minimal() 
+tri.age.plot
+
+```
+
+
+
+
+# Polynomial regression
+
+
+```{r polynomial}
+model.cubic <- lm(triceps~age + I(age^2) + I(age^3),
+                  data=triceps)
+summary(model.cubic)
+
+model.cubic.poly <- lm(triceps~poly(age,3),
+                       data=triceps)
+summary(model.cubic.poly)
+## plot(predict(model.cubic.poly), predict(model.cubic)) # the same
+tri.age.plot + 
+   stat_smooth(method = "lm", 
+               formula = y~poly(x,3,raw=T), size = 1)
+```
+
+
+
+# Cross-validation of different polynomials
+
+## RMSE for quadratic
+
+```{r}
+library(caret)
+set.seed(1234)
+#repeated CV for the MSE
+trC.lm <- trainControl(method = "repeatedcv", 
+                       number = 10,         
+                       repeats = 10)        
+pol.model <- train(triceps ~ poly(age,3),
+                       data = triceps, 
+                       method = "lm",
+                       trControl = trC.lm)    
+pol.model$results[2]
+```
+
+## RMSE for different degrees
+
+
+```{r}
+my.pol.f <- function(x){
+    xx<-poly(triceps$age, x, raw=T)    
+    new.data  <- cbind(triceps=triceps$triceps, xx)                                 
+    pol.model <- train(triceps~., data = new.data,method = "lm")    
+    RMSE.cv = pol.model$results[2]
+  }
+
+t(sapply(1:10, my.pol.f))
+```
+
+```{r}
+tri.age.plot + 
+   stat_smooth(method = "lm", 
+               formula = y~poly(x,6,raw=T), size = 1)
+```
+
+
+
+# Piecewise linear regression
+
+
+```{r}
+pred1 <- predict(lm(triceps~age, 
+                    data = triceps[triceps$age<5,]))
+pred2 <- predict(lm(triceps~age, 
+                    data = triceps[triceps$age >=5 & triceps$age<10,]))
+pred3 <- predict(lm(triceps~age, 
+                    data = triceps[triceps$age>=10 & triceps$age<20,]))
+pred4 <- predict(lm(triceps~age, 
+                    data = triceps[triceps$age>=20 & triceps$age<30,]))
+pred5 <- predict(lm(triceps~age, 
+                    data = triceps[triceps$age>=30 & triceps$age<40,]))
+pred6 <- predict(lm(triceps~age, 
+                    data = triceps[triceps$age>=40,]))
+tri.age.plot + 
+  geom_line(data=triceps[triceps$age<5,], 
+            aes(y = pred1, x=age), size = 1, col="blue") +
+  geom_line(data=triceps[triceps$age >=5 & triceps$age<10,], 
+            aes(y = pred2, x=age), size = 1, col="blue") +
+  geom_line(data=triceps[triceps$age>=10 & triceps$age<20,], 
+            aes(y = pred3, x=age), size = 1, col="blue") +
+  geom_line(data=triceps[triceps$age>=20 & triceps$age<30,], 
+            aes(y = pred4, x=age), size = 1, col="blue") +
+  geom_line(data=triceps[triceps$age>=30 & triceps$age<40,], 
+            aes(y = pred5, x=age), size = 1, col="blue") +
+  geom_line(data=triceps[triceps$age>=40,], 
+            aes(y = pred6, x=age), size = 1, col="blue")
+```
+
+## Connecting the lines 
+
+
+We want continuity in the knots, this will be the model:
+
+$$Y_i=\beta_0+\beta_1x_i+\beta_2I_{x_i\geq 5}(x_i-5)+\cdots+\beta_6I_{x_i \geq 40}(x_i-40) + \epsilon_i$$
+
+
+
+By "hand" or with B-splines: `splines::bs()`
+
+
+```{r connect lines}
+pred7 <- predict(lm(triceps~ age + I((age-5)*(age>=5)) +
+                                   I((age-10)*(age >= 10)) +
+                                   I((age-20)*(age >= 20)) +
+                                   I((age-30)*(age >= 30)) +
+                                  I((age-40)*(age >= 40)),
+                    data = triceps))
+tri.age.plot +
+  geom_line(data=triceps, 
+            aes(y = pred7, x=age), size = 1, col="red")
+```
+
+```{r}
+library(splines)
+pred.lm.bs <- predict(lm(triceps ~ bs(age, knots = c(5,10,20,30,40),degree=1), data=triceps))
+
+tri.age.plot +
+  geom_line(data=triceps, 
+            aes(y = pred.lm.bs, x=age), size = 1, col="red")
+```
+
+
+
+## Piecewise quadratic polynomial
+
+```{r}
+pred.quad <- predict(lm(triceps~ age + I(age^2) + 
+                    I((age-5)*(age>=5)) + I((age-5)^2*(age>=5)) +
+                    I((age-10)*(age >= 10)) + I((age-10)^2*(age>=10)) +
+                    I((age-20)*(age >= 20)) + I((age-20)^2*(age>=20)) +
+                    I((age-30)*(age >= 30)) + I((age-30)^2*(age>=30)) +
+                    I((age-40)*(age >= 40)) + I((age-40)^2*(age>=40)),
+                    data = triceps))
+tri.age.plot +
+  geom_line(data=triceps, 
+            aes(y = pred.quad, x=age), size = 1, col="red")
+```
+
+Not smooth yet, let us use only quadratic terms
+
+```{r}
+pred.quadsmooth <- predict(lm(triceps~ age + I(age^2) + 
+                    I((age-5)^2*(age>=5)) +
+                    I((age-10)^2*(age>=10)) +
+                    I((age-20)^2*(age>=20)) +
+                    I((age-30)^2*(age>=30)) +
+                    I((age-40)^2*(age>=40)),
+                    data = triceps))
+```
+
+This is again much simpler with `bs()`:
+
+```{r}
+pred.quadsmooth2 <- predict(lm(triceps ~ bs(age, knots = c(5,10,20,30,40),degree=2), data=triceps))                        
+tri.age.plot +
+  geom_line(data=triceps, 
+            aes(y = pred.quadsmooth2, x=age), size = 1, col="blue")
+
+```
+
+
+# Splines
+
+## B-splines
+
+
+```{r splines}
+cub.splines.bs <- lm(triceps ~ bs(age, knots = c(5,10,20,30,40),degree = 3), data=triceps)
+summary(cub.splines.bs)
+```
+
+## Natural splines, restriction that the fitted curve linear at the extremes
+
+```{r}
+cub.splines.ns <- lm(triceps ~ ns(age, knots = c(5,10,20,30,40)), data=triceps)
+summary(cub.splines.ns)
+```
+
+
+```{r}
+#| fig-cap: "polynomial cubic splines, natural cubic splines"
+tri.age.plot <- ggplot(triceps, aes(x=age, y=triceps)) +
+                 geom_point(alpha=0.55, color="black") + 
+                 theme_minimal() 
+tri.age.plot +
+    stat_smooth(method = "lm", 
+               formula = y~bs(x,knots = c(5,10,20,30,40)), 
+               lty = 1, col = "green") + 
+    stat_smooth(method = "lm", 
+               formula = y~ns(x,knots = c(5,10,20,30,40)), 
+               lty = 1, col = "red")
+```
+
+
+# Smoothing splines
+
+Avoids the knot selection problem completely by using a maximal set of
+knots. The complexity of the fit is controlled by regularization.
+Problem: among all functions $f(x)$ with two continuous derivatives,
+find one that minimizes the penalized residual sum of squares
+
+$$ RSS(f,\lambda)=\sum_{i=1}^N(y_i-f(x_i))^2+\lambda[f''(t)]^2dt$$
+
+where $\lambda$ is a fixed smoothing parameter. The first term measures closeness to the data, while the second term
+penalizes curvature in the function, and $\lambda$ establishes a tradeoff
+between the two. Special cases: $\lambda=0$ (no constraint on $f$) and
+$\lambda=\infty$ ($f$ has to be linear). It can be shown that this
+problem has an explicit, finite-dimensional, unique minimizer which is
+a natural cubic spline with knots at the unique values of the $x_i,i= 1, . . . , N.$
+
+At face value it seems that the family is still over-parametrized, since
+there are as many as $N$ knots, which implies $N$ degrees of freedom.
+However, the penalty term translates to a penalty on the spline
+coefficients, which are shrunk some of the way toward the linear fit.
+
+The solution is of the form
+
+$$f(x)=\sum_{j=1}^N\theta_iN_j(x),$$\
+
+where the $N_j(x)$ are an $N$-dimensional set of basis functions for
+representing this family of natural splines.
+
+
+```{r smoothing splines}
+sspline <- smooth.spline(x=triceps$age, y=triceps$triceps, cv=TRUE)
+plot(triceps$age, triceps$triceps)
+lines(sspline, col="blue")
+lines(triceps$age,predict(cub.splines.ns),type="p",col="red")   # compare with cubic spline
+```
+
+
+
+```{r eval=FALSE,echo=FALSE}
+ssplinecv <- smooth.spline(x=triceps$age, y=triceps$triceps, cv=T)
+ssplinelambda <- smooth.spline(triceps$age, 
+                         triceps$triceps, lambda=.0) 
+ssplinedf <- smooth.spline(triceps$age, 
+                         triceps$triceps, df=6) 
+plot(triceps$age, triceps$triceps)
+lines(ssplinecv, col="red")
+lines(ssplinelambda, col="blue")
+lines(ssplinedf, col="green")
+```
+
+
+# Generalized additive model 
+
+```{r GAM}
+library(mgcv)
+gamtri<-gam(triceps~s(age,bs="cr"),data=triceps)
+summary(gamtri)
+plot(gamtri)
+```

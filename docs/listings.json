@@ -2,6 +2,7 @@
   {
     "listing": "/index.html",
     "items": [
+      "/posts/fromLMtoSplines/index.html",
       "/posts/exponentialGrowth/index.html",
       "/posts/welcome/index.html"
     ]
@@ -9,6 +10,7 @@
   {
     "listing": "/archive.html",
     "items": [
+      "/posts/fromLMtoSplines/index.html",
       "/posts/exponentialGrowth/index.html",
       "/posts/welcome/index.html"
     ]

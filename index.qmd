@@ -1,13 +1,13 @@
 ---
-title: "StatBlog"
+title: "Posts"
 listing:
   contents: posts
   sort: "date desc"
-  type: default
+  type: table
   categories: true
   sort-ui: true
   filter-ui: true
-  fields: [date, title, description, categories,image]
+  fields: [date, title, description, categories]
   feed: true
 page-layout: full
 title-block-banner: false
