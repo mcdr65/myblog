@@ -246,8 +246,7 @@ representing this family of natural splines.
 ```{r smoothing splines}
 sspline <- smooth.spline(x=triceps$age, y=triceps$triceps, cv=TRUE)
 plot(triceps$age, triceps$triceps)
-lines(sspline, col="blue")
-lines(triceps$age,predict(cub.splines.ns),type="p",col="red")   # compare with cubic spline
+lines(sspline, lwd=3,col="red")
 ```
 
 
