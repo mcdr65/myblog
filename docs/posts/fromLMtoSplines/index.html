@@ -405,7 +405,8 @@ Attaching package: 'psych'</code></pre>
 <p><img src="index_files/figure-html/unnamed-chunk-16-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
-<p>Not smooth yet, let us use only quadratic terms</p>
+<p>Not smooth yet, let us use only quadratic terms:</p>
+<p><span class="math display">\[Y_i=\beta_0+\beta_1x_i+\beta_2x^2+\beta_3I_{x_i\geq 5}(x_i-5)^2+\cdots+\beta_7I_{x_i \geq 40}(x_i-40)^2 + \epsilon_i\]</span></p>
 <div class="cell">
 <details><summary>Code</summary><div class="sourceCode" id="cb18"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">pred.quadsmooth</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">triceps</span><span class="op">~</span> <span class="va">age</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/base/AsIs.html">I</a></span><span class="op">(</span><span class="va">age</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>                    <span class="fu"><a href="https://rdrr.io/r/base/AsIs.html">I</a></span><span class="op">(</span><span class="op">(</span><span class="va">age</span><span class="op">-</span><span class="fl">5</span><span class="op">)</span><span class="op">^</span><span class="fl">2</span><span class="op">*</span><span class="op">(</span><span class="va">age</span><span class="op">&gt;=</span><span class="fl">5</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
@@ -426,7 +427,6 @@ Attaching package: 'psych'</code></pre>
 </div>
 </section></section><section id="splines" class="level1"><h1>Splines</h1>
 <section id="cubic-b-splines" class="level2"><h2 class="anchored" data-anchor-id="cubic-b-splines">Cubic B-splines</h2>
-<p><span class="math display">\[Y_i=\beta_0+\beta_1x_i+\beta_2x^2+\beta_3x^3+\beta_4I_{x_i\geq 5}(x_i-5)^3+\cdots+\beta_9I_{x_i \geq 40}(x_i-40)^3 + \epsilon_i\]</span></p>
 <div class="cell">
 <details><summary>Code</summary><div class="sourceCode" id="cb19"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">cub.splines.bs</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">triceps</span> <span class="op">~</span> <span class="fu"><a href="https://rdrr.io/r/splines/bs.html">bs</a></span><span class="op">(</span><span class="va">age</span>, knots <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">5</span>,<span class="fl">10</span>,<span class="fl">20</span>,<span class="fl">30</span>,<span class="fl">40</span><span class="op">)</span>,degree <span class="op">=</span> <span class="fl">3</span><span class="op">)</span>, data<span class="op">=</span><span class="va">triceps</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
@@ -942,32 +942,32 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb31-174"><a href="#cb31-174" aria-hidden="true" tabindex="-1"></a>            <span class="fu">aes</span>(<span class="at">y =</span> pred.quad, <span class="at">x=</span>age), <span class="at">size =</span> <span class="dv">1</span>, <span class="at">col=</span><span class="st">"red"</span>)</span>
 <span id="cb31-175"><a href="#cb31-175" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb31-176"><a href="#cb31-176" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb31-177"><a href="#cb31-177" aria-hidden="true" tabindex="-1"></a>Not smooth yet, let us use only quadratic terms</span>
+<span id="cb31-177"><a href="#cb31-177" aria-hidden="true" tabindex="-1"></a>Not smooth yet, let us use only quadratic terms:</span>
 <span id="cb31-178"><a href="#cb31-178" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb31-181"><a href="#cb31-181" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb31-182"><a href="#cb31-182" aria-hidden="true" tabindex="-1"></a>pred.quadsmooth <span class="ot">&lt;-</span> <span class="fu">predict</span>(<span class="fu">lm</span>(triceps<span class="sc">~</span> age <span class="sc">+</span> <span class="fu">I</span>(age<span class="sc">^</span><span class="dv">2</span>) <span class="sc">+</span> </span>
-<span id="cb31-183"><a href="#cb31-183" aria-hidden="true" tabindex="-1"></a>                    <span class="fu">I</span>((age<span class="dv">-5</span>)<span class="sc">^</span><span class="dv">2</span><span class="sc">*</span>(age<span class="sc">&gt;=</span><span class="dv">5</span>)) <span class="sc">+</span></span>
-<span id="cb31-184"><a href="#cb31-184" aria-hidden="true" tabindex="-1"></a>                    <span class="fu">I</span>((age<span class="dv">-10</span>)<span class="sc">^</span><span class="dv">2</span><span class="sc">*</span>(age<span class="sc">&gt;=</span><span class="dv">10</span>)) <span class="sc">+</span></span>
-<span id="cb31-185"><a href="#cb31-185" aria-hidden="true" tabindex="-1"></a>                    <span class="fu">I</span>((age<span class="dv">-20</span>)<span class="sc">^</span><span class="dv">2</span><span class="sc">*</span>(age<span class="sc">&gt;=</span><span class="dv">20</span>)) <span class="sc">+</span></span>
-<span id="cb31-186"><a href="#cb31-186" aria-hidden="true" tabindex="-1"></a>                    <span class="fu">I</span>((age<span class="dv">-30</span>)<span class="sc">^</span><span class="dv">2</span><span class="sc">*</span>(age<span class="sc">&gt;=</span><span class="dv">30</span>)) <span class="sc">+</span></span>
-<span id="cb31-187"><a href="#cb31-187" aria-hidden="true" tabindex="-1"></a>                    <span class="fu">I</span>((age<span class="dv">-40</span>)<span class="sc">^</span><span class="dv">2</span><span class="sc">*</span>(age<span class="sc">&gt;=</span><span class="dv">40</span>)),</span>
-<span id="cb31-188"><a href="#cb31-188" aria-hidden="true" tabindex="-1"></a>                    <span class="at">data =</span> triceps))</span>
-<span id="cb31-189"><a href="#cb31-189" aria-hidden="true" tabindex="-1"></a>pred.quadsmooth2 <span class="ot">&lt;-</span> <span class="fu">predict</span>(<span class="fu">lm</span>(triceps <span class="sc">~</span> <span class="fu">bs</span>(age, <span class="at">knots =</span> <span class="fu">c</span>(<span class="dv">5</span>,<span class="dv">10</span>,<span class="dv">20</span>,<span class="dv">30</span>,<span class="dv">40</span>),<span class="at">degree=</span><span class="dv">2</span>), <span class="at">data=</span>triceps))                        </span>
-<span id="cb31-190"><a href="#cb31-190" aria-hidden="true" tabindex="-1"></a>tri.age.plot <span class="sc">+</span></span>
-<span id="cb31-191"><a href="#cb31-191" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">data=</span>triceps, </span>
-<span id="cb31-192"><a href="#cb31-192" aria-hidden="true" tabindex="-1"></a>            <span class="fu">aes</span>(<span class="at">y =</span> pred.quadsmooth, <span class="at">x=</span>age), <span class="at">size =</span> <span class="dv">1</span>, <span class="at">col=</span><span class="st">"blue"</span>)<span class="sc">+</span></span>
-<span id="cb31-193"><a href="#cb31-193" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">data=</span>triceps, </span>
-<span id="cb31-194"><a href="#cb31-194" aria-hidden="true" tabindex="-1"></a>            <span class="fu">aes</span>(<span class="at">y =</span> pred.quadsmooth2<span class="fl">+.2</span>, <span class="at">x=</span>age), <span class="at">size =</span> <span class="dv">1</span>, <span class="at">col=</span><span class="st">"red"</span>)</span>
-<span id="cb31-195"><a href="#cb31-195" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb31-196"><a href="#cb31-196" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb31-197"><a href="#cb31-197" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-179"><a href="#cb31-179" aria-hidden="true" tabindex="-1"></a>$$Y_i=\beta_0+\beta_1x_i+\beta_2x^2+\beta_3I_{x_i\geq 5}(x_i-5)^2+\cdots+\beta_7I_{x_i \geq 40}(x_i-40)^2 + \epsilon_i$$</span>
+<span id="cb31-180"><a href="#cb31-180" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-181"><a href="#cb31-181" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-184"><a href="#cb31-184" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb31-185"><a href="#cb31-185" aria-hidden="true" tabindex="-1"></a>pred.quadsmooth <span class="ot">&lt;-</span> <span class="fu">predict</span>(<span class="fu">lm</span>(triceps<span class="sc">~</span> age <span class="sc">+</span> <span class="fu">I</span>(age<span class="sc">^</span><span class="dv">2</span>) <span class="sc">+</span> </span>
+<span id="cb31-186"><a href="#cb31-186" aria-hidden="true" tabindex="-1"></a>                    <span class="fu">I</span>((age<span class="dv">-5</span>)<span class="sc">^</span><span class="dv">2</span><span class="sc">*</span>(age<span class="sc">&gt;=</span><span class="dv">5</span>)) <span class="sc">+</span></span>
+<span id="cb31-187"><a href="#cb31-187" aria-hidden="true" tabindex="-1"></a>                    <span class="fu">I</span>((age<span class="dv">-10</span>)<span class="sc">^</span><span class="dv">2</span><span class="sc">*</span>(age<span class="sc">&gt;=</span><span class="dv">10</span>)) <span class="sc">+</span></span>
+<span id="cb31-188"><a href="#cb31-188" aria-hidden="true" tabindex="-1"></a>                    <span class="fu">I</span>((age<span class="dv">-20</span>)<span class="sc">^</span><span class="dv">2</span><span class="sc">*</span>(age<span class="sc">&gt;=</span><span class="dv">20</span>)) <span class="sc">+</span></span>
+<span id="cb31-189"><a href="#cb31-189" aria-hidden="true" tabindex="-1"></a>                    <span class="fu">I</span>((age<span class="dv">-30</span>)<span class="sc">^</span><span class="dv">2</span><span class="sc">*</span>(age<span class="sc">&gt;=</span><span class="dv">30</span>)) <span class="sc">+</span></span>
+<span id="cb31-190"><a href="#cb31-190" aria-hidden="true" tabindex="-1"></a>                    <span class="fu">I</span>((age<span class="dv">-40</span>)<span class="sc">^</span><span class="dv">2</span><span class="sc">*</span>(age<span class="sc">&gt;=</span><span class="dv">40</span>)),</span>
+<span id="cb31-191"><a href="#cb31-191" aria-hidden="true" tabindex="-1"></a>                    <span class="at">data =</span> triceps))</span>
+<span id="cb31-192"><a href="#cb31-192" aria-hidden="true" tabindex="-1"></a>pred.quadsmooth2 <span class="ot">&lt;-</span> <span class="fu">predict</span>(<span class="fu">lm</span>(triceps <span class="sc">~</span> <span class="fu">bs</span>(age, <span class="at">knots =</span> <span class="fu">c</span>(<span class="dv">5</span>,<span class="dv">10</span>,<span class="dv">20</span>,<span class="dv">30</span>,<span class="dv">40</span>),<span class="at">degree=</span><span class="dv">2</span>), <span class="at">data=</span>triceps))                        </span>
+<span id="cb31-193"><a href="#cb31-193" aria-hidden="true" tabindex="-1"></a>tri.age.plot <span class="sc">+</span></span>
+<span id="cb31-194"><a href="#cb31-194" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">data=</span>triceps, </span>
+<span id="cb31-195"><a href="#cb31-195" aria-hidden="true" tabindex="-1"></a>            <span class="fu">aes</span>(<span class="at">y =</span> pred.quadsmooth, <span class="at">x=</span>age), <span class="at">size =</span> <span class="dv">1</span>, <span class="at">col=</span><span class="st">"blue"</span>)<span class="sc">+</span></span>
+<span id="cb31-196"><a href="#cb31-196" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">data=</span>triceps, </span>
+<span id="cb31-197"><a href="#cb31-197" aria-hidden="true" tabindex="-1"></a>            <span class="fu">aes</span>(<span class="at">y =</span> pred.quadsmooth2<span class="fl">+.2</span>, <span class="at">x=</span>age), <span class="at">size =</span> <span class="dv">1</span>, <span class="at">col=</span><span class="st">"red"</span>)</span>
 <span id="cb31-198"><a href="#cb31-198" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb31-199"><a href="#cb31-199" aria-hidden="true" tabindex="-1"></a><span class="fu"># Splines</span></span>
+<span id="cb31-199"><a href="#cb31-199" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb31-200"><a href="#cb31-200" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb31-201"><a href="#cb31-201" aria-hidden="true" tabindex="-1"></a><span class="fu">## Cubic B-splines</span></span>
-<span id="cb31-202"><a href="#cb31-202" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-201"><a href="#cb31-201" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-202"><a href="#cb31-202" aria-hidden="true" tabindex="-1"></a><span class="fu"># Splines</span></span>
 <span id="cb31-203"><a href="#cb31-203" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb31-204"><a href="#cb31-204" aria-hidden="true" tabindex="-1"></a>$$Y_i=\beta_0+\beta_1x_i+\beta_2x^2+\beta_3x^3+\beta_4I_{x_i\geq 5}(x_i-5)^3+\cdots+\beta_9I_{x_i \geq 40}(x_i-40)^3 + \epsilon_i$$</span>
+<span id="cb31-204"><a href="#cb31-204" aria-hidden="true" tabindex="-1"></a><span class="fu">## Cubic B-splines</span></span>
 <span id="cb31-205"><a href="#cb31-205" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb31-206"><a href="#cb31-206" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb31-207"><a href="#cb31-207" aria-hidden="true" tabindex="-1"></a><span class="in">```{r bs}</span></span>

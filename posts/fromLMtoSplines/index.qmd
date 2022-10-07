@@ -160,7 +160,10 @@ tri.age.plot +
             aes(y = pred.quad, x=age), size = 1, col="red")
 ```
 
-Not smooth yet, let us use only quadratic terms
+Not smooth yet, let us use only quadratic terms:
+
+$$Y_i=\beta_0+\beta_1x_i+\beta_2x^2+\beta_3I_{x_i\geq 5}(x_i-5)^2+\cdots+\beta_7I_{x_i \geq 40}(x_i-40)^2 + \epsilon_i$$
+
 
 ```{r}
 pred.quadsmooth <- predict(lm(triceps~ age + I(age^2) + 
@@ -183,9 +186,6 @@ tri.age.plot +
 # Splines
 
 ## Cubic B-splines
-
-
-$$Y_i=\beta_0+\beta_1x_i+\beta_2x^2+\beta_3x^3+\beta_4I_{x_i\geq 5}(x_i-5)^3+\cdots+\beta_9I_{x_i \geq 40}(x_i-40)^3 + \epsilon_i$$
 
 
 ```{r bs}
