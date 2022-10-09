@@ -31,5 +31,6 @@ format:
     code-link: true
     code-fold: true
     code-tools:
-      source: true
+      source: false
       toggle: true
+      

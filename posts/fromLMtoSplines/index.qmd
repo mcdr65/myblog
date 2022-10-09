@@ -85,8 +85,18 @@ tri.age.plot +
 ```
 
 
-
 # Piecewise linear regression
+
+Instead of fitting a high-degree polynomial over the entire range of $X$, piecewise polynomial regression involves fitting separate low-degree polynomials
+over different regions of $X$. For example, a piecewise cubic polynomial works
+by fitting a cubic regression model of the form 
+
+$$Y_i=\beta_0+\beta_1x_i+\beta_2x_i^2+\beta_3x_i^3+\epsilon_i,$$ 
+
+where the coefficients differ in different parts of the range of $X$. The points where the coefficients change are called *knots* $\xi_k$, $k=1,\dots,K$.
+
+Let us begin with a piecewise linear (degree=1):
+
 
 
 ```{r}
@@ -117,12 +127,23 @@ tri.age.plot +
             aes(y = pred6, x=age), size = 1, col="blue")
 ```
 
-## Continuous piecewise
+## Continuous piecewise linear regression
 
-$$Y_i=\beta_0+\beta_1x_i+\beta_2I_{x_i\geq 5}(x_i-5)+\cdots+\beta_6I_{x_i \geq 40}(x_i-40) + \epsilon_i$$
+We want a continuous function. Let us define a *truncated power basis function* per knot $\xi$,
+
+$$h(x, \xi)=(x-\xi)_{+}=
+\begin{cases}
+  x-\xi, \text{\,if\,} x>\xi\\
+  0, \text{\,else}.
+\end{cases}
+$$ 
+
+The continuous piecewise regression equation is
+
+$$Y_i=\beta_0+\beta_1x_i+\beta_2 h(x_i,5)+\cdots+\beta_6 h(x_i,40) + \epsilon_i$$
 
 
-By "hand" or with B-splines: `splines::bs()`
+This can be done -by hand- or with B-splines `splines::bs()`
 
 
 ```{r}
@@ -144,9 +165,9 @@ tri.age.plot +
 
 
 
-## Piecewise quadratic polynomial
+<!-- ## Piecewise quadratic polynomial -->
 
-```{r}
+```{r include=FALSE}
 pred.quad <- predict(lm(triceps~ age + I(age^2) + 
                     I((age-5)*(age>=5)) + I((age-5)^2*(age>=5)) +
                     I((age-10)*(age >= 10)) + I((age-10)^2*(age>=10)) +
@@ -159,9 +180,24 @@ tri.age.plot +
             aes(y = pred.quad, x=age), size = 1, col="red")
 ```
 
-Not smooth yet, let us use only quadratic terms:
 
-$$Y_i=\beta_0+\beta_1x_i+\beta_2x^2+\beta_3I_{x_i\geq 5}(x_i-5)^2+\cdots+\beta_7I_{x_i \geq 40}(x_i-40)^2 + \epsilon_i$$
+
+
+# Splines
+
+## Quadratic spline
+
+With 
+
+$$h(x, \xi)=(x-\xi)_{+}^2=
+\begin{cases}
+  (x-\xi)^2, \text{\,if\,} x>\xi\\
+  0, \text{\,else},
+\end{cases}
+$$
+
+we have as regression equation 
+$$Y_i=\beta_0+\beta_1x_i+\beta_2x^2+\beta_3 h(x_i,5)+\cdots+\beta_7 h(x_i,40) + \epsilon_i$$
 
 
 ```{r}
@@ -182,24 +218,37 @@ tri.age.plot +
 ```
 
 
-# Splines
+## Cubic Spline
 
-## Cubic B-splines
+Most often, cubic splines are used. Adding the following truncated power basis function per knot,
 
+$$h(x, \xi)=(x-\xi)_{+}^3=
+\begin{cases}
+  (x-\xi)^3, \text{\,if\,} x>\xi\\
+  0, \text{\,else},
+\end{cases}
+$$
+
+
+to the model for a cubic polynomial will lead to a discontinuity in
+*only the third derivative* at $\xi$; the function will remain continuous, with
+*continuous first and second derivatives, at each of the knots*:
+
+$$Y_i=\beta_0+\beta_1x_i+\beta_2x^2+\beta_3x^3+\beta_4h(x_i,5)+\cdots+\beta_8h(x_i,40)^3 + \epsilon_i$$
+
+One can show that a cubic spline has $K+4$ parameters.
 
 ```{r bs}
 cub.splines.bs <- lm(triceps ~ bs(age, knots = c(5,10,20,30,40),degree = 3), data=triceps)
 ```
 
-## Natural splines, restriction that the fitted curve linear at the extremes
+## Natural splines
+
+Natural splines have an additional restriction that the fitted curve *linear at the extremes*
+
 
 ```{r ns}
-cub.splines.ns <- lm(triceps ~ ns(age, knots = c(5,10,20,30,40)), data=triceps)
-```
-
-
-```{r}
-#| fig-cap: "polynomial cubic splines, natural cubic splines"
+#| fig-cap: "polynomial cubic splines (green), natural cubic splines (red)"
 tri.age.plot <- ggplot(triceps, aes(x=age, y=triceps)) +
                  geom_point(alpha=0.55, color="black") + 
                  theme_minimal() 

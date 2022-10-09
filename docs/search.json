@@ -58,21 +58,21 @@
   {
     "objectID": "posts/fromLMtoSplines/index.html",
     "href": "posts/fromLMtoSplines/index.html",
-    "title": "Splines are beautiful",
+    "title": "Beyond linearity",
     "section": "",
     "text": "Triceps skinfold thickness dataset: The data are derived from an anthropometric study of 892 females under 50 years in three Gambian villages in West Africa.\n\nCodelibrary(MultiKink)\nlibrary(ggplot2)\nlibrary(psych)\n\n\nAttaching package: 'psych'\n\n\nThe following objects are masked from 'package:ggplot2':\n\n    %+%, alpha\n\n\n\nCodedata(\"triceps\")\nheadTail(triceps)\n\n      age lntriceps triceps\n1   12.05      1.22     3.4\n2    9.91      1.39       4\n3   10.04      1.44     4.2\n4   11.49      1.44     4.2\n...   ...       ...     ...\n889  7.91      1.92     6.8\n890  7.99      1.44     4.2\n891 14.63       2.2       9\n892 30.14       2.1     8.2\n\nCodetri.age.plot <- ggplot(triceps, aes(x=age, y=triceps)) +\n                 geom_point(alpha=0.55, color=\"black\") + \n                 theme_minimal() \ntri.age.plot"
   },
   {
     "objectID": "posts/fromLMtoSplines/index.html#rmse-for-quadratic",
     "href": "posts/fromLMtoSplines/index.html#rmse-for-quadratic",
-    "title": "Splines are beautiful",
+    "title": "Beyond linearity",
     "section": "RMSE for quadratic",
     "text": "RMSE for quadratic\n\nCodelibrary(caret)\n\nLoading required package: lattice\n\nCodeset.seed(1234)\ntrC.lm <- trainControl(method = \"repeatedcv\", \n                       number = 10,         \n                       repeats = 10)        \npol.model <- train(triceps ~ poly(age,3),\n                       data = triceps, \n                       method = \"lm\",\n                       trControl = trC.lm)    \npol.model$results[2]\n\n      RMSE\n1 3.865866"
   },
   {
     "objectID": "posts/fromLMtoSplines/index.html#rmse-for-different-degrees",
     "href": "posts/fromLMtoSplines/index.html#rmse-for-different-degrees",
-    "title": "Splines are beautiful",
+    "title": "Beyond linearity",
     "section": "RMSE for different degrees",
     "text": "RMSE for different degrees\n\nCodemy.pol.f <- function(x){\n    xx<-poly(triceps$age, x, raw=T)    \n    new.data  <- cbind(triceps=triceps$triceps, xx)                                 \n    pol.model <- train(triceps~., data = new.data,method = \"lm\")    \n    RMSE.cv = pol.model$results[2]\n  }\n\nt(sapply(1:10, my.pol.f))\n\n     RMSE     RMSE     RMSE     RMSE    RMSE     RMSE     RMSE     RMSE     RMSE     RMSE    \n[1,] 3.984711 4.083302 3.830449 3.77627 3.787051 3.740982 3.847184 3.803367 3.866925 3.803712\n\n\n\nCodetri.age.plot + \n   stat_smooth(method = \"lm\", \n               formula = y~poly(x,6,raw=T), size = 1)"
   },
@@ -121,7 +121,7 @@
   {
     "objectID": "posts/fromLMtoSplines/index.html#natural-splines-restriction-that-the-fitted-curve-linear-at-the-extremes",
     "href": "posts/fromLMtoSplines/index.html#natural-splines-restriction-that-the-fitted-curve-linear-at-the-extremes",
-    "title": "Splines are beautiful",
+    "title": "Beyond linearity",
     "section": "Natural splines, restriction that the fitted curve linear at the extremes",
     "text": "Natural splines, restriction that the fitted curve linear at the extremes\n\nCodecub.splines.ns <- lm(triceps ~ ns(age, knots = c(5,10,20,30,40)), data=triceps)\n\n\n\nCodetri.age.plot <- ggplot(triceps, aes(x=age, y=triceps)) +\n                 geom_point(alpha=0.55, color=\"black\") + \n                 theme_minimal() \ntri.age.plot +\n    stat_smooth(method = \"lm\", \n               formula = y~bs(x,knots = c(5,10,20,30,40)), \n               lty = 1, col = \"green\") + \n    stat_smooth(method = \"lm\", \n               formula = y~ns(x,knots = c(5,10,20,30,40)), \n               lty = 1, col = \"red\")\n\n\npolynomial cubic splines, natural cubic splines"
   },
@@ -135,22 +135,50 @@
   {
     "objectID": "posts/fromLMtoSplines/index.html#piecewise-quadratic-polynomial",
     "href": "posts/fromLMtoSplines/index.html#piecewise-quadratic-polynomial",
-    "title": "Splines are beautiful",
+    "title": "Beyond linearity",
     "section": "Piecewise quadratic polynomial",
-    "text": "Piecewise quadratic polynomial\n\nCodepred.quad <- predict(lm(triceps~ age + I(age^2) + \n                    I((age-5)*(age>=5)) + I((age-5)^2*(age>=5)) +\n                    I((age-10)*(age >= 10)) + I((age-10)^2*(age>=10)) +\n                    I((age-20)*(age >= 20)) + I((age-20)^2*(age>=20)) +\n                    I((age-30)*(age >= 30)) + I((age-30)^2*(age>=30)) +\n                    I((age-40)*(age >= 40)) + I((age-40)^2*(age>=40)),\n                    data = triceps))\ntri.age.plot +\n  geom_line(data=triceps, \n            aes(y = pred.quad, x=age), size = 1, col=\"red\")\n\n\n\n\nNot smooth yet, let us use only quadratic terms:\n\\[Y_i=\\beta_0+\\beta_1x_i+\\beta_2x^2+\\beta_3I_{x_i\\geq 5}(x_i-5)^2+\\cdots+\\beta_7I_{x_i \\geq 40}(x_i-40)^2 + \\epsilon_i\\]\n\nCodepred.quadsmooth <- predict(lm(triceps~ age + I(age^2) + \n                    I((age-5)^2*(age>=5)) +\n                    I((age-10)^2*(age>=10)) +\n                    I((age-20)^2*(age>=20)) +\n                    I((age-30)^2*(age>=30)) +\n                    I((age-40)^2*(age>=40)),\n                    data = triceps))\npred.quadsmooth2 <- predict(lm(triceps ~ bs(age, knots = c(5,10,20,30,40),degree=2), data=triceps))                        \ntri.age.plot +\n  geom_line(data=triceps, \n            aes(y = pred.quadsmooth, x=age), size = 1, col=\"blue\")+\n  geom_line(data=triceps, \n            aes(y = pred.quadsmooth2+.2, x=age), size = 1, col=\"red\")"
+    "text": "Piecewise quadratic polynomial"
   },
   {
     "objectID": "posts/fromLMtoSplines/index.html#continuous-piecewise",
     "href": "posts/fromLMtoSplines/index.html#continuous-piecewise",
-    "title": "Splines are beautiful",
+    "title": "Beyond linearity",
     "section": "Continuous piecewise",
-    "text": "Continuous piecewise\n\\[Y_i=\\beta_0+\\beta_1x_i+\\beta_2I_{x_i\\geq 5}(x_i-5)+\\cdots+\\beta_6I_{x_i \\geq 40}(x_i-40) + \\epsilon_i\\]\nBy “hand” or with B-splines: splines::bs()\n\nCodepred7 <- predict(lm(triceps~ age + I((age-5)*(age>=5)) +\n                                   I((age-10)*(age >= 10)) +\n                                   I((age-20)*(age >= 20)) +\n                                   I((age-30)*(age >= 30)) +\n                                  I((age-40)*(age >= 40)),\n                    data = triceps))\nlibrary(splines)\npred.lm.bs <- predict(lm(triceps ~ bs(age, knots = c(5,10,20,30,40),degree=1), data=triceps))\ntri.age.plot +\n  geom_line(data=triceps, \n            aes(y = pred.lm.bs, x=age), size = 1, col=\"blue\")+\n  geom_line(data=triceps, \n            aes(y = pred7+.2, x=age), size = 1, col=\"red\")"
+    "text": "Continuous piecewise\nLet us define a truncated power basis function per knot \\(\\xi\\),\n\\[h(x, \\xi)=(x-\\xi)_{+}=\n\\begin{cases}\n  x-\\xi, \\text{\\,if\\,} x>\\xi\\\\\n  0, \\text{\\,else}.\n\\end{cases}\n\\]\nThe continuous piecewise regression equation is\n\\[Y_i=\\beta_0+\\beta_1x_i+\\beta_2 h(x_i,5)+\\cdots+\\beta_6 h(x_i,40) + \\epsilon_i\\]\nThis can be done -by hand- or with B-splines: splines::bs()\n\nCodepred7 <- predict(lm(triceps~ age + I((age-5)*(age>=5)) +\n                                   I((age-10)*(age >= 10)) +\n                                   I((age-20)*(age >= 20)) +\n                                   I((age-30)*(age >= 30)) +\n                                  I((age-40)*(age >= 40)),\n                    data = triceps))\nlibrary(splines)\npred.lm.bs <- predict(lm(triceps ~ bs(age, knots = c(5,10,20,30,40),degree=1), data=triceps))\ntri.age.plot +\n  geom_line(data=triceps, \n            aes(y = pred.lm.bs, x=age), size = 1, col=\"blue\")+\n  geom_line(data=triceps, \n            aes(y = pred7+.2, x=age), size = 1, col=\"red\")"
   },
   {
     "objectID": "posts/fromLMtoSplines/index.html#cubic-b-splines",
     "href": "posts/fromLMtoSplines/index.html#cubic-b-splines",
-    "title": "Splines are beautiful",
+    "title": "Beyond linearity",
     "section": "Cubic B-splines",
-    "text": "Cubic B-splines\n\nCodecub.splines.bs <- lm(triceps ~ bs(age, knots = c(5,10,20,30,40),degree = 3), data=triceps)"
+    "text": "Cubic B-splines\nMost often, cubic splines are used. Adding the following truncated power basis function per knot\n\\[h(x, \\xi_i)=(x-\\xi_i)_{+}^3=\n\\begin{cases}\n  (x-\\xi_i)^3, \\text{\\,if\\,} x>\\xi\\\\\n  0, \\text{\\,else}\n\\end{cases}\n\\]\nto the model for a cubic polynomial will lead to a discontinuity in only the third derivative at \\(\\xi\\); the function will remain continuous, with continuous first and second derivatives, at each of the knots:\n\\[Y_i=\\beta_0+\\beta_1x_i+\\beta_2x^2+\\beta_3x^3+\\beta_4h(x_i,5)+\\cdots+\\beta_8h(x_i,40)^3 + \\epsilon_i\\]\nA cubic spline has \\(K+4\\) parameters.\n\nCodecub.splines.bs <- lm(triceps ~ bs(age, knots = c(5,10,20,30,40),degree = 3), data=triceps)"
+  },
+  {
+    "objectID": "posts/fromLMtoSplines/index.html#quadratic-spline",
+    "href": "posts/fromLMtoSplines/index.html#quadratic-spline",
+    "title": "Beyond linearity",
+    "section": "Quadratic spline",
+    "text": "Quadratic spline\nWith\n\\[h(x, \\xi)=(x-\\xi)_{+}^2=\n\\begin{cases}\n  (x-\\xi)^2, \\text{\\,if\\,} x>\\xi\\\\\n  0, \\text{\\,else},\n\\end{cases}\n\\]\nwe have as regression equation \\[Y_i=\\beta_0+\\beta_1x_i+\\beta_2x^2+\\beta_3 h(x_i,5)+\\cdots+\\beta_7 h(x_i,40) + \\epsilon_i\\]\n\nCodepred.quadsmooth <- predict(lm(triceps~ age + I(age^2) + \n                    I((age-5)^2*(age>=5)) +\n                    I((age-10)^2*(age>=10)) +\n                    I((age-20)^2*(age>=20)) +\n                    I((age-30)^2*(age>=30)) +\n                    I((age-40)^2*(age>=40)),\n                    data = triceps))\npred.quadsmooth2 <- predict(lm(triceps ~ bs(age, knots = c(5,10,20,30,40),degree=2), data=triceps))                        \ntri.age.plot +\n  geom_line(data=triceps, \n            aes(y = pred.quadsmooth, x=age), size = 1, col=\"blue\")+\n  geom_line(data=triceps, \n            aes(y = pred.quadsmooth2+.2, x=age), size = 1, col=\"red\")"
+  },
+  {
+    "objectID": "posts/fromLMtoSplines/index.html#cubic-spline",
+    "href": "posts/fromLMtoSplines/index.html#cubic-spline",
+    "title": "Beyond linearity",
+    "section": "Cubic Spline",
+    "text": "Cubic Spline\nMost often, cubic splines are used. Adding the following truncated power basis function per knot,\n\\[h(x, \\xi)=(x-\\xi)_{+}^3=\n\\begin{cases}\n  (x-\\xi)^3, \\text{\\,if\\,} x>\\xi\\\\\n  0, \\text{\\,else},\n\\end{cases}\n\\]\nto the model for a cubic polynomial will lead to a discontinuity in only the third derivative at \\(\\xi\\); the function will remain continuous, with continuous first and second derivatives, at each of the knots:\n\\[Y_i=\\beta_0+\\beta_1x_i+\\beta_2x^2+\\beta_3x^3+\\beta_4h(x_i,5)+\\cdots+\\beta_8h(x_i,40)^3 + \\epsilon_i\\]\nOne can show that a cubic spline has \\(K+4\\) parameters.\n\nCodecub.splines.bs <- lm(triceps ~ bs(age, knots = c(5,10,20,30,40),degree = 3), data=triceps)"
+  },
+  {
+    "objectID": "posts/fromLMtoSplines/index.html#natural-splines",
+    "href": "posts/fromLMtoSplines/index.html#natural-splines",
+    "title": "Beyond linearity",
+    "section": "Natural splines",
+    "text": "Natural splines\nNatural splines have an additional restriction that the fitted curve linear at the extremes\n\nCodetri.age.plot <- ggplot(triceps, aes(x=age, y=triceps)) +\n                 geom_point(alpha=0.55, color=\"black\") + \n                 theme_minimal() \ntri.age.plot +\n    stat_smooth(method = \"lm\", \n               formula = y~bs(x,knots = c(5,10,20,30,40)), \n               lty = 1, col = \"green\") + \n    stat_smooth(method = \"lm\", \n               formula = y~ns(x,knots = c(5,10,20,30,40)), \n               lty = 1, col = \"red\")\n\n\npolynomial cubic splines (green), natural cubic splines (red)"
+  },
+  {
+    "objectID": "posts/fromLMtoSplines/index.html#continuous-piecewise-linear-regression",
+    "href": "posts/fromLMtoSplines/index.html#continuous-piecewise-linear-regression",
+    "title": "Beyond linearity",
+    "section": "Continuous piecewise linear regression",
+    "text": "Continuous piecewise linear regression\nWe want a continuous function. Let us define a truncated power basis function per knot \\(\\xi\\),\n\\[h(x, \\xi)=(x-\\xi)_{+}=\n\\begin{cases}\n  x-\\xi, \\text{\\,if\\,} x>\\xi\\\\\n  0, \\text{\\,else}.\n\\end{cases}\n\\]\nThe continuous piecewise regression equation is\n\\[Y_i=\\beta_0+\\beta_1x_i+\\beta_2 h(x_i,5)+\\cdots+\\beta_6 h(x_i,40) + \\epsilon_i\\]\nThis can be done -by hand- or with B-splines splines::bs()\n\nCodepred7 <- predict(lm(triceps~ age + I((age-5)*(age>=5)) +\n                                   I((age-10)*(age >= 10)) +\n                                   I((age-20)*(age >= 20)) +\n                                   I((age-30)*(age >= 30)) +\n                                  I((age-40)*(age >= 40)),\n                    data = triceps))\nlibrary(splines)\npred.lm.bs <- predict(lm(triceps ~ bs(age, knots = c(5,10,20,30,40),degree=1), data=triceps))\ntri.age.plot +\n  geom_line(data=triceps, \n            aes(y = pred.lm.bs, x=age), size = 1, col=\"blue\")+\n  geom_line(data=triceps, \n            aes(y = pred7+.2, x=age), size = 1, col=\"red\")"
   }
 ]
