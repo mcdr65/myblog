@@ -165,7 +165,7 @@
     "href": "posts/fromLMtoSplines/index.html#cubic-spline",
     "title": "Beyond linearity",
     "section": "Cubic Spline",
-    "text": "Cubic Spline\nMost often, cubic splines are used. Adding the following truncated power basis function per knot,\n\\[h(x, \\xi)=(x-\\xi)_{+}^3=\n\\begin{cases}\n  (x-\\xi)^3, \\text{\\,if\\,} x>\\xi\\\\\n  0, \\text{\\,else},\n\\end{cases}\n\\]\nto the model for a cubic polynomial will lead to a discontinuity in only the third derivative at \\(\\xi\\); the function will remain continuous, with continuous first and second derivatives, at each of the knots:\n\\[Y_i=\\beta_0+\\beta_1x_i+\\beta_2x^2+\\beta_3x^3+\\beta_4h(x_i,5)+\\cdots+\\beta_8h(x_i,40)^3 + \\epsilon_i\\]\nOne can show that a cubic spline has \\(K+4\\) parameters.\n\nCodecub.splines.bs <- lm(triceps ~ bs(age, knots = c(5,10,20,30,40),degree = 3), data=triceps)"
+    "text": "Cubic Spline\nMost often, cubic splines are used. Adding the following truncated power basis function per knot,\n\\[h(x, \\xi)=(x-\\xi)_{+}^3=\n\\begin{cases}\n  (x-\\xi)^3, \\text{\\,if\\,} x>\\xi\\\\\n  0, \\text{\\,else},\n\\end{cases}\n\\]\nto the model for a cubic polynomial will lead to a discontinuity in only the third derivative at \\(\\xi\\); the function will remain continuous, with continuous first and second derivatives, at each of the knots:\n\\[Y_i=\\beta_0+\\beta_1x_i+\\beta_2x^2+\\beta_3x^3+\\beta_4h(x_i,5)+\\cdots+\\beta_8h(x_i,40)^3 + \\epsilon_i\\]\nOne can show that a cubic spline has \\(K+4\\) parameters."
   },
   {
     "objectID": "posts/fromLMtoSplines/index.html#natural-splines",
@@ -180,5 +180,12 @@
     "title": "Beyond linearity",
     "section": "Continuous piecewise linear regression",
     "text": "Continuous piecewise linear regression\nWe want a continuous function. Let us define a truncated power basis function per knot \\(\\xi\\),\n\\[h(x, \\xi)=(x-\\xi)_{+}=\n\\begin{cases}\n  x-\\xi, \\text{\\,if\\,} x>\\xi\\\\\n  0, \\text{\\,else}.\n\\end{cases}\n\\]\nThe continuous piecewise regression equation is\n\\[Y_i=\\beta_0+\\beta_1x_i+\\beta_2 h(x_i,5)+\\cdots+\\beta_6 h(x_i,40) + \\epsilon_i\\]\nThis can be done -by hand- or with B-splines splines::bs()\n\nCodepred7 <- predict(lm(triceps~ age + I((age-5)*(age>=5)) +\n                                   I((age-10)*(age >= 10)) +\n                                   I((age-20)*(age >= 20)) +\n                                   I((age-30)*(age >= 30)) +\n                                  I((age-40)*(age >= 40)),\n                    data = triceps))\nlibrary(splines)\npred.lm.bs <- predict(lm(triceps ~ bs(age, knots = c(5,10,20,30,40),degree=1), data=triceps))\ntri.age.plot +\n  geom_line(data=triceps, \n            aes(y = pred.lm.bs, x=age), size = 1, col=\"blue\")+\n  geom_line(data=triceps, \n            aes(y = pred7+.2, x=age), size = 1, col=\"red\")"
+  },
+  {
+    "objectID": "posts/fromLMtoSplines/index.html#natural-spline",
+    "href": "posts/fromLMtoSplines/index.html#natural-spline",
+    "title": "Beyond linearity",
+    "section": "Natural Spline",
+    "text": "Natural Spline\nNatural splines have an additional restriction that the fitted curve linear at the extremes\n\nCodecub.splines.bs <- lm(triceps ~ bs(age, knots = c(5,10,20,30,40)), data=triceps)\ncub.splines.ns <- lm(triceps ~ ns(age, knots = c(5,10,20,30,40)), data=triceps)\n\n\n\nCodetri.age.plot <- ggplot(triceps, aes(x=age, y=triceps)) +\n                 geom_point(alpha=0.55, color=\"black\") + \n                 theme_minimal() \ntri.age.plot +\n    stat_smooth(method = \"lm\", \n               formula = y~bs(x,knots = c(5,10,20,30,40)), \n               lty = 1, col = \"green\") + \n    stat_smooth(method = \"lm\", \n               formula = y~ns(x,knots = c(5,10,20,30,40)), \n               lty = 1, col = \"red\")\n\n\npolynomial cubic splines (green), natural cubic splines (red)"
   }
 ]

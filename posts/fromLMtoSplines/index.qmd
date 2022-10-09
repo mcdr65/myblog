@@ -238,13 +238,16 @@ $$Y_i=\beta_0+\beta_1x_i+\beta_2x^2+\beta_3x^3+\beta_4h(x_i,5)+\cdots+\beta_8h(x
 
 One can show that a cubic spline has $K+4$ parameters.
 
-```{r bs}
-cub.splines.bs <- lm(triceps ~ bs(age, knots = c(5,10,20,30,40),degree = 3), data=triceps)
-```
 
-## Natural splines
+## Natural Spline
 
 Natural splines have an additional restriction that the fitted curve *linear at the extremes*
+
+```{r bs}
+cub.splines.bs <- lm(triceps ~ bs(age, knots = c(5,10,20,30,40)), data=triceps)
+cub.splines.ns <- lm(triceps ~ ns(age, knots = c(5,10,20,30,40)), data=triceps)
+```
+
 
 
 ```{r ns}
