@@ -3,15 +3,17 @@ title: "Posts"
 listing:
   contents: posts
   sort: "date desc"
-  type: table
+  type: default
   categories: true
   sort-ui: true
   filter-ui: true
-  fields: [date, title, description, categories]
+  fields: [date, description, title]
   feed: true
 page-layout: full
 title-block-banner: false
 ---
 
 Statistik, Philosophie, Physik und anderes...
+
+
 

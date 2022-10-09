@@ -1,11 +1,10 @@
 ---
-title: "Splines are beautiful"
+title: "Beyond linearity"
 date: "2022-10-06"
 description: "From linear model to GAM"
 categories: [code, analysis]
 fig-cap-location: top
 ---
-
 
 
 
