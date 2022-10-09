@@ -165,7 +165,7 @@
     "href": "posts/fromLMtoSplines/index.html#cubic-spline",
     "title": "Beyond linearity",
     "section": "Cubic Spline",
-    "text": "Cubic Spline\nMost often, cubic splines are used. Adding the following truncated power basis function per knot,\n\\[h(x, \\xi)=(x-\\xi)_{+}^3=\n\\begin{cases}\n  (x-\\xi)^3, \\text{\\,if\\,} x>\\xi\\\\\n  0, \\text{\\,else},\n\\end{cases}\n\\]\nto the model for a cubic polynomial will lead to a discontinuity in only the third derivative at \\(\\xi\\); the function will remain continuous, with continuous first and second derivatives, at each of the knots:\n\\[Y_i=\\beta_0+\\beta_1x_i+\\beta_2x^2+\\beta_3x^3+\\beta_4h(x_i,5)+\\cdots+\\beta_8h(x_i,40)^3 + \\epsilon_i\\]\nOne can show that a cubic spline has \\(K+4\\) parameters."
+    "text": "Cubic Spline\nMost often, cubic splines are used. Adding the following truncated power basis function per knot,\n\\[h(x, \\xi)=(x-\\xi)_{+}^3=\n\\begin{cases}\n  (x-\\xi)^3, \\text{\\,if\\,} x>\\xi\\\\\n  0, \\text{\\,else},\n\\end{cases}\n\\]\nto the model for a cubic polynomial will lead to a discontinuity in only the third derivative at \\(\\xi\\); the function will remain continuous, with continuous first and second derivatives, at each of the knots:\n\\[Y_i=\\beta_0+\\beta_1x_i+\\beta_2x^2+\\beta_3x^3+\\beta_4h(x_i,5)+\\cdots+\\beta_8h(x_i,40) + \\epsilon_i\\]\nOne can show that a cubic spline has \\(K+4\\) parameters."
   },
   {
     "objectID": "posts/fromLMtoSplines/index.html#natural-splines",

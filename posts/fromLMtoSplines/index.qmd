@@ -234,7 +234,7 @@ to the model for a cubic polynomial will lead to a discontinuity in
 *only the third derivative* at $\xi$; the function will remain continuous, with
 *continuous first and second derivatives, at each of the knots*:
 
-$$Y_i=\beta_0+\beta_1x_i+\beta_2x^2+\beta_3x^3+\beta_4h(x_i,5)+\cdots+\beta_8h(x_i,40)^3 + \epsilon_i$$
+$$Y_i=\beta_0+\beta_1x_i+\beta_2x^2+\beta_3x^3+\beta_4h(x_i,5)+\cdots+\beta_8h(x_i,40) + \epsilon_i$$
 
 One can show that a cubic spline has $K+4$ parameters.
 
