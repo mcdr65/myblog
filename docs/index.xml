@@ -147,8 +147,8 @@ Attaching package: 'psych'</code></pre>
 </div>
 </div>
 <section id="continuous-piecewise-linear-regression" class="level2"><h2 class="anchored" data-anchor-id="continuous-piecewise-linear-regression">Continuous piecewise linear regression</h2>
-<p>We want a continuous function. Let us define a <em>truncated power basis function</em> per knot <img src="https://latex.codecogs.com/png.latex?%5Cxi">,</p>
-<p><img src="https://latex.codecogs.com/png.latex?h(x,%20%5Cxi)=(x-%5Cxi)_%7B+%7D=%0A%5Cbegin%7Bcases%7D%0A%20%20x-%5Cxi,%20%5Ctext%7B%5C,if%5C,%7D%20x%3E%5Cxi%5C%5C%0A%20%200,%20%5Ctext%7B%5C,else%7D.%0A%5Cend%7Bcases%7D%0A"></p>
+<p>We want a continuous function. Let us define a <em>truncated power basis function</em> (here of degree=1) per knot <img src="https://latex.codecogs.com/png.latex?%5Cxi">,</p>
+<p><img src="https://latex.codecogs.com/png.latex?h(x,%20%5Cxi)=(x-%5Cxi)%5E1_%7B+%7D=%0A%5Cbegin%7Bcases%7D%0A%20%20x-%5Cxi,%20%5Ctext%7B%5C,if%5C,%7D%20x%3E%5Cxi%5C%5C%0A%20%200,%20%5Ctext%7B%5C,else%7D.%0A%5Cend%7Bcases%7D%0A"></p>
 <p>The continuous piecewise regression equation is</p>
 <p><img src="https://latex.codecogs.com/png.latex?Y_i=%5Cbeta_0+%5Cbeta_1x_i+%5Cbeta_2%20h(x_i,5)+%5Ccdots+%5Cbeta_6%20h(x_i,40)%20+%20%5Cepsilon_i"></p>
 <p>This can be done -by hand- or with B-splines <code><a href="https://rdrr.io/r/splines/bs.html">splines::bs()</a></code></p>
@@ -228,12 +228,9 @@ Attaching package: 'psych'</code></pre>
 </div>
 </section></section><section id="smoothing-splines" class="level1"><h1>Smoothing splines</h1>
 <p>Avoids the knot selection problem completely by using a maximal set of knots. The complexity of the fit is controlled by regularization. Problem: among all functions <img src="https://latex.codecogs.com/png.latex?f(x)"> with two continuous derivatives, find one that minimizes the penalized residual sum of squares</p>
-<p><img src="https://latex.codecogs.com/png.latex?%20RSS(f,%5Clambda)=%5Csum_%7Bi=1%7D%5EN(y_i-f(x_i))%5E2+%5Clambda%5Bf''(t)%5D%5E2dt"></p>
-<p>where <img src="https://latex.codecogs.com/png.latex?%5Clambda"> is a fixed smoothing parameter. The first term measures closeness to the data, while the second term penalizes curvature in the function, and <img src="https://latex.codecogs.com/png.latex?%5Clambda"> establishes a tradeoff between the two. Special cases: <img src="https://latex.codecogs.com/png.latex?%5Clambda=0"> (no constraint on <img src="https://latex.codecogs.com/png.latex?f">) and <img src="https://latex.codecogs.com/png.latex?%5Clambda=%5Cinfty"> (<img src="https://latex.codecogs.com/png.latex?f"> has to be linear). It can be shown that this problem has an explicit, finite-dimensional, unique minimizer which is a natural cubic spline with knots at the unique values of the <img src="https://latex.codecogs.com/png.latex?x_i,i=%201,%20.%20.%20.%20,%20N."></p>
-<p>At face value it seems that the family is still over-parametrized, since there are as many as <img src="https://latex.codecogs.com/png.latex?N"> knots, which implies <img src="https://latex.codecogs.com/png.latex?N"> degrees of freedom. However, the penalty term translates to a penalty on the spline coefficients, which are shrunk some of the way toward the linear fit.</p>
-<p>The solution is of the form</p>
-<p><img src="https://latex.codecogs.com/png.latex?f(x)=%5Csum_%7Bj=1%7D%5EN%5Ctheta_iN_j(x),"><br></p>
-<p>where the <img src="https://latex.codecogs.com/png.latex?N_j(x)"> are an <img src="https://latex.codecogs.com/png.latex?N">-dimensional set of basis functions for representing this family of natural splines.</p>
+<p><span id="eq-RSS"><img src="https://latex.codecogs.com/png.latex?%0A%20%20RSS(f,%5Clambda)=%5Csum_%7Bi=1%7D%5EN(y_i-f(x_i))%5E2+%5Clambda%5Bf''(t)%5D%5E2dt%0A%5Ctag%7B1%7D"></span></p>
+<p>where <img src="https://latex.codecogs.com/png.latex?%5Clambda"> is a fixed smoothing parameter. The first term measures closeness to the data, while the second term penalizes curvature in the function, and <img src="https://latex.codecogs.com/png.latex?%5Clambda"> establishes a tradeoff between the two. Special cases: <img src="https://latex.codecogs.com/png.latex?%5Clambda=0"> (no constraint on <img src="https://latex.codecogs.com/png.latex?f">) and <img src="https://latex.codecogs.com/png.latex?%5Clambda=%5Cinfty"> (<img src="https://latex.codecogs.com/png.latex?f"> has to be linear).</p>
+<p>The function <img src="https://latex.codecogs.com/png.latex?f(x)"> that minimizes (Equation&nbsp;1) can be shown to have some special properties: it is a piecewise cubic polynomial with knots at the unique values of <img src="https://latex.codecogs.com/png.latex?x_1,%5Cdots,x_n"> and continuous first and second derivatives at each knot. Furthermore, it is linear in the region outside of the extreme knots. In other words, the function <img src="https://latex.codecogs.com/png.latex?f(x)"> that minimizes (Equation&nbsp;1) is a natural cubic spline with knots at <img src="https://latex.codecogs.com/png.latex?x_1,%5Cdots,x_n"> ! However, it is not the same natural cubic spline that one would get if one applied the basis function approach described above – rather, it is a shrunken version of such a natural cubic spline, where the value of the tuning parameter <img src="https://latex.codecogs.com/png.latex?%5Clambda"> in (Equation&nbsp;1) controls the level of shrinkage.</p>
 <div class="cell">
 <details><summary>Code</summary><div class="sourceCode" id="cb20" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;">sspline</span> <span class="op" style="color: #5E5E5E;">&lt;-</span> <span class="fu" style="color: #4758AB;"><a href="https://rdrr.io/r/stats/smooth.spline.html">smooth.spline</a></span><span class="op" style="color: #5E5E5E;">(</span>x<span class="op" style="color: #5E5E5E;">=</span><span class="va" style="color: #111111;">triceps</span><span class="op" style="color: #5E5E5E;">$</span><span class="va" style="color: #111111;">age</span>, y<span class="op" style="color: #5E5E5E;">=</span><span class="va" style="color: #111111;">triceps</span><span class="op" style="color: #5E5E5E;">$</span><span class="va" style="color: #111111;">triceps</span>, cv<span class="op" style="color: #5E5E5E;">=</span><span class="cn" style="color: #8f5902;">TRUE</span><span class="op" style="color: #5E5E5E;">)</span></span></code></pre></div>
 </details><div class="cell-output cell-output-stderr">
@@ -456,8 +453,6 @@ GCV =  14.18  Scale est. = 14.057    n = 892</code></pre>
 </div>
 </div>
 
-
-<!-- -->
 
 </section></section><div id="quarto-appendix" class="default"><section id="footnotes" class="footnotes footnotes-end-of-document"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
 <ol>

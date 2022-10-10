@@ -129,9 +129,9 @@ tri.age.plot +
 
 ## Continuous piecewise linear regression
 
-We want a continuous function. Let us define a *truncated power basis function* per knot $\xi$,
+We want a continuous function. Let us define a *truncated power basis function* (here of degree=1) per knot $\xi$,
 
-$$h(x, \xi)=(x-\xi)_{+}=
+$$h(x, \xi)=(x-\xi)^1_{+}=
 \begin{cases}
   x-\xi, \text{\,if\,} x>\xi\\
   0, \text{\,else}.
@@ -272,26 +272,25 @@ knots. The complexity of the fit is controlled by regularization.
 Problem: among all functions $f(x)$ with two continuous derivatives,
 find one that minimizes the penalized residual sum of squares
 
-$$ RSS(f,\lambda)=\sum_{i=1}^N(y_i-f(x_i))^2+\lambda[f''(t)]^2dt$$
+
+$$
+  RSS(f,\lambda)=\sum_{i=1}^N(y_i-f(x_i))^2+\lambda[f''(t)]^2dt
+$$ {#eq-RSS}
+
+
 
 where $\lambda$ is a fixed smoothing parameter. The first term measures closeness to the data, while the second term
 penalizes curvature in the function, and $\lambda$ establishes a tradeoff
 between the two. Special cases: $\lambda=0$ (no constraint on $f$) and
-$\lambda=\infty$ ($f$ has to be linear). It can be shown that this
-problem has an explicit, finite-dimensional, unique minimizer which is
-a natural cubic spline with knots at the unique values of the $x_i,i= 1, . . . , N.$
+$\lambda=\infty$ ($f$ has to be linear). 
 
-At face value it seems that the family is still over-parametrized, since
-there are as many as $N$ knots, which implies $N$ degrees of freedom.
-However, the penalty term translates to a penalty on the spline
-coefficients, which are shrunk some of the way toward the linear fit.
 
-The solution is of the form
 
-$$f(x)=\sum_{j=1}^N\theta_iN_j(x),$$\
+The function $f(x)$ that minimizes (@eq-RSS) can be shown to have some special properties: it is a piecewise cubic polynomial with knots at the unique
+values of $x_1,\dots,x_n$ and continuous first and second derivatives at each
+knot. Furthermore, it is linear in the region outside of the extreme knots.
+In other words, the function $f(x)$ that minimizes (@eq-RSS) is a natural cubic spline with knots at $x_1,\dots,x_n$ ! However, it is not the same natural cubic spline that one would get if one applied the basis function approach described above -- rather, it is a shrunken version of such a natural cubic spline, where the value of the tuning parameter $\lambda$ in (@eq-RSS) controls the level of shrinkage.
 
-where the $N_j(x)$ are an $N$-dimensional set of basis functions for
-representing this family of natural splines.
 
 
 

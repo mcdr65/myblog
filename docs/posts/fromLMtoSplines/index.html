@@ -373,8 +373,8 @@ Attaching package: 'psych'</code></pre>
 </div>
 </div>
 <section id="continuous-piecewise-linear-regression" class="level2"><h2 class="anchored" data-anchor-id="continuous-piecewise-linear-regression">Continuous piecewise linear regression</h2>
-<p>We want a continuous function. Let us define a <em>truncated power basis function</em> per knot <span class="math inline">\(\xi\)</span>,</p>
-<p><span class="math display">\[h(x, \xi)=(x-\xi)_{+}=
+<p>We want a continuous function. Let us define a <em>truncated power basis function</em> (here of degree=1) per knot <span class="math inline">\(\xi\)</span>,</p>
+<p><span class="math display">\[h(x, \xi)=(x-\xi)^1_{+}=
 \begin{cases}
   x-\xi, \text{\,if\,} x&gt;\xi\\
   0, \text{\,else}.
@@ -469,12 +469,11 @@ Attaching package: 'psych'</code></pre>
 </div>
 </section></section><section id="smoothing-splines" class="level1"><h1>Smoothing splines</h1>
 <p>Avoids the knot selection problem completely by using a maximal set of knots. The complexity of the fit is controlled by regularization. Problem: among all functions <span class="math inline">\(f(x)\)</span> with two continuous derivatives, find one that minimizes the penalized residual sum of squares</p>
-<p><span class="math display">\[ RSS(f,\lambda)=\sum_{i=1}^N(y_i-f(x_i))^2+\lambda[f''(t)]^2dt\]</span></p>
-<p>where <span class="math inline">\(\lambda\)</span> is a fixed smoothing parameter. The first term measures closeness to the data, while the second term penalizes curvature in the function, and <span class="math inline">\(\lambda\)</span> establishes a tradeoff between the two. Special cases: <span class="math inline">\(\lambda=0\)</span> (no constraint on <span class="math inline">\(f\)</span>) and <span class="math inline">\(\lambda=\infty\)</span> (<span class="math inline">\(f\)</span> has to be linear). It can be shown that this problem has an explicit, finite-dimensional, unique minimizer which is a natural cubic spline with knots at the unique values of the <span class="math inline">\(x_i,i= 1, . . . , N.\)</span></p>
-<p>At face value it seems that the family is still over-parametrized, since there are as many as <span class="math inline">\(N\)</span> knots, which implies <span class="math inline">\(N\)</span> degrees of freedom. However, the penalty term translates to a penalty on the spline coefficients, which are shrunk some of the way toward the linear fit.</p>
-<p>The solution is of the form</p>
-<p><span class="math display">\[f(x)=\sum_{j=1}^N\theta_iN_j(x),\]</span><br></p>
-<p>where the <span class="math inline">\(N_j(x)\)</span> are an <span class="math inline">\(N\)</span>-dimensional set of basis functions for representing this family of natural splines.</p>
+<p><span id="eq-RSS"><span class="math display">\[
+  RSS(f,\lambda)=\sum_{i=1}^N(y_i-f(x_i))^2+\lambda[f''(t)]^2dt
+\tag{1}\]</span></span></p>
+<p>where <span class="math inline">\(\lambda\)</span> is a fixed smoothing parameter. The first term measures closeness to the data, while the second term penalizes curvature in the function, and <span class="math inline">\(\lambda\)</span> establishes a tradeoff between the two. Special cases: <span class="math inline">\(\lambda=0\)</span> (no constraint on <span class="math inline">\(f\)</span>) and <span class="math inline">\(\lambda=\infty\)</span> (<span class="math inline">\(f\)</span> has to be linear).</p>
+<p>The function <span class="math inline">\(f(x)\)</span> that minimizes (<a href="#eq-RSS">Equation&nbsp;1</a>) can be shown to have some special properties: it is a piecewise cubic polynomial with knots at the unique values of <span class="math inline">\(x_1,\dots,x_n\)</span> and continuous first and second derivatives at each knot. Furthermore, it is linear in the region outside of the extreme knots. In other words, the function <span class="math inline">\(f(x)\)</span> that minimizes (<a href="#eq-RSS">Equation&nbsp;1</a>) is a natural cubic spline with knots at <span class="math inline">\(x_1,\dots,x_n\)</span> ! However, it is not the same natural cubic spline that one would get if one applied the basis function approach described above – rather, it is a shrunken version of such a natural cubic spline, where the value of the tuning parameter <span class="math inline">\(\lambda\)</span> in (<a href="#eq-RSS">Equation&nbsp;1</a>) controls the level of shrinkage.</p>
 <div class="cell">
 <details><summary>Code</summary><div class="sourceCode" id="cb20"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">sspline</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/smooth.spline.html">smooth.spline</a></span><span class="op">(</span>x<span class="op">=</span><span class="va">triceps</span><span class="op">$</span><span class="va">age</span>, y<span class="op">=</span><span class="va">triceps</span><span class="op">$</span><span class="va">triceps</span>, cv<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output cell-output-stderr">
