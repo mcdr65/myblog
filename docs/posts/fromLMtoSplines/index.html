@@ -202,7 +202,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <li><a href="#natural-spline" id="toc-natural-spline" class="nav-link" data-scroll-target="#natural-spline">Natural Spline</a></li>
   </ul>
 </li>
-  <li><a href="#smoothing-splines" id="toc-smoothing-splines" class="nav-link" data-scroll-target="#smoothing-splines">Smoothing splines</a></li>
+  <li>
+<a href="#smoothing-splines" id="toc-smoothing-splines" class="nav-link" data-scroll-target="#smoothing-splines">Smoothing splines</a>
+  <ul class="collapse">
+<li><a href="#lambda-determined-with-cross-validation" id="toc-lambda-determined-with-cross-validation" class="nav-link" data-scroll-target="#lambda-determined-with-cross-validation"><span class="math inline">\(\lambda\)</span> determined with cross-validation</a></li>
+  <li><a href="#no-smooth-and-max-smooth" id="toc-no-smooth-and-max-smooth" class="nav-link" data-scroll-target="#no-smooth-and-max-smooth">No smooth and max smooth</a></li>
+  </ul>
+</li>
   <li><a href="#generalized-additive-model" id="toc-generalized-additive-model" class="nav-link" data-scroll-target="#generalized-additive-model">Generalized additive model</a></li>
   </ul></nav>
     </div>
@@ -474,6 +480,8 @@ Attaching package: 'psych'</code></pre>
 \tag{1}\]</span></span></p>
 <p>where <span class="math inline">\(\lambda\)</span> is a fixed smoothing parameter. The first term measures closeness to the data, while the second term penalizes curvature in the function, and <span class="math inline">\(\lambda\)</span> establishes a tradeoff between the two. Special cases: <span class="math inline">\(\lambda=0\)</span> (no constraint on <span class="math inline">\(f\)</span>) and <span class="math inline">\(\lambda=\infty\)</span> (<span class="math inline">\(f\)</span> has to be linear).</p>
 <p>The function <span class="math inline">\(f(x)\)</span> that minimizes (<a href="#eq-RSS">Equation&nbsp;1</a>) can be shown to have some special properties: it is a piecewise cubic polynomial with knots at the unique values of <span class="math inline">\(x_1,\dots,x_n\)</span> and continuous first and second derivatives at each knot. Furthermore, it is linear in the region outside of the extreme knots. In other words, the function <span class="math inline">\(f(x)\)</span> that minimizes (<a href="#eq-RSS">Equation&nbsp;1</a>) is a natural cubic spline with knots at <span class="math inline">\(x_1,\dots,x_n\)</span> ! However, it is not the same natural cubic spline that one would get if one applied the basis function approach described above – rather, it is a shrunken version of such a natural cubic spline, where the value of the tuning parameter <span class="math inline">\(\lambda\)</span> in (<a href="#eq-RSS">Equation&nbsp;1</a>) controls the level of shrinkage.</p>
+<section id="lambda-determined-with-cross-validation" class="level2"><h2 class="anchored" data-anchor-id="lambda-determined-with-cross-validation">
+<span class="math inline">\(\lambda\)</span> determined with cross-validation</h2>
 <div class="cell">
 <details><summary>Code</summary><div class="sourceCode" id="cb20"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">sspline</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/smooth.spline.html">smooth.spline</a></span><span class="op">(</span>x<span class="op">=</span><span class="va">triceps</span><span class="op">$</span><span class="va">age</span>, y<span class="op">=</span><span class="va">triceps</span><span class="op">$</span><span class="va">triceps</span>, cv<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output cell-output-stderr">
@@ -486,19 +494,30 @@ seems doubtful</code></pre>
 <p><img src="index_files/figure-html/unnamed-chunk-20-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
+</section><section id="no-smooth-and-max-smooth" class="level2"><h2 class="anchored" data-anchor-id="no-smooth-and-max-smooth">No smooth and max smooth</h2>
+<div class="cell">
+<details><summary>Code</summary><div class="sourceCode" id="cb23"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">ssplineNosmooth</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/smooth.spline.html">smooth.spline</a></span><span class="op">(</span>x<span class="op">=</span><span class="va">triceps</span><span class="op">$</span><span class="va">age</span>, y<span class="op">=</span><span class="va">triceps</span><span class="op">$</span><span class="va">triceps</span>, lambda<span class="op">=</span><span class="fl">0</span><span class="op">)</span></span>
+<span><span class="va">ssplineMaxsmooth</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/smooth.spline.html">smooth.spline</a></span><span class="op">(</span>x<span class="op">=</span><span class="va">triceps</span><span class="op">$</span><span class="va">age</span>, y<span class="op">=</span><span class="va">triceps</span><span class="op">$</span><span class="va">triceps</span>, lambda<span class="op">=</span><span class="fl">100</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">triceps</span><span class="op">$</span><span class="va">age</span>, <span class="va">triceps</span><span class="op">$</span><span class="va">triceps</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/lines.html">lines</a></span><span class="op">(</span><span class="va">ssplineNosmooth</span>, lwd<span class="op">=</span><span class="fl">2</span>,col<span class="op">=</span><span class="st">"red"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/lines.html">lines</a></span><span class="op">(</span><span class="va">ssplineMaxsmooth</span>, lwd<span class="op">=</span><span class="fl">2</span>,col<span class="op">=</span><span class="st">"blue"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output-display">
+<p><img src="index_files/figure-html/unnamed-chunk-22-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
 <div class="cell">
 
 </div>
-</section><section id="generalized-additive-model" class="level1"><h1>Generalized additive model</h1>
+</section></section><section id="generalized-additive-model" class="level1"><h1>Generalized additive model</h1>
 <div class="cell">
-<details><summary>Code</summary><div class="sourceCode" id="cb23"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">mgcv</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<details><summary>Code</summary><div class="sourceCode" id="cb24"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">mgcv</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output cell-output-stderr">
 <pre><code>Loading required package: nlme</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
 <pre><code>This is mgcv 1.8-35. For overview type 'help("mgcv-package")'.</code></pre>
 </div>
-<details><summary>Code</summary><div class="sourceCode" id="cb26"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">gamtri</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/pkg/mgcv/man/gam.html">gam</a></span><span class="op">(</span><span class="va">triceps</span><span class="op">~</span><span class="fu"><a href="https://rdrr.io/pkg/mgcv/man/s.html">s</a></span><span class="op">(</span><span class="va">age</span>,bs<span class="op">=</span><span class="st">"cr"</span><span class="op">)</span>,data<span class="op">=</span><span class="va">triceps</span><span class="op">)</span></span>
+<details><summary>Code</summary><div class="sourceCode" id="cb27"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">gamtri</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/pkg/mgcv/man/gam.html">gam</a></span><span class="op">(</span><span class="va">triceps</span><span class="op">~</span><span class="fu"><a href="https://rdrr.io/pkg/mgcv/man/s.html">s</a></span><span class="op">(</span><span class="va">age</span>,bs<span class="op">=</span><span class="st">"cr"</span><span class="op">)</span>,data<span class="op">=</span><span class="va">triceps</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">gamtri</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output cell-output-stdout">
 <pre><code>
@@ -519,7 +538,7 @@ s(age) 6.706  7.539 85.6  &lt;2e-16
 R-sq.(adj) =  0.419   Deviance explained = 42.3%
 GCV =  14.18  Scale est. = 14.057    n = 892</code></pre>
 </div>
-<details><summary>Code</summary><div class="sourceCode" id="cb28"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">gamtri</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<details><summary>Code</summary><div class="sourceCode" id="cb29"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">gamtri</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output-display">
 <p><img src="index_files/figure-html/GAM-1.png" class="img-fluid" width="672"></p>
 </div>

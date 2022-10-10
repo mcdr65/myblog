@@ -187,5 +187,19 @@
     "title": "Beyond linearity",
     "section": "Natural Spline",
     "text": "Natural Spline\nNatural splines have an additional restriction that the fitted curve linear at the extremes\n\nCodecub.splines.bs <- lm(triceps ~ bs(age, knots = c(5,10,20,30,40)), data=triceps)\ncub.splines.ns <- lm(triceps ~ ns(age, knots = c(5,10,20,30,40)), data=triceps)\n\n\n\nCodetri.age.plot <- ggplot(triceps, aes(x=age, y=triceps)) +\n                 geom_point(alpha=0.55, color=\"black\") + \n                 theme_minimal() \ntri.age.plot +\n    stat_smooth(method = \"lm\", \n               formula = y~bs(x,knots = c(5,10,20,30,40)), \n               lty = 1, col = \"green\") + \n    stat_smooth(method = \"lm\", \n               formula = y~ns(x,knots = c(5,10,20,30,40)), \n               lty = 1, col = \"red\")\n\n\npolynomial cubic splines (green), natural cubic splines (red)"
+  },
+  {
+    "objectID": "posts/fromLMtoSplines/index.html#lambda-determined-with-cross-validation",
+    "href": "posts/fromLMtoSplines/index.html#lambda-determined-with-cross-validation",
+    "title": "Beyond linearity",
+    "section": "\n\\(\\lambda\\) determined with cross-validation",
+    "text": "\\(\\lambda\\) determined with cross-validation\n\nCodesspline <- smooth.spline(x=triceps$age, y=triceps$triceps, cv=TRUE)\n\nWarning in smooth.spline(x = triceps$age, y = triceps$triceps, cv = TRUE): cross-validation with non-unique 'x' values\nseems doubtful\n\nCodeplot(triceps$age, triceps$triceps)\nlines(sspline, lwd=3,col=\"red\")"
+  },
+  {
+    "objectID": "posts/fromLMtoSplines/index.html#no-smooth-and-max-smooth",
+    "href": "posts/fromLMtoSplines/index.html#no-smooth-and-max-smooth",
+    "title": "Beyond linearity",
+    "section": "No smooth and max smooth",
+    "text": "No smooth and max smooth\n\nCodessplineNosmooth <- smooth.spline(x=triceps$age, y=triceps$triceps, lambda=0)\nssplineMaxsmooth <- smooth.spline(x=triceps$age, y=triceps$triceps, lambda=100)\nplot(triceps$age, triceps$triceps)\nlines(ssplineNosmooth, lwd=2,col=\"red\")\nlines(ssplineMaxsmooth, lwd=2,col=\"blue\")"
   }
 ]

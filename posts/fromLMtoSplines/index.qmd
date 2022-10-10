@@ -292,7 +292,7 @@ knot. Furthermore, it is linear in the region outside of the extreme knots.
 In other words, the function $f(x)$ that minimizes (@eq-RSS) is a natural cubic spline with knots at $x_1,\dots,x_n$ ! However, it is not the same natural cubic spline that one would get if one applied the basis function approach described above -- rather, it is a shrunken version of such a natural cubic spline, where the value of the tuning parameter $\lambda$ in (@eq-RSS) controls the level of shrinkage.
 
 
-
+## $\lambda$ determined with cross-validation
 
 ```{r}
 sspline <- smooth.spline(x=triceps$age, y=triceps$triceps, cv=TRUE)
@@ -300,6 +300,16 @@ plot(triceps$age, triceps$triceps)
 lines(sspline, lwd=3,col="red")
 ```
 
+## No smooth and max smooth
+
+```{r}
+ssplineNosmooth <- smooth.spline(x=triceps$age, y=triceps$triceps, lambda=0)
+ssplineMaxsmooth <- smooth.spline(x=triceps$age, y=triceps$triceps, lambda=100)
+plot(triceps$age, triceps$triceps)
+lines(ssplineNosmooth, lwd=2,col="red")
+lines(ssplineMaxsmooth, lwd=2,col="blue")
+
+```
 
 
 ```{r eval=FALSE,echo=FALSE}
