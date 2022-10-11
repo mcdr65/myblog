@@ -6,7 +6,8 @@ categories: [code, analysis]
 ---
 
 
-# Example Data
+
+## Example Data
 
 Triceps skinfold thickness dataset: The data are derived from an anthropometric study of 892 females under 50 years in three Gambian villages in West Africa.
 
@@ -29,8 +30,9 @@ tri.age.plot
 
 
 
-# Polynomial regression
+## Polynomial regression
 
+Using `poly()` in `lm()`:
 
 ```{r polynomial}
 model.cubic.poly <- lm(triceps~poly(age,3,raw=TRUE),data=triceps)
@@ -44,9 +46,10 @@ tri.age.plot +
 
 
 
-# Cross-validation of different polynomials
 
-## RMSE for quadratic
+## Cross-validation of different polynomials
+
+### RMSE for quadratic
 
 ```{r}
 library(caret)
@@ -61,7 +64,7 @@ pol.model <- train(triceps ~ poly(age,3),
 pol.model$results[2]
 ```
 
-## RMSE for different degrees
+### RMSE for different degrees
 
 
 ```{r}
@@ -82,7 +85,7 @@ tri.age.plot +
 ```
 
 
-# Piecewise linear regression
+## Piecewise linear regression
 
 Instead of fitting a high-degree polynomial over the entire range of $X$, piecewise polynomial regression involves fitting separate low-degree polynomials
 over different regions of $X$. For example, a piecewise cubic polynomial works
@@ -124,7 +127,7 @@ tri.age.plot +
             aes(y = pred6, x=age), size = 1, col="blue")
 ```
 
-## Continuous piecewise linear regression
+### Continuous piecewise linear regression
 
 We want a continuous function. Let us define a *truncated power basis function* (here of degree=1) per knot $\xi$,
 
@@ -180,9 +183,9 @@ tri.age.plot +
 
 
 
-# Splines
+## Splines
 
-## Quadratic spline
+### Quadratic spline
 
 With 
 
@@ -215,7 +218,7 @@ tri.age.plot +
 ```
 
 
-## Cubic Spline
+### Cubic Spline
 
 Most often, cubic splines are used. Adding the following truncated power basis function per knot,
 
@@ -236,9 +239,9 @@ $$Y_i=\beta_0+\beta_1x_i+\beta_2x_i^2+\beta_3x_i^3+\beta_4h(x_i,5)+\cdots+\beta_
 One can show that a cubic spline has $K+4$ parameters.
 
 
-## Natural Spline
+### Natural Spline
 
-Natural splines have an additional restriction that the fitted curve *linear at the extremes*
+Natural splines have an additional restriction that the fitted curve *linear at the extremes*, `splines::ns()`
 
 ```{r bs}
 cub.splines.bs <- lm(triceps ~ bs(age, knots = c(5,10,20,30,40)), data=triceps)
@@ -262,7 +265,7 @@ tri.age.plot +
 ```
 
 
-# Smoothing splines
+## Smoothing splines
 
 Avoids the knot selection problem completely by using a maximal set of
 knots. The complexity of the fit is controlled by regularization.
@@ -288,8 +291,10 @@ values of $x_1,\dots,x_n$ and continuous first and second derivatives at each
 knot. Furthermore, it is linear in the region outside of the extreme knots.
 In other words, the function $f(x)$ that minimizes (@eq-RSS) is a natural cubic spline with knots at $x_1,\dots,x_n$ ! However, it is not the same natural cubic spline that one would get if one applied the basis function approach described above -- rather, it is a shrunken version of such a natural cubic spline, where the value of the tuning parameter $\lambda$ in (@eq-RSS) controls the level of shrinkage.
 
+Smoothing splines are implemented in `smooth.spline()`.
 
-## $\lambda$ determined with cross-validation
+
+### $\lambda$ determined with cross-validation
 
 ```{r}
 sspline <- smooth.spline(x=triceps$age, y=triceps$triceps, cv=TRUE)
@@ -297,7 +302,7 @@ plot(triceps$age, triceps$triceps)
 lines(sspline, lwd=3,col="red")
 ```
 
-## The extremes: no smooth and max smooth
+### The extremes: no smooth and max smooth
 
 ```{r}
 ssplineNosmooth <- smooth.spline(x=triceps$age, y=triceps$triceps, lambda=0)
@@ -322,8 +327,9 @@ lines(ssplinedf, col="green")
 ```
 
 
-# Generalized additive model 
+## Generalized additive model 
 
+Using `mgcv::gam()`
 
 
 ```{r GAM}
