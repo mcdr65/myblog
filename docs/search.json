@@ -53,7 +53,7 @@
     "href": "about.html",
     "title": "About",
     "section": "",
-    "text": "👀 I’m interested in philosophy, physics, quantitative research methodology and biostatistics.\n🌱 I’m currently working as a statistics consultant at the Institute of Physiotherapy, Zurich University of Applied Sciences.\n❤️ I like 🏃.\n🏢 André Meichtry, Dozent Institut für Physiotherapie\nZürcher Hochschule für Angewandte Wissenschaften ZHAW\nTechnikumstr. 71, 8401 Winterthur\nTel: 058 934 64 86"
+    "text": "👀 I’m interested in philosophy, physics, quantitative research methodology and biostatistics.\n🌱 I’m currently working as a statistics consultant at the Institute of Physiotherapy, Zurich University of Applied Sciences.\n❤️ I like 🏃.\n\n🏢 André Meichtry, Dozent Institut für Physiotherapie\nZürcher Hochschule für Angewandte Wissenschaften ZHAW\nTechnikumstr. 71, 8401 Winterthur\nTel: 058 934 64 86"
   },
   {
     "objectID": "posts/fromLMtoSplines/index.html",
@@ -201,5 +201,12 @@
     "title": "Beyond linearity",
     "section": "No smooth and max smooth",
     "text": "No smooth and max smooth\n\nCodessplineNosmooth <- smooth.spline(x=triceps$age, y=triceps$triceps, lambda=0)\nssplineMaxsmooth <- smooth.spline(x=triceps$age, y=triceps$triceps, lambda=100)\nplot(triceps$age, triceps$triceps)\nlines(ssplineNosmooth, lwd=2,col=\"red\")\nlines(ssplineMaxsmooth, lwd=2,col=\"blue\")"
+  },
+  {
+    "objectID": "posts/fromLMtoSplines/index.html#the-extremes-no-smooth-and-max-smooth",
+    "href": "posts/fromLMtoSplines/index.html#the-extremes-no-smooth-and-max-smooth",
+    "title": "Beyond linearity",
+    "section": "The extremes: no smooth and max smooth",
+    "text": "The extremes: no smooth and max smooth\n\nCodessplineNosmooth <- smooth.spline(x=triceps$age, y=triceps$triceps, lambda=0)\nssplineMaxsmooth <- smooth.spline(x=triceps$age, y=triceps$triceps, lambda=100)\nplot(triceps$age, triceps$triceps)\nlines(ssplineNosmooth, lwd=2,col=\"red\")\nlines(ssplineMaxsmooth, lwd=2,col=\"blue\")"
   }
 ]

@@ -3,12 +3,10 @@ title: "Beyond linearity"
 date: "2022-10-06"
 description: "From linear model to GAM"
 categories: [code, analysis]
-fig-cap-location: top
 ---
 
 
-
-# Data
+# Example Data
 
 Triceps skinfold thickness dataset: The data are derived from an anthropometric study of 892 females under 50 years in three Gambian villages in West Africa.
 
@@ -28,7 +26,6 @@ tri.age.plot <- ggplot(triceps, aes(x=age, y=triceps)) +
 tri.age.plot
 
 ```
-
 
 
 
@@ -300,7 +297,7 @@ plot(triceps$age, triceps$triceps)
 lines(sspline, lwd=3,col="red")
 ```
 
-## No smooth and max smooth
+## The extremes: no smooth and max smooth
 
 ```{r}
 ssplineNosmooth <- smooth.spline(x=triceps$age, y=triceps$triceps, lambda=0)
@@ -327,9 +324,14 @@ lines(ssplinedf, col="green")
 
 # Generalized additive model 
 
+
+
 ```{r GAM}
 library(mgcv)
 gamtri<-gam(triceps~s(age,bs="cr"),data=triceps)
 summary(gamtri)
 plot(gamtri)
 ```
+
+
+

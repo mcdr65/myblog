@@ -7,7 +7,7 @@
 <meta name="author" content="André Meichtry">
 <meta name="dcterms.date" content="2022-10-06">
 <meta name="description" content="From linear model to GAM">
-<title>Physio-Stat-Blog - Beyond linearity</title>
+<title>Stat-things - Beyond linearity</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -128,7 +128,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <header id="quarto-header" class="headroom fixed-top"><nav class="navbar navbar-expand-lg navbar-dark "><div class="navbar-container container-fluid">
       <div class="navbar-brand-container">
     <a class="navbar-brand" href="../../index.html">
-    <span class="navbar-title">Physio-Stat-Blog</span>
+    <span class="navbar-title">Stat-things</span>
     </a>
   </div>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
@@ -179,7 +179,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
         <nav id="TOC" role="doc-toc" class="toc-active"><h2 id="toc-title">On this page</h2>
    
   <ul>
-<li><a href="#data" id="toc-data" class="nav-link active" data-scroll-target="#data">Data</a></li>
+<li><a href="#example-data" id="toc-example-data" class="nav-link active" data-scroll-target="#example-data">Example Data</a></li>
   <li><a href="#polynomial-regression" id="toc-polynomial-regression" class="nav-link" data-scroll-target="#polynomial-regression">Polynomial regression</a></li>
   <li>
 <a href="#cross-validation-of-different-polynomials" id="toc-cross-validation-of-different-polynomials" class="nav-link" data-scroll-target="#cross-validation-of-different-polynomials">Cross-validation of different polynomials</a>
@@ -206,7 +206,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <a href="#smoothing-splines" id="toc-smoothing-splines" class="nav-link" data-scroll-target="#smoothing-splines">Smoothing splines</a>
   <ul class="collapse">
 <li><a href="#lambda-determined-with-cross-validation" id="toc-lambda-determined-with-cross-validation" class="nav-link" data-scroll-target="#lambda-determined-with-cross-validation"><span class="math inline">\(\lambda\)</span> determined with cross-validation</a></li>
-  <li><a href="#no-smooth-and-max-smooth" id="toc-no-smooth-and-max-smooth" class="nav-link" data-scroll-target="#no-smooth-and-max-smooth">No smooth and max smooth</a></li>
+  <li><a href="#the-extremes-no-smooth-and-max-smooth" id="toc-the-extremes-no-smooth-and-max-smooth" class="nav-link" data-scroll-target="#the-extremes-no-smooth-and-max-smooth">The extremes: no smooth and max smooth</a></li>
   </ul>
 </li>
   <li><a href="#generalized-additive-model" id="toc-generalized-additive-model" class="nav-link" data-scroll-target="#generalized-additive-model">Generalized additive model</a></li>
@@ -247,7 +247,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   </div>
   
 
-</header><section id="data" class="level1"><h1>Data</h1>
+</header><section id="example-data" class="level1"><h1>Example Data</h1>
 <p>Triceps skinfold thickness dataset: The data are derived from an anthropometric study of 892 females under 50 years in three Gambian villages in West Africa.</p>
 <div class="cell">
 <details><summary>Code</summary><div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">MultiKink</span><span class="op">)</span></span>
@@ -494,7 +494,7 @@ seems doubtful</code></pre>
 <p><img src="index_files/figure-html/unnamed-chunk-20-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
-</section><section id="no-smooth-and-max-smooth" class="level2"><h2 class="anchored" data-anchor-id="no-smooth-and-max-smooth">No smooth and max smooth</h2>
+</section><section id="the-extremes-no-smooth-and-max-smooth" class="level2"><h2 class="anchored" data-anchor-id="the-extremes-no-smooth-and-max-smooth">The extremes: no smooth and max smooth</h2>
 <div class="cell">
 <details><summary>Code</summary><div class="sourceCode" id="cb23"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">ssplineNosmooth</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/smooth.spline.html">smooth.spline</a></span><span class="op">(</span>x<span class="op">=</span><span class="va">triceps</span><span class="op">$</span><span class="va">age</span>, y<span class="op">=</span><span class="va">triceps</span><span class="op">$</span><span class="va">triceps</span>, lambda<span class="op">=</span><span class="fl">0</span><span class="op">)</span></span>
 <span><span class="va">ssplineMaxsmooth</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/smooth.spline.html">smooth.spline</a></span><span class="op">(</span>x<span class="op">=</span><span class="va">triceps</span><span class="op">$</span><span class="va">age</span>, y<span class="op">=</span><span class="va">triceps</span><span class="op">$</span><span class="va">triceps</span>, lambda<span class="op">=</span><span class="fl">100</span><span class="op">)</span></span>
