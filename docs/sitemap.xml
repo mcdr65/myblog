@@ -2,7 +2,7 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://mcdr65.github.io/myblog/index.html</loc>
-    <lastmod>2022-10-11T13:55:09.818Z</lastmod>
+    <lastmod>2022-10-24T11:50:42.802Z</lastmod>
   </url>
   <url>
     <loc>https://mcdr65.github.io/myblog/posts/welcome/index.html</loc>
@@ -10,18 +10,22 @@
   </url>
   <url>
     <loc>https://mcdr65.github.io/myblog/posts/exponentialGrowth/index.html</loc>
-    <lastmod>2022-10-11T13:55:23.294Z</lastmod>
+    <lastmod>2022-10-24T11:36:59.054Z</lastmod>
   </url>
   <url>
     <loc>https://mcdr65.github.io/myblog/archive.html</loc>
-    <lastmod>2022-10-11T13:53:57.643Z</lastmod>
+    <lastmod>2022-10-24T11:50:43.198Z</lastmod>
   </url>
   <url>
     <loc>https://mcdr65.github.io/myblog/about.html</loc>
-    <lastmod>2022-10-11T08:53:45.732Z</lastmod>
+    <lastmod>2022-10-11T14:18:11.813Z</lastmod>
   </url>
   <url>
     <loc>https://mcdr65.github.io/myblog/posts/fromLMtoSplines/index.html</loc>
-    <lastmod>2022-10-11T13:54:13.459Z</lastmod>
+    <lastmod>2022-10-20T07:12:32.345Z</lastmod>
+  </url>
+  <url>
+    <loc>https://mcdr65.github.io/myblog/posts/gendern/index.html</loc>
+    <lastmod>2022-10-24T11:50:43.938Z</lastmod>
   </url>
 </urlset>

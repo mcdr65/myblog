@@ -163,7 +163,18 @@ tri.age.plot +
 
 ```
 
-
+```{r mars, include=FALSE}
+library(earth)
+fit<-earth(triceps~age,triceps)
+summary(fit)
+pred.mars<-predict(fit)
+tri.age.plot +
+  geom_line(data=triceps, 
+            aes(y = pred.lm.bs, x=age), size = 1, col="blue")+
+  geom_line(data=triceps, 
+            aes(y = pred7+.2, x=age), size = 1, col="red")+
+  geom_line(data=triceps,aes(y=pred.mars,x=age), size = 1, col="yellow") 
+```
 
 <!-- ## Piecewise quadratic polynomial -->
 
