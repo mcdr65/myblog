@@ -7,7 +7,7 @@ categories: [meinung]
 
 
 
-Aus dem Buch von **Fabian Payr**
+Aus dem Buch von **Fabian Payr**:
 
 > __Von Menschen und Mensch\*innen__. 20 gute Gründe, mit dem Gendern aufzuhören
 
@@ -27,4 +27,6 @@ muss, was es heute noch für ein gleichberechtigtes Miteinander der Geschlechter
 
 
 > Alle Formen des Genderns sind unbrauchbar.
-> Sie sind in sich widersprüchlich, sie sind nicht konsequent durchführbar, sie stossen an die Grenzen von Logik, Praktikabilität und Akzeptanz. Sie sind unästhetisch, unökonomisch und irreführend (**Tomas Kubelik**, [Vortrag](https://youtu.be/Ri-kVYDTEAk))
+> Sie sind in sich widersprüchlich, sie sind nicht konsequent durchführbar, sie stossen an die Grenzen von Logik, Praktikabilität und Akzeptanz. Sie sind unästhetisch, unökonomisch und irreführend. (**Tomas Kubelik**, [Vortrag](https://youtu.be/Ri-kVYDTEAk))
+
+
