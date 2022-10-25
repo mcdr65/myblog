@@ -6,9 +6,11 @@ categories: [meinung]
 ---
 
 
-In einer Zeit, in denen -- an vom Steuerzahler finanzierten Hochschulen -- Sprachleitfaden verteilt werden, scheint es doch wichtig, Gegendruck auch aus der Mitte -- also nicht nur von der extremen Rechten -- aufzubauen. Es ist nicht die Aufgabe staatlicher Institutionen, an der Verbreitung von Ideologien mitzuwirken und Vorgaben zu machen, was *gute* Sprache ist. *Sprachpolitik* zu betreiben ist etwas vom Schlimmsten, was eine Hochschule machen kann. 
+
+In einer Zeit, in denen -- an vom Steuerzahler finanzierten Hochschulen[^1] -- Sprachleitfaden verteilt werden, scheint es doch wichtig, Gegendruck auch aus der Mitte -- also nicht nur von der extremen Rechten -- aufzubauen. Es ist nicht die Aufgabe staatlicher Institutionen, an der Verbreitung von Ideologien mitzuwirken und Vorgaben zu machen, was *gute* Sprache ist. *Sprachpolitik* zu betreiben ist etwas vom Schlimmsten, was eine Hochschule machen kann. 
 
 Falls jemand Argumente braucht: Ein einfach und klar geschriebenes Buch ist: **Fabian Payr**: __Von Menschen und Mensch\*innen. 20 gute Gründe, mit dem Gendern aufzuhören__. Ein Zitat daraus, das aus meiner Sicht diese Problematik gut zusammenfasst:
+
 
 
 > Vielleicht endet die Geschichte des geschlechtergerechten Sprachumbaus mit all seinen grotesken Auswüchsen eines Tages wie Andersens
@@ -27,3 +29,6 @@ Hier ein unterhaltsamer, humorvoller und gut aufgebauter Vortrag von **Tomas Kub
 
 > Alle Formen des Genderns sind unbrauchbar.
 > Sie sind in sich widersprüchlich, sie sind nicht konsequent durchführbar, sie stossen an die Grenzen von Logik, Praktikabilität und Akzeptanz. Sie sind unästhetisch, unökonomisch und irreführend. (**Tomas Kubelik**, [Vortrag](https://youtu.be/Ri-kVYDTEAk) und [Text](https://www.fazitmagazin.at/2014/04/das-missverstaendnis-vom-grammatikalischen-geschlecht/))
+
+[^1]: z.B. ZHAW
+
