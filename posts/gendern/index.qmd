@@ -3,6 +3,7 @@ title: "Aber der Kaiser hat ja gar nichts an!"
 date: "2022-10-25"
 description: "Gegen Identitätspolitik"
 categories: [meinung]
+draft: true
 ---
 
 

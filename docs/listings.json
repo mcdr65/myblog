@@ -2,7 +2,6 @@
   {
     "listing": "/index.html",
     "items": [
-      "/posts/gendern/index.html",
       "/posts/fromLMtoSplines/index.html",
       "/posts/exponentialGrowth/index.html",
       "/posts/welcome/index.html"
@@ -11,7 +10,6 @@
   {
     "listing": "/archive.html",
     "items": [
-      "/posts/gendern/index.html",
       "/posts/fromLMtoSplines/index.html",
       "/posts/exponentialGrowth/index.html",
       "/posts/welcome/index.html"
