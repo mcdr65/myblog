@@ -4,7 +4,7 @@
     "href": "index.html",
     "title": "Posts",
     "section": "",
-    "text": "Order By\n       Default\n         \n          Title\n        \n         \n          Date - Oldest\n        \n         \n          Date - Newest\n        \n     \n  \n    \n      \n      \n    \n\n\n\n\n\n\nBeyond linearity\n\n\n\n\n\n\n\ncode\n\n\nanalysis\n\n\n\n\nFrom linear model to GAM\n\n\n\n\n\n\nOct 6, 2022\n\n\n\n\n\n\n\n\nExponential Growth\n\n\n\n\n\n\n\nnews\n\n\ncode\n\n\nanalysis\n\n\n\n\nexp and log\n\n\n\n\n\n\nSep 29, 2022\n\n\n\n\n\n\n\n\nWelcome To My Blog\n\n\n\n\n\n\n\nnews\n\n\n\n\n\n\n\n\n\n\n\nSep 26, 2022\n\n\n\n\n\n\nNo matching items"
+    "text": "Order By\n       Default\n         \n          Title\n        \n         \n          Date - Oldest\n        \n         \n          Date - Newest\n        \n     \n  \n    \n      \n      \n    \n\n\n\n\n\n\nCompositions\n\n\n\n\n\n\n\ncode\n\n\nanalysis\n\n\n\n\nSymplex as sample space\n\n\n\n\n\n\nNov 3, 2022\n\n\n\n\n\n\n\n\nBeyond linearity\n\n\n\n\n\n\n\ncode\n\n\nanalysis\n\n\n\n\nFrom linear model to GAM\n\n\n\n\n\n\nOct 6, 2022\n\n\n\n\n\n\n\n\nExponential Growth\n\n\n\n\n\n\n\nnews\n\n\ncode\n\n\nanalysis\n\n\n\n\nexp and log\n\n\n\n\n\n\nSep 29, 2022\n\n\n\n\n\n\n\n\nWelcome To My Blog\n\n\n\n\n\n\n\nnews\n\n\n\n\n\n\n\n\n\n\n\nSep 26, 2022\n\n\n\n\n\n\nNo matching items"
   },
   {
     "objectID": "posts/welcome/index.html",
@@ -46,7 +46,7 @@
     "href": "archive.html",
     "title": "Archive",
     "section": "",
-    "text": "Oct 6, 2022\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nSep 29, 2022\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nSep 26, 2022\n\n\n\n\n\n\nNo matching items"
+    "text": "Nov 3, 2022\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nOct 6, 2022\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nSep 29, 2022\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nSep 26, 2022\n\n\n\n\n\n\nNo matching items"
   },
   {
     "objectID": "about.html",
@@ -250,5 +250,12 @@
     "title": "Beyond linearity",
     "section": "Generalized additive model",
     "text": "Generalized additive model\nUsing mgcv::gam()\n\nCodelibrary(mgcv)\n\nLoading required package: nlme\n\n\nThis is mgcv 1.8-35. For overview type 'help(\"mgcv-package\")'.\n\nCodegamtri<-gam(triceps~s(age,bs=\"cr\"),data=triceps)\nsummary(gamtri)\n\n\nFamily: gaussian \nLink function: identity \n\nFormula:\ntriceps ~ s(age, bs = \"cr\")\n\nParametric coefficients:\n            Estimate Std. Error t value Pr(>|t|)\n(Intercept)   9.7024     0.1255   77.29   <2e-16\n\nApproximate significance of smooth terms:\n         edf Ref.df    F p-value\ns(age) 6.706  7.539 85.6  <2e-16\n\nR-sq.(adj) =  0.419   Deviance explained = 42.3%\nGCV =  14.18  Scale est. = 14.057    n = 892\n\nCodeplot(gamtri)"
+  },
+  {
+    "objectID": "posts/logratioGeometry/index.html",
+    "href": "posts/logratioGeometry/index.html",
+    "title": "Compositions",
+    "section": "",
+    "text": "Codeplot3D(datAitch,col=as.numeric(Rater),cex=5)\n\nWarning in par3d(userMatrix = structure(c(1, 0, 0, 0, 0, 0.342020143325668, : font family \"sans\" not found, using\n\"bitmap\""
   }
 ]

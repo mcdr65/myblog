@@ -1,0 +1,52 @@
+---
+title: "Compositions"
+date: "2022-11-03"
+description: "Symplex as sample space"
+categories: [code, analysis]
+---
+
+
+```{r, echo=FALSE,results="hide",message=FALSE}
+library(compositions)
+library(DirichletReg)
+library(psych)
+library(irr)
+library(rgl)
+knitr::knit_hooks$set(webgl = hook_webgl)
+d.ern<-read.csv("ern.csv",stringsAsFactors=TRUE)
+d.ern[]<-lapply(d.ern,gsub,pattern="%",replacement="")
+d.ern[]<-lapply(d.ern,as.numeric)
+str(d.ern)
+d.ern
+d.ern$ID<-as.factor(d.ern$ID)
+data.frame(names(d.ern))
+A<-acomp(d.ern[,c(2,6,10,14)])
+B<-acomp(d.ern[,c(3,7,11,15)])
+C<-acomp(d.ern[,c(4,8,12,16)])
+D<-acomp(d.ern[,c(5,9,13,17)])
+
+HA<-as.matrix(d.ern[,c(2,6,10,14)])%*%c(0,1,2,3)
+HB<-as.matrix(d.ern[,c(3,7,11,15)])%*%c(0,1,2,3)
+HC<-as.matrix(d.ern[,c(4,8,12,16)])%*%c(0,1,2,3)
+HD<-as.matrix(d.ern[,c(5,9,13,17)])%*%c(0,1,2,3)
+
+apply(A,1,sum) 
+apply(B,1,sum)
+apply(C,1,sum) 
+apply(D,1,sum)
+datAitch<-acomp(data.frame(rbind(A,B,C,D)))
+datAitch
+Rater<-as.factor(rep(c("A","B","C","D"),each=20))
+ID<-as.factor(rep(1:20,4))
+peri<-d.ern[,2:5]
+zent<-d.ern[,6:9]
+kort<-d.ern[,10:13]
+veg<-d.ern[,14:17]
+```
+
+
+
+```{r, test-rgl,webgl=TRUE}
+
+plot3D(datAitch,col=as.numeric(Rater),cex=5)
+```

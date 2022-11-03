@@ -2,7 +2,7 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://mcdr65.github.io/myblog/index.html</loc>
-    <lastmod>2022-10-28T11:37:03.312Z</lastmod>
+    <lastmod>2022-11-03T15:00:56.544Z</lastmod>
   </url>
   <url>
     <loc>https://mcdr65.github.io/myblog/posts/welcome/index.html</loc>
@@ -14,14 +14,18 @@
   </url>
   <url>
     <loc>https://mcdr65.github.io/myblog/archive.html</loc>
-    <lastmod>2022-10-28T11:36:58.744Z</lastmod>
+    <lastmod>2022-11-03T15:00:56.880Z</lastmod>
   </url>
   <url>
     <loc>https://mcdr65.github.io/myblog/about.html</loc>
-    <lastmod>2022-10-27T11:34:45.286Z</lastmod>
+    <lastmod>2022-10-31T09:08:46.633Z</lastmod>
   </url>
   <url>
     <loc>https://mcdr65.github.io/myblog/posts/fromLMtoSplines/index.html</loc>
-    <lastmod>2022-10-27T11:32:58.620Z</lastmod>
+    <lastmod>2022-10-31T09:09:01.949Z</lastmod>
+  </url>
+  <url>
+    <loc>https://mcdr65.github.io/myblog/posts/logratioGeometry/index.html</loc>
+    <lastmod>2022-11-03T15:00:58.492Z</lastmod>
   </url>
 </urlset>
