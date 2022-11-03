@@ -6,7 +6,7 @@ categories: [code, analysis]
 ---
 
 
-```{r, echo=FALSE,results="hide",message=FALSE}
+```{r include=FALSE,warning=FALSE}
 library(compositions)
 library(DirichletReg)
 library(psych)
@@ -46,7 +46,6 @@ veg<-d.ern[,14:17]
 
 
 
-```{r, test-rgl,webgl=TRUE}
-
-plot3D(datAitch,col=as.numeric(Rater),cex=5)
+```{r  test-rgl,webgl=TRUE,warning=FALSE}
+plot3D(datAitch,col=as.numeric(Rater),size=5,axes=TRUE)
 ```

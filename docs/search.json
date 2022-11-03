@@ -256,6 +256,6 @@
     "href": "posts/logratioGeometry/index.html",
     "title": "Compositions",
     "section": "",
-    "text": "Codeplot3D(datAitch,col=as.numeric(Rater),cex=5)\n\nWarning in par3d(userMatrix = structure(c(1, 0, 0, 0, 0, 0.342020143325668, : font family \"sans\" not found, using\n\"bitmap\""
+    "text": "Codeplot3D(datAitch,col=as.numeric(Rater),size=5,axes=TRUE)"
   }
 ]
