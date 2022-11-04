@@ -5,6 +5,9 @@ description: "Simplex as sample space: Tetrahedron for 4-part compositions"
 categories: [code, analysis]
 ---
 
+
+###### Sample Space of compositional data ######
+
 The sample space of compositional data with $D$ parts is a simplex: 
 
 $\mathcal{S}^D=\{\mathbf{x}=[x_1,x_2,\dots,x_D]\in \mathbb{R}^D \mid
@@ -21,6 +24,9 @@ Normalization to the standard simplex is called closure and is
 $\mathcal{C}[x_1,x_2,\dots,x_D]=\left[\frac{x_1}{\sum_{i=1}^D x_i},\frac{x_2}{\sum_{i=1}^D x_i}, \dots,\frac{x_D}{\sum_{i=1}^D x_i}\right]$
 
 
+###### Example ######
+
+4 Raters rated a 4-part-composition on $n=20$ subjects. See the interactive *Tetrahedron*
 
 ```{r include=FALSE,warning=FALSE}
 library(compositions)

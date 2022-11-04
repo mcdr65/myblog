@@ -256,6 +256,6 @@
     "href": "posts/logratioGeometry/index.html",
     "title": "Compositions",
     "section": "",
-    "text": "\\(\\mathcal{S}^D=\\{\\mathbf{x}=[x_1,x_2,\\dots,x_D]\\in \\mathbb{R}^D \\mid x_i>0, i=1,2,\\dots,D; \\sum_{i=1}^Dx_i=\\mathcal{k}\\}\\)\nThe only information is given by the ratios between components, so the information of a composition is preserved under multiplication by any positive constant. Therefore, the sample space of compositional data can always be assumed to be a standard simplex, i.e. \\(\\mathcal{k} = 1\\).\nNormalization to the standard simplex is called closure and is\n\\(\\mathcal{C}[x_1,x_2,\\dots,x_D]=\\left[\\frac{x_1}{\\sum_{i=1}^D x_i},\\frac{x_2}{\\sum_{i=1}^D x_i}, \\dots,\\frac{x_D}{\\sum_{i=1}^D x_i}\\right]\\)\n\nCodeplot3D(datAitch,col=as.numeric(Rater),size=5,axes=TRUE)"
+    "text": "Example\n4 Raters rated a 4-part-composition on \\(n=20\\) subjects. See the interactive Tetrahedron\n\nCodeplot3D(datAitch,col=as.numeric(Rater),size=5,axes=TRUE)"
   }
 ]
