@@ -5,8 +5,20 @@ description: "Simplex as sample space: Tetrahedron for 4-part compositions"
 categories: [code, analysis]
 ---
 
-$\mathcal{S}^4=\{\mathbf{x}=[x_1,x_2,x_3,x_4]\in \mathbb{R}^4 \mid
-x_i>0, i=1,2,3,4; \sum_{i=1}^4x_i=\mathcal{k}\}$
+The sample space of compositional data with $D$ parts is a simplex: 
+
+$\mathcal{S}^D=\{\mathbf{x}=[x_1,x_2,\dots,x_D]\in \mathbb{R}^D \mid
+x_i>0, i=1,2,\dots,D; \sum_{i=1}^Dx_i=\mathcal{k}\}$
+
+The only information is given by the *ratios between components*, so
+the information of a composition is preserved under multiplication by
+any positive constant. Therefore, the sample space of compositional
+data can always be assumed to be a standard simplex, i.e. $\mathcal{k}
+= 1$.
+
+Normalization to the standard simplex is called closure and is
+
+$\mathcal{C}[x_1,x_2,\dots,x_D]=\left[\frac{x_1}{\sum_{i=1}^D x_i},\frac{x_2}{\sum_{i=1}^D x_i}, \dots,\frac{x_D}{\sum_{i=1}^D x_i}\right]$
 
 
 
