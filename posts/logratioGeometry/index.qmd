@@ -5,6 +5,10 @@ description: "Simplex as sample space: Tetrahedron for 4-part compositions"
 categories: [code, analysis]
 ---
 
+$\mathcal{S}^4=\{\mathbf{x}=[x_1,x_2,x_3,x_4]\in \mathbb{R}^4 \mid
+x_i>0, i=1,2,3,4; \sum_{i=1}^4x_i=\mathcal{k}\}$
+
+
 
 ```{r include=FALSE,warning=FALSE}
 library(compositions)
