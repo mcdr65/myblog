@@ -8,7 +8,7 @@ categories: [code, analysis]
 
 ###### Sample Space of compositional data ######
 
-The sample space of compositional data with $D$ parts is a simplex: 
+The sample space of compositional data with $D$ parts is a simplex $\mathcal{S}^D$ of dimension $D-1$: 
 
 $\mathcal{S}^D=\{\mathbf{x}=[x_1,x_2,\dots,x_D]\in \mathbb{R}^D \mid
 x_i>0, i=1,2,\dots,D; \sum_{i=1}^Dx_i=\mathcal{k}\}$

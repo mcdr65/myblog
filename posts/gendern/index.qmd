@@ -3,7 +3,7 @@ title: "Aber der Kaiser hat ja gar nichts an!"
 date: "2022-10-25"
 description: "Gegen Identitätspolitik"
 categories: [meinung]
-draft: true
+draft: false
 ---
 
 
@@ -44,7 +44,7 @@ Letztendlich ist es bei vielen die Angst, als frauenfeindlich dazustehen, die es
 > nicht auf der Höhe der Zeit zu sein, die viele mitlaufen lässt. Dabei ist die geschlechtergerechte Sprache noch nicht einmal ein „neues Kleid“, sondern ein über 40 Jahre altes Konzept, bei dem die Frage erlaubt sein
 > muss, was es heute noch für ein gleichberechtigtes Miteinander der Geschlechter zu leisten vermag.
 
-Hier ein unterhaltsamer, humorvoller und gut aufgebauter Vortrag von **Tomas Kubelik**. Sein sehr nachvollziehbares Fazit:
+Hier ein unterhaltsamer, humorvoller und gut aufgebauter Vortrag von **Tomas Kubelik**. Sein aus meiner Sicht nachvollziehbares Fazit:
 
 > Alle Formen des Genderns sind unbrauchbar.
 > Sie sind in sich widersprüchlich, sie sind nicht konsequent durchführbar, sie stossen an die Grenzen von Logik, Praktikabilität und Akzeptanz. Sie sind unästhetisch, unökonomisch und irreführend. (**Tomas Kubelik**, [Vortrag](https://youtu.be/Ri-kVYDTEAk) und [Text](https://www.fazitmagazin.at/2014/04/das-missverstaendnis-vom-grammatikalischen-geschlecht/))
