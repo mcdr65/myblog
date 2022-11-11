@@ -5,8 +5,7 @@ description: "Simplex as sample space: Tetrahedron for 4-part compositions"
 categories: [code, analysis]
 ---
 
-
-###### Sample Space of compositional data ######
+###### Sample space of compositional data ######
 
 The sample space of compositional data with $D$ parts is a simplex $\mathcal{S}^D$ of dimension $D-1$: 
 
@@ -34,8 +33,10 @@ library(DirichletReg)
 library(psych)
 library(irr)
 library(rgl)
+
 knitr::knit_hooks$set(webgl = hook_webgl)
 d.ern<-read.csv("ern.csv",stringsAsFactors=TRUE)
+
 d.ern[]<-lapply(d.ern,gsub,pattern="%",replacement="")
 d.ern[]<-lapply(d.ern,as.numeric)
 str(d.ern)
@@ -67,7 +68,6 @@ veg<-d.ern[,14:17]
 ```
 
 
-
-```{r  test-rgl,webgl=TRUE,warning=FALSE}
-plot3D(datAitch,col=as.numeric(Rater),size=5,axes=TRUE)
+```{r rgl1,webgl=TRUE,warning=FALSE}
+plot3D(datAitch,col=as.numeric(Rater),size=5,axes=TRUE,coors=TRUE)
 ```
