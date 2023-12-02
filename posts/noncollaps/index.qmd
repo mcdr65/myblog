@@ -3,6 +3,10 @@ title: "Noncollapsibility of the odds ratio"
 date: "2023-12-02"
 description: "IPW-analysis"
 categories: [code, analysis]
+
+bibliography: 
+  - "/home/meichtry/Templates/Rcite.bib"
+  - grateful-refs.bib
 ---
 
 
@@ -301,6 +305,7 @@ sum(sw)^2/sum(sw^2)
 Nnew/(1+var(w))
 Nnew/(1+var(sw))
 ```
+
 
 
 # Bibliography {-}

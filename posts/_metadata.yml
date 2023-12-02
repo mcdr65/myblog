@@ -29,9 +29,7 @@ format:
       source: true
       toggle: false
 
-bibliography: 
-  - "/home/meichtry/Templates/Rcite.bib"
-  - grateful-refs.bib
+
 
 page-layout: article
 fig-cap-location: top
