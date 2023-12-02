@@ -18,6 +18,7 @@ library(psych)
 ```
 
 
+
 ```{r}
 data("triceps")
 headTail(triceps)

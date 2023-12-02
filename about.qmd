@@ -10,18 +10,26 @@ about:
 ---
 
 
- 👋 Hi, I’m @mcdr65
+ 👋 Hi, I’m André Meichtry
  
  👀 I’m interested in philosophy, physics, quantitative research methodology and biostatistics.
  
- <!-- 🌱 I’m currently working as a statistics consultant at the Institute of Physiotherapy, Zurich University of Applied Sciences. -->
+ 🌱 I’m currently working as a statistics consultant at the School of Health Professions, Bern University of Applied Sciences.
+ 
  
 ❤️ I like 🏃.
 
 *******************************
 
-🏢 André Meichtry\
-Bernstrasse 71\
-3175 Flamatt
+🏢 
+Berner Fachhochschule / Bern University of Applied Sciences\
+Departement Gesundheit / Department of Health Professions\
+André Meichtry\
+Murtenstrasse 10\
+(Büro: Finkenhubelweg 11, Raum/Office F108)\
+3008 Bern\
+Switzerland\
++41 31 848 60 18\
 
-
+[andre.meichtry@bfh.ch](mailto:andre.meichtry@bfh.ch)\
+[bfh.ch/gesundheit](bfh.ch/gesundheit)

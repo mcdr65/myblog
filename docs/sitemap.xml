@@ -2,7 +2,7 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://mcdr65.github.io/myblog/index.html</loc>
-    <lastmod>2023-01-16T15:54:22.535Z</lastmod>
+    <lastmod>2023-12-02T15:24:46.350Z</lastmod>
   </url>
   <url>
     <loc>https://mcdr65.github.io/myblog/posts/welcome/index.html</loc>
@@ -10,26 +10,42 @@
   </url>
   <url>
     <loc>https://mcdr65.github.io/myblog/posts/exponentialGrowth/index.html</loc>
-    <lastmod>2022-10-25T12:14:34.530Z</lastmod>
+    <lastmod>2023-01-17T07:25:37.453Z</lastmod>
   </url>
   <url>
     <loc>https://mcdr65.github.io/myblog/archive.html</loc>
-    <lastmod>2023-01-16T15:54:22.755Z</lastmod>
+    <lastmod>2023-12-02T15:20:52.591Z</lastmod>
   </url>
   <url>
     <loc>https://mcdr65.github.io/myblog/about.html</loc>
-    <lastmod>2022-11-11T13:58:38.408Z</lastmod>
+    <lastmod>2023-01-17T14:01:31.782Z</lastmod>
   </url>
   <url>
     <loc>https://mcdr65.github.io/myblog/posts/fromLMtoSplines/index.html</loc>
-    <lastmod>2022-10-31T09:09:01.949Z</lastmod>
+    <lastmod>2023-12-02T15:22:07.776Z</lastmod>
   </url>
   <url>
     <loc>https://mcdr65.github.io/myblog/posts/logratioGeometry/index.html</loc>
-    <lastmod>2022-11-04T15:56:30.556Z</lastmod>
+    <lastmod>2023-08-21T09:27:34.379Z</lastmod>
+  </url>
+  <url>
+    <loc>https://mcdr65.github.io/myblog/posts/BeratungBegin/index.html</loc>
+    <lastmod>2023-01-17T10:07:04.875Z</lastmod>
   </url>
   <url>
     <loc>https://mcdr65.github.io/myblog/posts/gendern/index.html</loc>
-    <lastmod>2023-01-16T15:54:23.611Z</lastmod>
+    <lastmod>2023-12-02T15:20:53.595Z</lastmod>
+  </url>
+  <url>
+    <loc>https://mcdr65.github.io/myblog/posts/shinytest/index.html</loc>
+    <lastmod>2023-01-31T10:30:43.271Z</lastmod>
+  </url>
+  <url>
+    <loc>https://mcdr65.github.io/myblog/posts/noncollaps/noncollaps.html</loc>
+    <lastmod>2023-12-02T15:17:35.090Z</lastmod>
+  </url>
+  <url>
+    <loc>https://mcdr65.github.io/myblog/posts/noncollaps/index.html</loc>
+    <lastmod>2023-12-02T15:25:11.007Z</lastmod>
   </url>
 </urlset>

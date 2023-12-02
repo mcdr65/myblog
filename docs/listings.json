@@ -2,6 +2,7 @@
   {
     "listing": "/index.html",
     "items": [
+      "/posts/noncollaps/index.html",
       "/posts/logratioGeometry/index.html",
       "/posts/gendern/index.html",
       "/posts/fromLMtoSplines/index.html",
@@ -12,6 +13,7 @@
   {
     "listing": "/archive.html",
     "items": [
+      "/posts/noncollaps/index.html",
       "/posts/logratioGeometry/index.html",
       "/posts/gendern/index.html",
       "/posts/fromLMtoSplines/index.html",

@@ -10,7 +10,691 @@
 <atom:link href="https://mcdr65.github.io/myblog/index.xml" rel="self" type="application/rss+xml"/>
 <description>This is André Meichtry&#39;s personal Blog</description>
 <generator>quarto-1.2.313</generator>
-<lastBuildDate>Wed, 02 Nov 2022 23:00:00 GMT</lastBuildDate>
+<lastBuildDate>Fri, 01 Dec 2023 23:00:00 GMT</lastBuildDate>
+<item>
+  <title>Noncollapsibility of the odds ratio</title>
+  <dc:creator>André Meichtry</dc:creator>
+  <link>https://mcdr65.github.io/myblog/posts/noncollaps/index.html</link>
+  <description><![CDATA[ <section id="noncollapsibility" class="level1"><h1>Noncollapsibility</h1>
+<p>We simulate data from GLM with <strong>non-confounding</strong> covariate <img src="https://latex.codecogs.com/png.latex?C">:</p>
+<div class="cell">
+<details><summary>Code</summary><div class="sourceCode" id="cb1" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu" style="color: #4758AB;"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op" style="color: #5E5E5E;">(</span><span class="fl" style="color: #AD0000;">3</span><span class="op" style="color: #5E5E5E;">)</span></span>
+<span><span class="va" style="color: #111111;">N</span> <span class="op" style="color: #5E5E5E;">&lt;-</span> <span class="fl" style="color: #AD0000;">400</span></span>
+<span><span class="va" style="color: #111111;">C</span> <span class="op" style="color: #5E5E5E;">&lt;-</span> <span class="fu" style="color: #4758AB;"><a href="https://rdrr.io/r/base/sort.html">sort</a></span><span class="op" style="color: #5E5E5E;">(</span><span class="fu" style="color: #4758AB;"><a href="https://rdrr.io/r/stats/Uniform.html">runif</a></span><span class="op" style="color: #5E5E5E;">(</span><span class="va" style="color: #111111;">N</span>,<span class="op" style="color: #5E5E5E;">-</span><span class="fl" style="color: #AD0000;">8</span>,<span class="fl" style="color: #AD0000;">8</span><span class="op" style="color: #5E5E5E;">)</span><span class="op" style="color: #5E5E5E;">)</span> <span class="co" style="color: #5E5E5E;">#non-confounding C</span></span>
+<span><span class="va" style="color: #111111;">G</span><span class="op" style="color: #5E5E5E;">&lt;-</span><span class="fu" style="color: #4758AB;"><a href="https://rdrr.io/r/base/sample.html">sample</a></span><span class="op" style="color: #5E5E5E;">(</span><span class="fu" style="color: #4758AB;"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op" style="color: #5E5E5E;">(</span><span class="fl" style="color: #AD0000;">0</span>,<span class="fl" style="color: #AD0000;">1</span><span class="op" style="color: #5E5E5E;">)</span>,<span class="va" style="color: #111111;">N</span>,replace<span class="op" style="color: #5E5E5E;">=</span><span class="cn" style="color: #8f5902;">TRUE</span><span class="op" style="color: #5E5E5E;">)</span></span>
+<span><span class="va" style="color: #111111;">beta0</span><span class="op" style="color: #5E5E5E;">&lt;-</span><span class="fl" style="color: #AD0000;">0</span></span>
+<span><span class="va" style="color: #111111;">beta1</span><span class="op" style="color: #5E5E5E;">&lt;-</span><span class="fu" style="color: #4758AB;"><a href="https://rdrr.io/r/base/Log.html">log</a></span><span class="op" style="color: #5E5E5E;">(</span><span class="fl" style="color: #AD0000;">10</span><span class="op" style="color: #5E5E5E;">)</span></span>
+<span><span class="va" style="color: #111111;">beta2</span><span class="op" style="color: #5E5E5E;">&lt;-</span><span class="fl" style="color: #AD0000;">1</span></span>
+<span><span class="co" style="color: #5E5E5E;">##Logistic </span></span>
+<span><span class="va" style="color: #111111;">etai</span><span class="op" style="color: #5E5E5E;">&lt;-</span><span class="va" style="color: #111111;">beta0</span><span class="op" style="color: #5E5E5E;">+</span><span class="va" style="color: #111111;">beta1</span><span class="op" style="color: #5E5E5E;">*</span><span class="va" style="color: #111111;">G</span><span class="op" style="color: #5E5E5E;">+</span><span class="va" style="color: #111111;">beta2</span><span class="op" style="color: #5E5E5E;">*</span><span class="va" style="color: #111111;">C</span></span>
+<span><span class="va" style="color: #111111;">pii</span><span class="op" style="color: #5E5E5E;">&lt;-</span><span class="fu" style="color: #4758AB;"><a href="https://rdrr.io/r/base/Log.html">exp</a></span><span class="op" style="color: #5E5E5E;">(</span><span class="va" style="color: #111111;">etai</span><span class="op" style="color: #5E5E5E;">)</span><span class="op" style="color: #5E5E5E;">/</span><span class="op" style="color: #5E5E5E;">(</span><span class="fl" style="color: #AD0000;">1</span><span class="op" style="color: #5E5E5E;">+</span><span class="fu" style="color: #4758AB;"><a href="https://rdrr.io/r/base/Log.html">exp</a></span><span class="op" style="color: #5E5E5E;">(</span><span class="va" style="color: #111111;">etai</span><span class="op" style="color: #5E5E5E;">)</span><span class="op" style="color: #5E5E5E;">)</span></span>
+<span><span class="va" style="color: #111111;">Ydich</span> <span class="op" style="color: #5E5E5E;">&lt;-</span><span class="fu" style="color: #4758AB;"><a href="https://rdrr.io/r/stats/Binomial.html">rbinom</a></span><span class="op" style="color: #5E5E5E;">(</span><span class="va" style="color: #111111;">G</span>,size<span class="op" style="color: #5E5E5E;">=</span><span class="fl" style="color: #AD0000;">1</span>,prob<span class="op" style="color: #5E5E5E;">=</span><span class="va" style="color: #111111;">pii</span><span class="op" style="color: #5E5E5E;">)</span></span>
+<span><span class="va" style="color: #111111;">dat</span><span class="op" style="color: #5E5E5E;">&lt;-</span><span class="fu" style="color: #4758AB;"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op" style="color: #5E5E5E;">(</span><span class="va" style="color: #111111;">C</span>,<span class="va" style="color: #111111;">G</span>,<span class="va" style="color: #111111;">Ydich</span><span class="op" style="color: #5E5E5E;">)</span></span>
+<span><span class="fu" style="color: #4758AB;"><a href="https://rdrr.io/r/stats/cor.html">cor</a></span><span class="op" style="color: #5E5E5E;">(</span><span class="va" style="color: #111111;">dat</span><span class="op" style="color: #5E5E5E;">)</span></span></code></pre></div>
+</details><div class="cell-output cell-output-stdout">
+<pre><code>             C        G  Ydich
+C     1.000000 0.006606 0.8131
+G     0.006606 1.000000 0.1560
+Ydich 0.813133 0.156035 1.0000</code></pre>
+</div>
+</div>
+<div class="cell">
+<details><summary>Code</summary><div class="sourceCode" id="cb3" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;">modC</span><span class="op" style="color: #5E5E5E;">&lt;-</span><span class="fu" style="color: #4758AB;"><a href="https://rdrr.io/r/stats/glm.html">glm</a></span><span class="op" style="color: #5E5E5E;">(</span><span class="va" style="color: #111111;">Ydich</span><span class="op" style="color: #5E5E5E;">~</span><span class="va" style="color: #111111;">G</span><span class="op" style="color: #5E5E5E;">+</span><span class="va" style="color: #111111;">C</span>,family<span class="op" style="color: #5E5E5E;">=</span><span class="st" style="color: #20794D;">"binomial"</span><span class="op" style="color: #5E5E5E;">)</span></span>
+<span><span class="va" style="color: #111111;">modM</span><span class="op" style="color: #5E5E5E;">&lt;-</span><span class="fu" style="color: #4758AB;"><a href="https://rdrr.io/r/stats/glm.html">glm</a></span><span class="op" style="color: #5E5E5E;">(</span><span class="va" style="color: #111111;">Ydich</span><span class="op" style="color: #5E5E5E;">~</span><span class="va" style="color: #111111;">G</span>,family<span class="op" style="color: #5E5E5E;">=</span><span class="st" style="color: #20794D;">"binomial"</span><span class="op" style="color: #5E5E5E;">)</span></span></code></pre></div>
+</details>
+</div>
+<section id="illustrate-non-collapsibility" class="level2"><h2 class="anchored" data-anchor-id="illustrate-non-collapsibility">Illustrate non-collapsibility</h2>
+<div class="cell">
+<details><summary>Code</summary><div class="sourceCode" id="cb4" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;">pred</span><span class="op" style="color: #5E5E5E;">&lt;-</span><span class="fu" style="color: #4758AB;"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span><span class="op" style="color: #5E5E5E;">(</span><span class="va" style="color: #111111;">modM</span>,type<span class="op" style="color: #5E5E5E;">=</span><span class="st" style="color: #20794D;">"response"</span>,se.fit<span class="op" style="color: #5E5E5E;">=</span><span class="cn" style="color: #8f5902;">TRUE</span><span class="op" style="color: #5E5E5E;">)</span></span>
+<span><span class="va" style="color: #111111;">predgA</span><span class="op" style="color: #5E5E5E;">&lt;-</span><span class="fu" style="color: #4758AB;"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span><span class="op" style="color: #5E5E5E;">(</span><span class="va" style="color: #111111;">modC</span>,newdata<span class="op" style="color: #5E5E5E;">=</span><span class="fu" style="color: #4758AB;"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op" style="color: #5E5E5E;">(</span>C<span class="op" style="color: #5E5E5E;">=</span><span class="va" style="color: #111111;">C</span><span class="op" style="color: #5E5E5E;">[</span><span class="va" style="color: #111111;">G</span><span class="op" style="color: #5E5E5E;">==</span><span class="fl" style="color: #AD0000;">0</span><span class="op" style="color: #5E5E5E;">]</span>,G<span class="op" style="color: #5E5E5E;">=</span><span class="fl" style="color: #AD0000;">0</span><span class="op" style="color: #5E5E5E;">)</span>,se.fit<span class="op" style="color: #5E5E5E;">=</span><span class="cn" style="color: #8f5902;">TRUE</span>,type<span class="op" style="color: #5E5E5E;">=</span><span class="st" style="color: #20794D;">"response"</span><span class="op" style="color: #5E5E5E;">)</span></span>
+<span><span class="va" style="color: #111111;">predgB</span><span class="op" style="color: #5E5E5E;">&lt;-</span><span class="fu" style="color: #4758AB;"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span><span class="op" style="color: #5E5E5E;">(</span><span class="va" style="color: #111111;">modC</span>,newdata<span class="op" style="color: #5E5E5E;">=</span><span class="fu" style="color: #4758AB;"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op" style="color: #5E5E5E;">(</span>C<span class="op" style="color: #5E5E5E;">=</span><span class="va" style="color: #111111;">C</span><span class="op" style="color: #5E5E5E;">[</span><span class="va" style="color: #111111;">G</span><span class="op" style="color: #5E5E5E;">==</span><span class="fl" style="color: #AD0000;">1</span><span class="op" style="color: #5E5E5E;">]</span>,G<span class="op" style="color: #5E5E5E;">=</span><span class="fl" style="color: #AD0000;">1</span><span class="op" style="color: #5E5E5E;">)</span>,se.fit<span class="op" style="color: #5E5E5E;">=</span><span class="cn" style="color: #8f5902;">TRUE</span>,type<span class="op" style="color: #5E5E5E;">=</span><span class="st" style="color: #20794D;">"response"</span><span class="op" style="color: #5E5E5E;">)</span></span>
+<span><span class="fu" style="color: #4758AB;"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op" style="color: #5E5E5E;">(</span><span class="va" style="color: #111111;">C</span>,<span class="va" style="color: #111111;">Ydich</span>,col<span class="op" style="color: #5E5E5E;">=</span><span class="fu" style="color: #4758AB;"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op" style="color: #5E5E5E;">(</span><span class="st" style="color: #20794D;">"blue"</span>,<span class="st" style="color: #20794D;">"red"</span><span class="op" style="color: #5E5E5E;">)</span><span class="op" style="color: #5E5E5E;">[</span><span class="va" style="color: #111111;">G</span><span class="op" style="color: #5E5E5E;">+</span><span class="fl" style="color: #AD0000;">1</span><span class="op" style="color: #5E5E5E;">]</span>,ylab<span class="op" style="color: #5E5E5E;">=</span><span class="st" style="color: #20794D;">"Probability"</span><span class="op" style="color: #5E5E5E;">)</span></span>
+<span><span class="fu" style="color: #4758AB;"><a href="https://rdrr.io/r/graphics/lines.html">lines</a></span><span class="op" style="color: #5E5E5E;">(</span><span class="fu" style="color: #4758AB;"><a href="https://rdrr.io/r/base/sort.html">sort</a></span><span class="op" style="color: #5E5E5E;">(</span><span class="va" style="color: #111111;">C</span><span class="op" style="color: #5E5E5E;">[</span><span class="va" style="color: #111111;">G</span><span class="op" style="color: #5E5E5E;">==</span><span class="fl" style="color: #AD0000;">0</span><span class="op" style="color: #5E5E5E;">]</span><span class="op" style="color: #5E5E5E;">)</span>,<span class="fu" style="color: #4758AB;"><a href="https://rdrr.io/r/base/sort.html">sort</a></span><span class="op" style="color: #5E5E5E;">(</span><span class="va" style="color: #111111;">predgA</span><span class="op" style="color: #5E5E5E;">$</span><span class="va" style="color: #111111;">fit</span><span class="op" style="color: #5E5E5E;">)</span>,col<span class="op" style="color: #5E5E5E;">=</span><span class="st" style="color: #20794D;">"blue"</span><span class="op" style="color: #5E5E5E;">)</span></span>
+<span><span class="fu" style="color: #4758AB;"><a href="https://rdrr.io/r/graphics/lines.html">lines</a></span><span class="op" style="color: #5E5E5E;">(</span><span class="fu" style="color: #4758AB;"><a href="https://rdrr.io/r/base/sort.html">sort</a></span><span class="op" style="color: #5E5E5E;">(</span><span class="va" style="color: #111111;">C</span><span class="op" style="color: #5E5E5E;">[</span><span class="va" style="color: #111111;">G</span><span class="op" style="color: #5E5E5E;">==</span><span class="fl" style="color: #AD0000;">1</span><span class="op" style="color: #5E5E5E;">]</span><span class="op" style="color: #5E5E5E;">)</span>,<span class="fu" style="color: #4758AB;"><a href="https://rdrr.io/r/base/sort.html">sort</a></span><span class="op" style="color: #5E5E5E;">(</span><span class="va" style="color: #111111;">predgB</span><span class="op" style="color: #5E5E5E;">$</span><span class="va" style="color: #111111;">fit</span><span class="op" style="color: #5E5E5E;">)</span>,col<span class="op" style="color: #5E5E5E;">=</span><span class="st" style="color: #20794D;">"red"</span><span class="op" style="color: #5E5E5E;">)</span></span>
+<span><span class="fu" style="color: #4758AB;"><a href="https://rdrr.io/r/graphics/abline.html">abline</a></span><span class="op" style="color: #5E5E5E;">(</span>a<span class="op" style="color: #5E5E5E;">=</span><span class="fu" style="color: #4758AB;"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op" style="color: #5E5E5E;">(</span><span class="va" style="color: #111111;">pii</span><span class="op" style="color: #5E5E5E;">[</span><span class="va" style="color: #111111;">G</span><span class="op" style="color: #5E5E5E;">==</span><span class="fl" style="color: #AD0000;">0</span><span class="op" style="color: #5E5E5E;">]</span><span class="op" style="color: #5E5E5E;">)</span>,b<span class="op" style="color: #5E5E5E;">=</span><span class="fl" style="color: #AD0000;">0</span>,col<span class="op" style="color: #5E5E5E;">=</span><span class="st" style="color: #20794D;">"blue"</span>,lty<span class="op" style="color: #5E5E5E;">=</span><span class="fl" style="color: #AD0000;">2</span><span class="op" style="color: #5E5E5E;">)</span></span>
+<span><span class="fu" style="color: #4758AB;"><a href="https://rdrr.io/r/graphics/abline.html">abline</a></span><span class="op" style="color: #5E5E5E;">(</span>a<span class="op" style="color: #5E5E5E;">=</span><span class="fu" style="color: #4758AB;"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op" style="color: #5E5E5E;">(</span><span class="va" style="color: #111111;">pii</span><span class="op" style="color: #5E5E5E;">[</span><span class="va" style="color: #111111;">G</span><span class="op" style="color: #5E5E5E;">==</span><span class="fl" style="color: #AD0000;">1</span><span class="op" style="color: #5E5E5E;">]</span><span class="op" style="color: #5E5E5E;">)</span>,b<span class="op" style="color: #5E5E5E;">=</span><span class="fl" style="color: #AD0000;">0</span>,col<span class="op" style="color: #5E5E5E;">=</span><span class="st" style="color: #20794D;">"red"</span>,lty<span class="op" style="color: #5E5E5E;">=</span><span class="fl" style="color: #AD0000;">2</span><span class="op" style="color: #5E5E5E;">)</span></span></code></pre></div>
+</details><div class="cell-output-display">
+<p><img src="https://mcdr65.github.io/myblog/posts/noncollaps/index_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section><section id="marginal-model" class="level2"><h2 class="anchored" data-anchor-id="marginal-model">Marginal model</h2>
+<div class="cell">
+<details><summary>Code</summary><div class="sourceCode" id="cb5" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu" style="color: #4758AB;"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op" style="color: #5E5E5E;">(</span><span class="va" style="color: #111111;">modM</span><span class="op" style="color: #5E5E5E;">)</span><span class="op" style="color: #5E5E5E;">$</span><span class="va" style="color: #111111;">coef</span></span></code></pre></div>
+</details><div class="cell-output cell-output-stdout">
+<pre><code>            Estimate Std. Error z value Pr(&gt;|z|)
+(Intercept) -0.08004     0.1415 -0.5655 0.571710
+G            0.63377     0.2040  3.1071 0.001889</code></pre>
+</div>
+</div>
+</section><section id="conditional-model" class="level2"><h2 class="anchored" data-anchor-id="conditional-model">Conditional model</h2>
+<p>Effect of <img src="https://latex.codecogs.com/png.latex?G"> is larger, even though <img src="https://latex.codecogs.com/png.latex?C"> is not a confounder. This is due to <strong>non-collapsibility of the odds ratio</strong></p>
+<div class="cell">
+<details><summary>Code</summary><div class="sourceCode" id="cb7" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu" style="color: #4758AB;"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op" style="color: #5E5E5E;">(</span><span class="va" style="color: #111111;">modC</span><span class="op" style="color: #5E5E5E;">)</span><span class="op" style="color: #5E5E5E;">$</span><span class="va" style="color: #111111;">coef</span></span></code></pre></div>
+</details><div class="cell-output cell-output-stdout">
+<pre><code>            Estimate Std. Error z value  Pr(&gt;|z|)
+(Intercept) -0.05395     0.3208 -0.1682 8.665e-01
+G            2.46270     0.5209  4.7280 2.267e-06
+C            1.04913     0.1200  8.7453 2.223e-18</code></pre>
+</div>
+</div>
+</section><section id="ipw-model" class="level2"><h2 class="anchored" data-anchor-id="ipw-model">IPW-model</h2>
+<p>Estimate inverse probability weights to fit marginal structural models in a point treatment situation.</p>
+<section id="weights" class="level3"><h3 class="anchored" data-anchor-id="weights">Weights</h3>
+<div class="cell">
+<details><summary>Code</summary><div class="sourceCode" id="cb9" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw" style="color: #003B4F;"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op" style="color: #5E5E5E;">(</span><span class="va" style="color: #111111;">ipw</span><span class="op" style="color: #5E5E5E;">)</span></span>
+<span><span class="va" style="color: #111111;">temp</span> <span class="op" style="color: #5E5E5E;">&lt;-</span> <span class="fu" style="color: #4758AB;"><a href="https://rdrr.io/pkg/ipw/man/ipwpoint.html">ipwpoint</a></span><span class="op" style="color: #5E5E5E;">(</span>exposure<span class="op" style="color: #5E5E5E;">=</span><span class="va" style="color: #111111;">G</span>,family <span class="op" style="color: #5E5E5E;">=</span> <span class="st" style="color: #20794D;">"binomial"</span>,link <span class="op" style="color: #5E5E5E;">=</span> <span class="st" style="color: #20794D;">"logit"</span>,data<span class="op" style="color: #5E5E5E;">=</span><span class="va" style="color: #111111;">dat</span>,numerator <span class="op" style="color: #5E5E5E;">=</span><span class="op" style="color: #5E5E5E;">~</span><span class="fl" style="color: #AD0000;">1</span>,denominator <span class="op" style="color: #5E5E5E;">=</span> <span class="op" style="color: #5E5E5E;">~</span> <span class="va" style="color: #111111;">C</span><span class="op" style="color: #5E5E5E;">)</span></span>
+<span><span class="fu" style="color: #4758AB;"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op" style="color: #5E5E5E;">(</span><span class="va" style="color: #111111;">temp</span><span class="op" style="color: #5E5E5E;">$</span><span class="va" style="color: #111111;">ipw.weights</span><span class="op" style="color: #5E5E5E;">)</span></span></code></pre></div>
+</details><div class="cell-output cell-output-stdout">
+<pre><code>   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+  0.989   0.994   1.000   1.000   1.006   1.012 </code></pre>
+</div>
+<details><summary>Code</summary><div class="sourceCode" id="cb11" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;">dat</span><span class="op" style="color: #5E5E5E;">$</span><span class="va" style="color: #111111;">sw</span><span class="op" style="color: #5E5E5E;">&lt;-</span><span class="va" style="color: #111111;">temp</span><span class="op" style="color: #5E5E5E;">$</span><span class="va" style="color: #111111;">ipw.weights</span></span></code></pre></div>
+</details>
+</div>
+</section><section id="marginal-structural-model" class="level3"><h3 class="anchored" data-anchor-id="marginal-structural-model">Marginal structural model</h3>
+<p>Marginal structural model for the causal effect of <img src="https://latex.codecogs.com/png.latex?X"> on <img src="https://latex.codecogs.com/png.latex?Y"> corrected for confounding by <img src="https://latex.codecogs.com/png.latex?C"> using inverse probability weighting</p>
+<div class="cell">
+<details><summary>Code</summary><div class="sourceCode" id="cb12" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;">modW</span><span class="op" style="color: #5E5E5E;">&lt;-</span><span class="fu" style="color: #4758AB;"><a href="https://rdrr.io/r/stats/glm.html">glm</a></span><span class="op" style="color: #5E5E5E;">(</span><span class="va" style="color: #111111;">Ydich</span><span class="op" style="color: #5E5E5E;">~</span><span class="va" style="color: #111111;">G</span>,weights<span class="op" style="color: #5E5E5E;">=</span><span class="va" style="color: #111111;">sw</span>,data<span class="op" style="color: #5E5E5E;">=</span><span class="va" style="color: #111111;">dat</span>,family<span class="op" style="color: #5E5E5E;">=</span><span class="va" style="color: #111111;">quasibinomial</span><span class="op" style="color: #5E5E5E;">)</span></span>
+<span><span class="fu" style="color: #4758AB;"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op" style="color: #5E5E5E;">(</span><span class="va" style="color: #111111;">modW</span><span class="op" style="color: #5E5E5E;">)</span><span class="op" style="color: #5E5E5E;">$</span><span class="va" style="color: #111111;">coef</span></span></code></pre></div>
+</details><div class="cell-output cell-output-stdout">
+<pre><code>            Estimate Std. Error t value Pr(&gt;|t|)
+(Intercept)  -0.0683     0.1419 -0.4814 0.630474
+G             0.6117     0.2043  2.9938 0.002927</code></pre>
+</div>
+</div>
+<div class="cell">
+<details><summary>Code</summary><div class="sourceCode" id="cb14" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw" style="color: #003B4F;"><a href="https://rdrr.io/r/base/library.html">require</a></span><span class="op" style="color: #5E5E5E;">(</span><span class="st" style="color: #20794D;"><a href="http://r-survey.r-forge.r-project.org/survey/">"survey"</a></span><span class="op" style="color: #5E5E5E;">)</span></span>
+<span><span class="va" style="color: #111111;">msm</span> <span class="op" style="color: #5E5E5E;">&lt;-</span> <span class="op" style="color: #5E5E5E;">(</span><span class="fu" style="color: #4758AB;"><a href="https://rdrr.io/pkg/survey/man/svyglm.html">svyglm</a></span><span class="op" style="color: #5E5E5E;">(</span><span class="va" style="color: #111111;">Ydich</span> <span class="op" style="color: #5E5E5E;">~</span> <span class="va" style="color: #111111;">G</span>, family<span class="op" style="color: #5E5E5E;">=</span><span class="st" style="color: #20794D;">"binomial"</span>,design <span class="op" style="color: #5E5E5E;">=</span> <span class="fu" style="color: #4758AB;"><a href="https://rdrr.io/pkg/survey/man/svydesign.html">svydesign</a></span><span class="op" style="color: #5E5E5E;">(</span><span class="op" style="color: #5E5E5E;">~</span> <span class="fl" style="color: #AD0000;">1</span>, weights <span class="op" style="color: #5E5E5E;">=</span><span class="op" style="color: #5E5E5E;">~</span><span class="va" style="color: #111111;">sw</span>,data <span class="op" style="color: #5E5E5E;">=</span> <span class="va" style="color: #111111;">dat</span><span class="op" style="color: #5E5E5E;">)</span><span class="op" style="color: #5E5E5E;">)</span><span class="op" style="color: #5E5E5E;">)</span></span>
+<span><span class="fu" style="color: #4758AB;"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op" style="color: #5E5E5E;">(</span><span class="va" style="color: #111111;">msm</span><span class="op" style="color: #5E5E5E;">)</span></span></code></pre></div>
+</details>
+</div>
+</section></section><section id="comparison" class="level2"><h2 class="anchored" data-anchor-id="comparison">Comparison</h2>
+<div class="cell">
+<details><summary>Code</summary><div class="sourceCode" id="cb15" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu" style="color: #4758AB;">modelsummary</span><span class="fu" style="color: #4758AB;">::</span><span class="fu" style="color: #4758AB;"><a href="https://rdrr.io/pkg/modelsummary/man/modelsummary.html">modelsummary</a></span><span class="op" style="color: #5E5E5E;">(</span>models<span class="op" style="color: #5E5E5E;">=</span><span class="fu" style="color: #4758AB;"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op" style="color: #5E5E5E;">(</span><span class="st" style="color: #20794D;">"marginal"</span><span class="op" style="color: #5E5E5E;">=</span><span class="va" style="color: #111111;">modM</span>,<span class="st" style="color: #20794D;">"conditional"</span><span class="op" style="color: #5E5E5E;">=</span><span class="va" style="color: #111111;">modC</span>,<span class="st" style="color: #20794D;">"IPW"</span><span class="op" style="color: #5E5E5E;">=</span><span class="va" style="color: #111111;">modW</span><span class="op" style="color: #5E5E5E;">)</span><span class="op" style="color: #5E5E5E;">)</span></span></code></pre></div>
+</details><div class="cell-output-display">
+
+<table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<thead><tr>
+<th style="text-align:left;">   </th>
+   <th style="text-align:center;"> marginal </th>
+   <th style="text-align:center;"> conditional </th>
+   <th style="text-align:center;"> &nbsp;IPW </th>
+  </tr></thead>
+<tbody>
+<tr>
+<td style="text-align:left;"> (Intercept) </td>
+   <td style="text-align:center;"> −0.080 </td>
+   <td style="text-align:center;"> −0.054 </td>
+   <td style="text-align:center;"> −0.068 </td>
+  </tr>
+<tr>
+<td style="text-align:left;">  </td>
+   <td style="text-align:center;"> (0.142) </td>
+   <td style="text-align:center;"> (0.321) </td>
+   <td style="text-align:center;"> (0.142) </td>
+  </tr>
+<tr>
+<td style="text-align:left;"> G </td>
+   <td style="text-align:center;"> 0.634 </td>
+   <td style="text-align:center;"> 2.463 </td>
+   <td style="text-align:center;"> 0.612 </td>
+  </tr>
+<tr>
+<td style="text-align:left;">  </td>
+   <td style="text-align:center;"> (0.204) </td>
+   <td style="text-align:center;"> (0.521) </td>
+   <td style="text-align:center;"> (0.204) </td>
+  </tr>
+<tr>
+<td style="text-align:left;"> C </td>
+   <td style="text-align:center;">  </td>
+   <td style="text-align:center;"> 1.049 </td>
+   <td style="text-align:center;">  </td>
+  </tr>
+<tr>
+<td style="text-align:left;box-shadow: 0px 1.5px">  </td>
+   <td style="text-align:center;box-shadow: 0px 1.5px">  </td>
+   <td style="text-align:center;box-shadow: 0px 1.5px"> (0.120) </td>
+   <td style="text-align:center;box-shadow: 0px 1.5px">  </td>
+  </tr>
+<tr>
+<td style="text-align:left;"> Num.Obs. </td>
+   <td style="text-align:center;"> 400 </td>
+   <td style="text-align:center;"> 400 </td>
+   <td style="text-align:center;"> 400 </td>
+  </tr>
+<tr>
+<td style="text-align:left;"> AIC </td>
+   <td style="text-align:center;"> 543.4 </td>
+   <td style="text-align:center;"> 152.6 </td>
+   <td style="text-align:center;">  </td>
+  </tr>
+<tr>
+<td style="text-align:left;"> BIC </td>
+   <td style="text-align:center;"> 551.4 </td>
+   <td style="text-align:center;"> 164.5 </td>
+   <td style="text-align:center;">  </td>
+  </tr>
+<tr>
+<td style="text-align:left;"> Log.Lik. </td>
+   <td style="text-align:center;"> −269.718 </td>
+   <td style="text-align:center;"> −73.275 </td>
+   <td style="text-align:center;">  </td>
+  </tr>
+<tr>
+<td style="text-align:left;"> F </td>
+   <td style="text-align:center;"> 9.654 </td>
+   <td style="text-align:center;"> 38.281 </td>
+   <td style="text-align:center;"> 8.963 </td>
+  </tr>
+<tr>
+<td style="text-align:left;"> RMSE </td>
+   <td style="text-align:center;"> 0.49 </td>
+   <td style="text-align:center;"> 0.23 </td>
+   <td style="text-align:center;"> 0.49 </td>
+  </tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="callout-important callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Important
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li>conditional-marginal=noncollaps+confouding</li>
+<li>IPW-marginal=confounding</li>
+<li>conditional-IPW=noncollaps</li>
+</ul>
+</div>
+</div>
+</section></section><section id="example-smoking-and-children-weight" class="level1"><h1>Example smoking and children weight</h1>
+<div class="cell">
+
+</div>
+<div class="cell">
+<details><summary>Code</summary><div class="sourceCode" id="cb16" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu" style="color: #4758AB;"><a href="https://rdrr.io/r/utils/str.html">str</a></span><span class="op" style="color: #5E5E5E;">(</span><span class="va" style="color: #111111;">bwt</span><span class="op" style="color: #5E5E5E;">)</span></span></code></pre></div>
+</details><div class="cell-output cell-output-stdout">
+<pre><code>'data.frame':   189 obs. of  9 variables:
+ $ low     : int  0 0 0 0 0 0 0 0 0 0 ...
+ $ age     : int  19 33 20 21 18 21 22 17 29 26 ...
+ $ lwt     : int  182 155 105 108 107 124 118 103 123 113 ...
+ $ smoke   : int  0 0 1 1 1 0 0 0 1 1 ...
+ $ ht      : int  0 0 0 0 0 0 0 0 0 0 ...
+ $ ui      : int  1 0 0 1 1 0 0 0 0 0 ...
+ $ ftv     : int  0 3 1 2 0 0 1 1 1 0 ...
+ $ bwt     : int  2523 2551 2557 2594 2600 2622 2637 2637 2663 2665 ...
+ $ socclass: Factor w/ 3 levels "I","II","III": 2 3 1 1 1 3 1 3 1 1 ...</code></pre>
+</div>
+</div>
+<div class="cell">
+<details><summary>Code</summary><div class="sourceCode" id="cb18" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;">glm_smoke</span> <span class="op" style="color: #5E5E5E;">&lt;-</span> <span class="fu" style="color: #4758AB;"><a href="https://rdrr.io/r/stats/glm.html">glm</a></span><span class="op" style="color: #5E5E5E;">(</span><span class="va" style="color: #111111;">low</span> <span class="op" style="color: #5E5E5E;">~</span> <span class="va" style="color: #111111;">smoke</span>, data <span class="op" style="color: #5E5E5E;">=</span> <span class="va" style="color: #111111;">bwt</span>, family <span class="op" style="color: #5E5E5E;">=</span> <span class="va" style="color: #111111;">binomial</span><span class="op" style="color: #5E5E5E;">)</span></span>
+<span><span class="fu" style="color: #4758AB;"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op" style="color: #5E5E5E;">(</span><span class="va" style="color: #111111;">glm_smoke</span><span class="op" style="color: #5E5E5E;">)</span><span class="op" style="color: #5E5E5E;">$</span><span class="va" style="color: #111111;">coef</span></span></code></pre></div>
+</details><div class="cell-output cell-output-stdout">
+<pre><code>            Estimate Std. Error z value  Pr(&gt;|z|)
+(Intercept)  -1.0871     0.2147  -5.062 4.142e-07
+smoke         0.7041     0.3196   2.203 2.762e-02</code></pre>
+</div>
+<details><summary>Code</summary><div class="sourceCode" id="cb20" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;">glm_multi_1</span> <span class="op" style="color: #5E5E5E;">&lt;-</span> <span class="fu" style="color: #4758AB;"><a href="https://rdrr.io/r/stats/glm.html">glm</a></span><span class="op" style="color: #5E5E5E;">(</span><span class="va" style="color: #111111;">low</span> <span class="op" style="color: #5E5E5E;">~</span> <span class="va" style="color: #111111;">smoke</span> <span class="op" style="color: #5E5E5E;">+</span> <span class="va" style="color: #111111;">socclass</span>, data <span class="op" style="color: #5E5E5E;">=</span> <span class="va" style="color: #111111;">bwt</span>, family <span class="op" style="color: #5E5E5E;">=</span> <span class="va" style="color: #111111;">binomial</span><span class="op" style="color: #5E5E5E;">)</span></span>
+<span><span class="fu" style="color: #4758AB;"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op" style="color: #5E5E5E;">(</span><span class="va" style="color: #111111;">glm_multi_1</span><span class="op" style="color: #5E5E5E;">)</span><span class="op" style="color: #5E5E5E;">$</span><span class="va" style="color: #111111;">coef</span></span></code></pre></div>
+</details><div class="cell-output cell-output-stdout">
+<pre><code>            Estimate Std. Error z value  Pr(&gt;|z|)
+(Intercept)   -1.841     0.3529  -5.216 1.828e-07
+smoke          1.116     0.3692   3.023 2.507e-03
+socclassII     1.084     0.4900   2.212 2.693e-02
+socclassIII    1.109     0.4003   2.769 5.618e-03</code></pre>
+</div>
+</div>
+<div class="cell">
+<details><summary>Code</summary><div class="sourceCode" id="cb22" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;">temp</span> <span class="op" style="color: #5E5E5E;">&lt;-</span> <span class="fu" style="color: #4758AB;"><a href="https://rdrr.io/pkg/ipw/man/ipwpoint.html">ipwpoint</a></span><span class="op" style="color: #5E5E5E;">(</span>exposure<span class="op" style="color: #5E5E5E;">=</span><span class="va" style="color: #111111;">smoke</span>,family <span class="op" style="color: #5E5E5E;">=</span> <span class="st" style="color: #20794D;">"binomial"</span>,link <span class="op" style="color: #5E5E5E;">=</span> <span class="st" style="color: #20794D;">"logit"</span>,data<span class="op" style="color: #5E5E5E;">=</span><span class="va" style="color: #111111;">bwt</span>,</span>
+<span>                 numerator<span class="op" style="color: #5E5E5E;">=</span><span class="op" style="color: #5E5E5E;">~</span><span class="fl" style="color: #AD0000;">1</span>,denominator<span class="op" style="color: #5E5E5E;">=</span><span class="op" style="color: #5E5E5E;">~</span><span class="va" style="color: #111111;">socclass</span><span class="op" style="color: #5E5E5E;">)</span></span>
+<span><span class="fu" style="color: #4758AB;"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op" style="color: #5E5E5E;">(</span><span class="va" style="color: #111111;">temp</span><span class="op" style="color: #5E5E5E;">$</span><span class="va" style="color: #111111;">ipw.weights</span><span class="op" style="color: #5E5E5E;">)</span></span></code></pre></div>
+</details><div class="cell-output cell-output-stdout">
+<pre><code>   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+  0.723   0.723   0.741   1.000   1.328   2.186 </code></pre>
+</div>
+<details><summary>Code</summary><div class="sourceCode" id="cb24" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;">bwt</span><span class="op" style="color: #5E5E5E;">$</span><span class="va" style="color: #111111;">sw</span><span class="op" style="color: #5E5E5E;">&lt;-</span><span class="va" style="color: #111111;">temp</span><span class="op" style="color: #5E5E5E;">$</span><span class="va" style="color: #111111;">ipw.weights</span></span></code></pre></div>
+</details>
+</div>
+<div class="cell">
+<details><summary>Code</summary><div class="sourceCode" id="cb25" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;">modW</span><span class="op" style="color: #5E5E5E;">&lt;-</span><span class="fu" style="color: #4758AB;"><a href="https://rdrr.io/r/stats/glm.html">glm</a></span><span class="op" style="color: #5E5E5E;">(</span><span class="va" style="color: #111111;">low</span><span class="op" style="color: #5E5E5E;">~</span><span class="va" style="color: #111111;">smoke</span>,weights<span class="op" style="color: #5E5E5E;">=</span><span class="va" style="color: #111111;">sw</span>,data<span class="op" style="color: #5E5E5E;">=</span><span class="va" style="color: #111111;">bwt</span>,family<span class="op" style="color: #5E5E5E;">=</span><span class="va" style="color: #111111;">quasibinomial</span><span class="op" style="color: #5E5E5E;">)</span></span>
+<span><span class="fu" style="color: #4758AB;"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op" style="color: #5E5E5E;">(</span><span class="va" style="color: #111111;">modW</span><span class="op" style="color: #5E5E5E;">)</span><span class="op" style="color: #5E5E5E;">$</span><span class="va" style="color: #111111;">coef</span></span></code></pre></div>
+</details><div class="cell-output cell-output-stdout">
+<pre><code>            Estimate Std. Error t value  Pr(&gt;|t|)
+(Intercept)   -1.277     0.2270  -5.625 6.696e-08
+smoke          0.937     0.3283   2.854 4.798e-03</code></pre>
+</div>
+</div>
+<div class="callout-important callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Important
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li>conditional-marginal=noncollaps+confouding</li>
+<li>IPW-marginal=confounding</li>
+<li>conditional-IPW=noncollaps</li>
+</ul>
+</div>
+</div>
+<div class="cell">
+<details><summary>Code</summary><div class="sourceCode" id="cb27" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu" style="color: #4758AB;">modelsummary</span><span class="fu" style="color: #4758AB;">::</span><span class="fu" style="color: #4758AB;"><a href="https://rdrr.io/pkg/modelsummary/man/modelsummary.html">modelsummary</a></span><span class="op" style="color: #5E5E5E;">(</span>models<span class="op" style="color: #5E5E5E;">=</span><span class="fu" style="color: #4758AB;"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op" style="color: #5E5E5E;">(</span><span class="st" style="color: #20794D;">"marginal"</span><span class="op" style="color: #5E5E5E;">=</span><span class="va" style="color: #111111;">glm_smoke</span>,<span class="st" style="color: #20794D;">"conditional"</span><span class="op" style="color: #5E5E5E;">=</span><span class="va" style="color: #111111;">glm_multi_1</span>,<span class="st" style="color: #20794D;">"IPW"</span><span class="op" style="color: #5E5E5E;">=</span><span class="va" style="color: #111111;">modW</span><span class="op" style="color: #5E5E5E;">)</span><span class="op" style="color: #5E5E5E;">)</span></span></code></pre></div>
+</details><div class="cell-output-display">
+
+<table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<thead><tr>
+<th style="text-align:left;">   </th>
+   <th style="text-align:center;"> marginal </th>
+   <th style="text-align:center;"> conditional </th>
+   <th style="text-align:center;"> &nbsp;IPW </th>
+  </tr></thead>
+<tbody>
+<tr>
+<td style="text-align:left;"> (Intercept) </td>
+   <td style="text-align:center;"> −1.087 </td>
+   <td style="text-align:center;"> −1.841 </td>
+   <td style="text-align:center;"> −1.277 </td>
+  </tr>
+<tr>
+<td style="text-align:left;">  </td>
+   <td style="text-align:center;"> (0.215) </td>
+   <td style="text-align:center;"> (0.353) </td>
+   <td style="text-align:center;"> (0.227) </td>
+  </tr>
+<tr>
+<td style="text-align:left;"> smoke </td>
+   <td style="text-align:center;"> 0.704 </td>
+   <td style="text-align:center;"> 1.116 </td>
+   <td style="text-align:center;"> 0.937 </td>
+  </tr>
+<tr>
+<td style="text-align:left;">  </td>
+   <td style="text-align:center;"> (0.320) </td>
+   <td style="text-align:center;"> (0.369) </td>
+   <td style="text-align:center;"> (0.328) </td>
+  </tr>
+<tr>
+<td style="text-align:left;"> socclassII </td>
+   <td style="text-align:center;">  </td>
+   <td style="text-align:center;"> 1.084 </td>
+   <td style="text-align:center;">  </td>
+  </tr>
+<tr>
+<td style="text-align:left;">  </td>
+   <td style="text-align:center;">  </td>
+   <td style="text-align:center;"> (0.490) </td>
+   <td style="text-align:center;">  </td>
+  </tr>
+<tr>
+<td style="text-align:left;"> socclassIII </td>
+   <td style="text-align:center;">  </td>
+   <td style="text-align:center;"> 1.109 </td>
+   <td style="text-align:center;">  </td>
+  </tr>
+<tr>
+<td style="text-align:left;box-shadow: 0px 1.5px">  </td>
+   <td style="text-align:center;box-shadow: 0px 1.5px">  </td>
+   <td style="text-align:center;box-shadow: 0px 1.5px"> (0.400) </td>
+   <td style="text-align:center;box-shadow: 0px 1.5px">  </td>
+  </tr>
+<tr>
+<td style="text-align:left;"> Num.Obs. </td>
+   <td style="text-align:center;"> 189 </td>
+   <td style="text-align:center;"> 189 </td>
+   <td style="text-align:center;"> 189 </td>
+  </tr>
+<tr>
+<td style="text-align:left;"> AIC </td>
+   <td style="text-align:center;"> 233.8 </td>
+   <td style="text-align:center;"> 228.0 </td>
+   <td style="text-align:center;">  </td>
+  </tr>
+<tr>
+<td style="text-align:left;"> BIC </td>
+   <td style="text-align:center;"> 240.3 </td>
+   <td style="text-align:center;"> 240.9 </td>
+   <td style="text-align:center;">  </td>
+  </tr>
+<tr>
+<td style="text-align:left;"> Log.Lik. </td>
+   <td style="text-align:center;"> −114.902 </td>
+   <td style="text-align:center;"> −109.987 </td>
+   <td style="text-align:center;">  </td>
+  </tr>
+<tr>
+<td style="text-align:left;"> F </td>
+   <td style="text-align:center;"> 4.852 </td>
+   <td style="text-align:center;"> 4.294 </td>
+   <td style="text-align:center;"> 8.148 </td>
+  </tr>
+<tr>
+<td style="text-align:left;"> RMSE </td>
+   <td style="text-align:center;"> 0.46 </td>
+   <td style="text-align:center;"> 0.45 </td>
+   <td style="text-align:center;"> 0.46 </td>
+  </tr>
+</tbody>
+</table>
+</div>
+</div>
+</section><section id="potential-outcomes" class="level1"><h1>Potential outcomes</h1>
+<p>See <a href="https://www.r-bloggers.com/2017/12/when-you-use-inverse-probability-weighting-for-estimation-what-are-the-weights-actually-doing/">Example</a> for marginal structural models in this context.</p>
+<section id="simulate-some-data" class="level2"><h2 class="anchored" data-anchor-id="simulate-some-data">Simulate some data</h2>
+<div class="cell">
+<details><summary>Code</summary><div class="sourceCode" id="cb28" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw" style="color: #003B4F;"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op" style="color: #5E5E5E;">(</span><span class="va" style="color: #111111;"><a href="https://github.com/kgoldfeld/simstudy">simstudy</a></span><span class="op" style="color: #5E5E5E;">)</span></span>
+<span><span class="co" style="color: #5E5E5E;"># define the data</span></span>
+<span><span class="va" style="color: #111111;">defB</span> <span class="op" style="color: #5E5E5E;">&lt;-</span> <span class="fu" style="color: #4758AB;"><a href="https://kgoldfeld.github.io/simstudy/reference/defData.html">defData</a></span><span class="op" style="color: #5E5E5E;">(</span>varname <span class="op" style="color: #5E5E5E;">=</span> <span class="st" style="color: #20794D;">"L"</span>, formula <span class="op" style="color: #5E5E5E;">=</span><span class="fl" style="color: #AD0000;">0.27</span>, </span>
+<span>                dist <span class="op" style="color: #5E5E5E;">=</span> <span class="st" style="color: #20794D;">"binary"</span><span class="op" style="color: #5E5E5E;">)</span></span>
+<span><span class="va" style="color: #111111;">defB</span> <span class="op" style="color: #5E5E5E;">&lt;-</span> <span class="fu" style="color: #4758AB;"><a href="https://kgoldfeld.github.io/simstudy/reference/defData.html">defData</a></span><span class="op" style="color: #5E5E5E;">(</span><span class="va" style="color: #111111;">defB</span>, varname <span class="op" style="color: #5E5E5E;">=</span> <span class="st" style="color: #20794D;">"Y0"</span>, formula <span class="op" style="color: #5E5E5E;">=</span> <span class="st" style="color: #20794D;">"-2.5 + 1.75*L"</span>, </span>
+<span>                dist <span class="op" style="color: #5E5E5E;">=</span> <span class="st" style="color: #20794D;">"binary"</span>, link <span class="op" style="color: #5E5E5E;">=</span> <span class="st" style="color: #20794D;">"logit"</span><span class="op" style="color: #5E5E5E;">)</span></span>
+<span><span class="va" style="color: #111111;">defB</span> <span class="op" style="color: #5E5E5E;">&lt;-</span> <span class="fu" style="color: #4758AB;"><a href="https://kgoldfeld.github.io/simstudy/reference/defData.html">defData</a></span><span class="op" style="color: #5E5E5E;">(</span><span class="va" style="color: #111111;">defB</span>, varname <span class="op" style="color: #5E5E5E;">=</span> <span class="st" style="color: #20794D;">"Y1"</span>, formula <span class="op" style="color: #5E5E5E;">=</span> <span class="st" style="color: #20794D;">"-1.5 + 1.75*L"</span>, </span>
+<span>                dist <span class="op" style="color: #5E5E5E;">=</span> <span class="st" style="color: #20794D;">"binary"</span>, link <span class="op" style="color: #5E5E5E;">=</span> <span class="st" style="color: #20794D;">"logit"</span><span class="op" style="color: #5E5E5E;">)</span></span>
+<span><span class="va" style="color: #111111;">defB</span> <span class="op" style="color: #5E5E5E;">&lt;-</span> <span class="fu" style="color: #4758AB;"><a href="https://kgoldfeld.github.io/simstudy/reference/defData.html">defData</a></span><span class="op" style="color: #5E5E5E;">(</span><span class="va" style="color: #111111;">defB</span>, varname <span class="op" style="color: #5E5E5E;">=</span> <span class="st" style="color: #20794D;">"A"</span>, formula <span class="op" style="color: #5E5E5E;">=</span> <span class="st" style="color: #20794D;">"0.315 + 0.352 * L"</span>, </span>
+<span>                dist <span class="op" style="color: #5E5E5E;">=</span> <span class="st" style="color: #20794D;">"binary"</span><span class="op" style="color: #5E5E5E;">)</span></span>
+<span><span class="va" style="color: #111111;">defB</span> <span class="op" style="color: #5E5E5E;">&lt;-</span> <span class="fu" style="color: #4758AB;"><a href="https://kgoldfeld.github.io/simstudy/reference/defData.html">defData</a></span><span class="op" style="color: #5E5E5E;">(</span><span class="va" style="color: #111111;">defB</span>, varname <span class="op" style="color: #5E5E5E;">=</span> <span class="st" style="color: #20794D;">"Y"</span>, formula <span class="op" style="color: #5E5E5E;">=</span> <span class="st" style="color: #20794D;">"Y0 + A * (Y1 - Y0)"</span>, </span>
+<span>                dist <span class="op" style="color: #5E5E5E;">=</span> <span class="st" style="color: #20794D;">"nonrandom"</span><span class="op" style="color: #5E5E5E;">)</span></span>
+<span><span class="va" style="color: #111111;">defB</span></span></code></pre></div>
+</details><div class="cell-output cell-output-stdout">
+<pre><code>   varname            formula variance      dist     link
+1:       L               0.27        0    binary identity
+2:      Y0      -2.5 + 1.75*L        0    binary    logit
+3:      Y1      -1.5 + 1.75*L        0    binary    logit
+4:       A  0.315 + 0.352 * L        0    binary identity
+5:       Y Y0 + A * (Y1 - Y0)        0 nonrandom identity</code></pre>
+</div>
+</div>
+<div class="cell">
+<details><summary>Code</summary><div class="sourceCode" id="cb30" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu" style="color: #4758AB;"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op" style="color: #5E5E5E;">(</span><span class="fl" style="color: #AD0000;">2002</span><span class="op" style="color: #5E5E5E;">)</span></span>
+<span><span class="va" style="color: #111111;">Nnew</span><span class="op" style="color: #5E5E5E;">&lt;-</span><span class="fl" style="color: #AD0000;">1000</span></span>
+<span><span class="va" style="color: #111111;">dtB</span> <span class="op" style="color: #5E5E5E;">&lt;-</span> <span class="fu" style="color: #4758AB;"><a href="https://kgoldfeld.github.io/simstudy/reference/genData.html">genData</a></span><span class="op" style="color: #5E5E5E;">(</span><span class="va" style="color: #111111;">Nnew</span>, <span class="va" style="color: #111111;">defB</span><span class="op" style="color: #5E5E5E;">)</span></span>
+<span><span class="va" style="color: #111111;">dtB</span></span></code></pre></div>
+</details><div class="cell-output cell-output-stdout">
+<pre><code>        id L Y0 Y1 A Y
+   1:    1 0  0  0 0 0
+   2:    2 0  0  1 0 0
+   3:    3 1  0  0 1 0
+   4:    4 0  0  0 0 0
+   5:    5 1  1  1 0 1
+  ---                 
+ 996:  996 0  0  1 0 0
+ 997:  997 0  0  0 1 0
+ 998:  998 1  0  1 1 1
+ 999:  999 0  0  0 0 0
+1000: 1000 1  0  0 1 0</code></pre>
+</div>
+</div>
+</section><section id="true-causal-effect-based-on-potential-outcomes" class="level2"><h2 class="anchored" data-anchor-id="true-causal-effect-based-on-potential-outcomes">True causal effect (based on potential outcomes)</h2>
+<div class="cell">
+<details><summary>Code</summary><div class="sourceCode" id="cb32" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;">odds</span> <span class="op" style="color: #5E5E5E;">&lt;-</span> <span class="kw" style="color: #003B4F;">function</span> <span class="op" style="color: #5E5E5E;">(</span><span class="va" style="color: #111111;">p</span><span class="op" style="color: #5E5E5E;">)</span> <span class="op" style="color: #5E5E5E;">{</span></span>
+<span>    <span class="kw" style="color: #003B4F;"><a href="https://rdrr.io/r/base/function.html">return</a></span><span class="op" style="color: #5E5E5E;">(</span><span class="op" style="color: #5E5E5E;">(</span><span class="va" style="color: #111111;">p</span><span class="op" style="color: #5E5E5E;">/</span><span class="op" style="color: #5E5E5E;">(</span><span class="fl" style="color: #AD0000;">1</span> <span class="op" style="color: #5E5E5E;">-</span> <span class="va" style="color: #111111;">p</span><span class="op" style="color: #5E5E5E;">)</span><span class="op" style="color: #5E5E5E;">)</span><span class="op" style="color: #5E5E5E;">)</span></span>
+<span><span class="op" style="color: #5E5E5E;">}</span></span>
+<span></span>
+<span><span class="va" style="color: #111111;">dtB</span><span class="op" style="color: #5E5E5E;">[</span>, <span class="fu" style="color: #4758AB;"><a href="https://rdrr.io/r/base/Log.html">log</a></span><span class="op" style="color: #5E5E5E;">(</span> <span class="fu" style="color: #4758AB;">odds</span><span class="op" style="color: #5E5E5E;">(</span> <span class="fu" style="color: #4758AB;"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op" style="color: #5E5E5E;">(</span><span class="va" style="color: #111111;">Y1</span><span class="op" style="color: #5E5E5E;">)</span> <span class="op" style="color: #5E5E5E;">)</span> <span class="op" style="color: #5E5E5E;">/</span> <span class="fu" style="color: #4758AB;">odds</span><span class="op" style="color: #5E5E5E;">(</span> <span class="fu" style="color: #4758AB;"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op" style="color: #5E5E5E;">(</span><span class="va" style="color: #111111;">Y0</span><span class="op" style="color: #5E5E5E;">)</span> <span class="op" style="color: #5E5E5E;">)</span> <span class="op" style="color: #5E5E5E;">)</span><span class="op" style="color: #5E5E5E;">]</span></span></code></pre></div>
+</details><div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.9494</code></pre>
+</div>
+</div>
+</section><section id="conditional-effect" class="level2"><h2 class="anchored" data-anchor-id="conditional-effect">Conditional effect</h2>
+<p>The true conditional causal effect of <img src="https://latex.codecogs.com/png.latex?A"> is 1.</p>
+<div class="cell">
+<details><summary>Code</summary><div class="sourceCode" id="cb34" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;">mc</span><span class="op" style="color: #5E5E5E;">&lt;-</span><span class="fu" style="color: #4758AB;"><a href="https://rdrr.io/r/stats/glm.html">glm</a></span><span class="op" style="color: #5E5E5E;">(</span><span class="va" style="color: #111111;">Y</span> <span class="op" style="color: #5E5E5E;">~</span> <span class="va" style="color: #111111;">A</span> <span class="op" style="color: #5E5E5E;">+</span> <span class="va" style="color: #111111;">L</span> , data <span class="op" style="color: #5E5E5E;">=</span> <span class="va" style="color: #111111;">dtB</span>, family<span class="op" style="color: #5E5E5E;">=</span><span class="st" style="color: #20794D;">"binomial"</span><span class="op" style="color: #5E5E5E;">)</span></span>
+<span><span class="va" style="color: #111111;">mc</span></span></code></pre></div>
+</details><div class="cell-output cell-output-stdout">
+<pre><code>
+Call:  glm(formula = Y ~ A + L, family = "binomial", data = dtB)
+
+Coefficients:
+(Intercept)            A            L  
+      -2.74         1.21         1.61  
+
+Degrees of Freedom: 999 Total (i.e. Null);  997 Residual
+Null Deviance:      964 
+Residual Deviance: 797  AIC: 803</code></pre>
+</div>
+</div>
+<p>This estimate for <img src="https://latex.codecogs.com/png.latex?A"> is a good estimate of the conditional effect in the population, based on the potential outcomes at each level of <img src="https://latex.codecogs.com/png.latex?L"></p>
+<div class="cell">
+<details><summary>Code</summary><div class="sourceCode" id="cb36" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;">dtB</span><span class="op" style="color: #5E5E5E;">[</span>, <span class="fu" style="color: #4758AB;">.</span><span class="op" style="color: #5E5E5E;">(</span>LOR <span class="op" style="color: #5E5E5E;">=</span> <span class="fu" style="color: #4758AB;"><a href="https://rdrr.io/r/base/Log.html">log</a></span><span class="op" style="color: #5E5E5E;">(</span> <span class="fu" style="color: #4758AB;">odds</span><span class="op" style="color: #5E5E5E;">(</span> <span class="fu" style="color: #4758AB;"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op" style="color: #5E5E5E;">(</span><span class="va" style="color: #111111;">Y1</span><span class="op" style="color: #5E5E5E;">)</span> <span class="op" style="color: #5E5E5E;">)</span> <span class="op" style="color: #5E5E5E;">/</span> <span class="fu" style="color: #4758AB;">odds</span><span class="op" style="color: #5E5E5E;">(</span> <span class="fu" style="color: #4758AB;"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op" style="color: #5E5E5E;">(</span><span class="va" style="color: #111111;">Y0</span><span class="op" style="color: #5E5E5E;">)</span> <span class="op" style="color: #5E5E5E;">)</span> <span class="op" style="color: #5E5E5E;">)</span> <span class="op" style="color: #5E5E5E;">)</span>, keyby <span class="op" style="color: #5E5E5E;">=</span> <span class="va" style="color: #111111;">L</span><span class="op" style="color: #5E5E5E;">]</span></span></code></pre></div>
+</details><div class="cell-output cell-output-stdout">
+<pre><code>   L   LOR
+1: 0 1.104
+2: 1 1.067</code></pre>
+</div>
+</div>
+</section><section id="marginal-effect" class="level2"><h2 class="anchored" data-anchor-id="marginal-effect">Marginal effect</h2>
+<p>The marginal estimate is biased both for the conditional effect and the marginal causal effect.</p>
+<div class="cell">
+<details><summary>Code</summary><div class="sourceCode" id="cb38" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;">mm</span><span class="op" style="color: #5E5E5E;">&lt;-</span><span class="fu" style="color: #4758AB;"><a href="https://rdrr.io/r/stats/glm.html">glm</a></span><span class="op" style="color: #5E5E5E;">(</span><span class="va" style="color: #111111;">Y</span> <span class="op" style="color: #5E5E5E;">~</span> <span class="va" style="color: #111111;">A</span> , data <span class="op" style="color: #5E5E5E;">=</span> <span class="va" style="color: #111111;">dtB</span>, family<span class="op" style="color: #5E5E5E;">=</span><span class="st" style="color: #20794D;">"binomial"</span><span class="op" style="color: #5E5E5E;">)</span></span>
+<span><span class="va" style="color: #111111;">mm</span></span></code></pre></div>
+</details><div class="cell-output cell-output-stdout">
+<pre><code>
+Call:  glm(formula = Y ~ A, family = "binomial", data = dtB)
+
+Coefficients:
+(Intercept)            A  
+      -2.33         1.59  
+
+Degrees of Freedom: 999 Total (i.e. Null);  998 Residual
+Null Deviance:      964 
+Residual Deviance: 876  AIC: 880</code></pre>
+</div>
+</div>
+</section><section id="numerator-and-denominator-model" class="level2"><h2 class="anchored" data-anchor-id="numerator-and-denominator-model">Numerator and Denominator model</h2>
+<div class="cell">
+<details><summary>Code</summary><div class="sourceCode" id="cb40" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;">numModel</span> <span class="op" style="color: #5E5E5E;">&lt;-</span> <span class="fu" style="color: #4758AB;"><a href="https://rdrr.io/r/stats/glm.html">glm</a></span><span class="op" style="color: #5E5E5E;">(</span><span class="va" style="color: #111111;">A</span> <span class="op" style="color: #5E5E5E;">~</span> <span class="fl" style="color: #AD0000;">1</span>, data <span class="op" style="color: #5E5E5E;">=</span> <span class="va" style="color: #111111;">dtB</span>, family <span class="op" style="color: #5E5E5E;">=</span> <span class="st" style="color: #20794D;">"binomial"</span><span class="op" style="color: #5E5E5E;">)</span></span>
+<span><span class="va" style="color: #111111;">denModel</span> <span class="op" style="color: #5E5E5E;">&lt;-</span> <span class="fu" style="color: #4758AB;"><a href="https://rdrr.io/r/stats/glm.html">glm</a></span><span class="op" style="color: #5E5E5E;">(</span><span class="va" style="color: #111111;">A</span> <span class="op" style="color: #5E5E5E;">~</span> <span class="va" style="color: #111111;">L</span>, data <span class="op" style="color: #5E5E5E;">=</span> <span class="va" style="color: #111111;">dtB</span>, family <span class="op" style="color: #5E5E5E;">=</span> <span class="st" style="color: #20794D;">"binomial"</span><span class="op" style="color: #5E5E5E;">)</span></span></code></pre></div>
+</details>
+</div>
+</section><section id="stabilized-weights-by-hand" class="level2"><h2 class="anchored" data-anchor-id="stabilized-weights-by-hand">Stabilized weights by hand</h2>
+<div class="cell">
+<details><summary>Code</summary><div class="sourceCode" id="cb41" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;">dtB</span><span class="op" style="color: #5E5E5E;">[</span>, <span class="va" style="color: #111111;">pA0</span> <span class="op" style="color: #5E5E5E;">:=</span> <span class="fu" style="color: #4758AB;"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span><span class="op" style="color: #5E5E5E;">(</span><span class="va" style="color: #111111;">numModel</span>, type <span class="op" style="color: #5E5E5E;">=</span> <span class="st" style="color: #20794D;">"response"</span><span class="op" style="color: #5E5E5E;">)</span><span class="op" style="color: #5E5E5E;">]</span></span>
+<span><span class="va" style="color: #111111;">dtB</span><span class="op" style="color: #5E5E5E;">[</span>, <span class="va" style="color: #111111;">pA</span> <span class="op" style="color: #5E5E5E;">:=</span> <span class="fu" style="color: #4758AB;"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span><span class="op" style="color: #5E5E5E;">(</span><span class="va" style="color: #111111;">denModel</span>, type <span class="op" style="color: #5E5E5E;">=</span> <span class="st" style="color: #20794D;">"response"</span><span class="op" style="color: #5E5E5E;">)</span><span class="op" style="color: #5E5E5E;">]</span></span>
+<span><span class="va" style="color: #111111;">defB2</span> <span class="op" style="color: #5E5E5E;">&lt;-</span> <span class="fu" style="color: #4758AB;"><a href="https://kgoldfeld.github.io/simstudy/reference/defDataAdd.html">defDataAdd</a></span><span class="op" style="color: #5E5E5E;">(</span>varname <span class="op" style="color: #5E5E5E;">=</span> <span class="st" style="color: #20794D;">"IPW"</span>, </span>
+<span>                    formula <span class="op" style="color: #5E5E5E;">=</span> <span class="st" style="color: #20794D;">"(A*pA0+(1-A)*(1-pA0))/((A * pA) + ((1 - A) * (1 - pA)))"</span>, </span>
+<span>                    dist <span class="op" style="color: #5E5E5E;">=</span> <span class="st" style="color: #20794D;">"nonrandom"</span><span class="op" style="color: #5E5E5E;">)</span></span>
+<span><span class="va" style="color: #111111;">dtB</span> <span class="op" style="color: #5E5E5E;">&lt;-</span> <span class="fu" style="color: #4758AB;"><a href="https://kgoldfeld.github.io/simstudy/reference/addColumns.html">addColumns</a></span><span class="op" style="color: #5E5E5E;">(</span><span class="va" style="color: #111111;">defB2</span>, <span class="va" style="color: #111111;">dtB</span><span class="op" style="color: #5E5E5E;">)</span></span>
+<span><span class="va" style="color: #111111;">dtB</span><span class="op" style="color: #5E5E5E;">[</span><span class="fl" style="color: #AD0000;">1</span><span class="op" style="color: #5E5E5E;">:</span><span class="fl" style="color: #AD0000;">6</span><span class="op" style="color: #5E5E5E;">]</span></span></code></pre></div>
+</details><div class="cell-output cell-output-stdout">
+<pre><code>   id L Y0 Y1 A Y   pA0     pA    IPW
+1:  1 0  0  0 0 0 0.423 0.3347 0.8673
+2:  2 0  0  1 0 0 0.423 0.3347 0.8673
+3:  3 1  0  0 1 0 0.423 0.6718 0.6297
+4:  4 0  0  0 0 0 0.423 0.3347 0.8673
+5:  5 1  1  1 0 1 0.423 0.6718 1.7578
+6:  6 1  0  0 1 0 0.423 0.6718 0.6297</code></pre>
+</div>
+</div>
+<div class="cell">
+<details><summary>Code</summary><div class="sourceCode" id="cb43" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu" style="color: #4758AB;"><a href="https://rdrr.io/r/base/unique.html">unique</a></span><span class="op" style="color: #5E5E5E;">(</span><span class="va" style="color: #111111;">dtB</span><span class="op" style="color: #5E5E5E;">$</span><span class="va" style="color: #111111;">IPW</span><span class="op" style="color: #5E5E5E;">)</span></span></code></pre></div>
+</details><div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.8673 0.6297 1.7578 1.2639</code></pre>
+</div>
+</div>
+</section><section id="stabilized-weights-with-ipw-package" class="level2"><h2 class="anchored" data-anchor-id="stabilized-weights-with-ipw-package">Stabilized weights with <strong>ipw</strong> package</h2>
+<div class="cell">
+<details><summary>Code</summary><div class="sourceCode" id="cb45" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;">tempsw</span><span class="op" style="color: #5E5E5E;">&lt;-</span><span class="fu" style="color: #4758AB;">ipw</span><span class="fu" style="color: #4758AB;">::</span><span class="fu" style="color: #4758AB;"><a href="https://rdrr.io/pkg/ipw/man/ipwpoint.html">ipwpoint</a></span><span class="op" style="color: #5E5E5E;">(</span>exposure<span class="op" style="color: #5E5E5E;">=</span><span class="va" style="color: #111111;">A</span>,family<span class="op" style="color: #5E5E5E;">=</span><span class="st" style="color: #20794D;">"binomial"</span>,link<span class="op" style="color: #5E5E5E;">=</span><span class="st" style="color: #20794D;">"logit"</span>,numerator<span class="op" style="color: #5E5E5E;">=</span><span class="op" style="color: #5E5E5E;">~</span><span class="fl" style="color: #AD0000;">1</span>,denominator <span class="op" style="color: #5E5E5E;">=</span> <span class="op" style="color: #5E5E5E;">~</span><span class="va" style="color: #111111;">L</span>,data<span class="op" style="color: #5E5E5E;">=</span><span class="va" style="color: #111111;">dtB</span><span class="op" style="color: #5E5E5E;">)</span></span>
+<span><span class="va" style="color: #111111;">tempw</span><span class="op" style="color: #5E5E5E;">&lt;-</span><span class="fu" style="color: #4758AB;">ipw</span><span class="fu" style="color: #4758AB;">::</span><span class="fu" style="color: #4758AB;"><a href="https://rdrr.io/pkg/ipw/man/ipwpoint.html">ipwpoint</a></span><span class="op" style="color: #5E5E5E;">(</span>exposure<span class="op" style="color: #5E5E5E;">=</span><span class="va" style="color: #111111;">A</span>,family<span class="op" style="color: #5E5E5E;">=</span><span class="st" style="color: #20794D;">"binomial"</span>,link<span class="op" style="color: #5E5E5E;">=</span><span class="st" style="color: #20794D;">"logit"</span>,denominator <span class="op" style="color: #5E5E5E;">=</span> <span class="op" style="color: #5E5E5E;">~</span><span class="va" style="color: #111111;">L</span>,data<span class="op" style="color: #5E5E5E;">=</span><span class="va" style="color: #111111;">dtB</span><span class="op" style="color: #5E5E5E;">)</span></span>
+<span><span class="fu" style="color: #4758AB;"><a href="https://rdrr.io/r/base/unique.html">unique</a></span><span class="op" style="color: #5E5E5E;">(</span><span class="va" style="color: #111111;">tempsw</span><span class="op" style="color: #5E5E5E;">$</span><span class="va" style="color: #111111;">ipw.weights</span><span class="op" style="color: #5E5E5E;">)</span></span></code></pre></div>
+</details><div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.8673 0.6297 1.7578 1.2639</code></pre>
+</div>
+<details><summary>Code</summary><div class="sourceCode" id="cb47" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu" style="color: #4758AB;"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op" style="color: #5E5E5E;">(</span><span class="va" style="color: #111111;">tempsw</span><span class="op" style="color: #5E5E5E;">$</span><span class="va" style="color: #111111;">ipw.weights</span><span class="op" style="color: #5E5E5E;">)</span></span></code></pre></div>
+</details><div class="cell-output cell-output-stdout">
+<pre><code>[1] 1</code></pre>
+</div>
+<details><summary>Code</summary><div class="sourceCode" id="cb49" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu" style="color: #4758AB;"><a href="https://rdrr.io/r/base/unique.html">unique</a></span><span class="op" style="color: #5E5E5E;">(</span><span class="va" style="color: #111111;">tempw</span><span class="op" style="color: #5E5E5E;">$</span><span class="va" style="color: #111111;">ipw.weights</span><span class="op" style="color: #5E5E5E;">)</span></span></code></pre></div>
+</details><div class="cell-output cell-output-stdout">
+<pre><code>[1] 1.503 1.489 3.047 2.988</code></pre>
+</div>
+<details><summary>Code</summary><div class="sourceCode" id="cb51" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu" style="color: #4758AB;"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op" style="color: #5E5E5E;">(</span><span class="va" style="color: #111111;">tempw</span><span class="op" style="color: #5E5E5E;">$</span><span class="va" style="color: #111111;">ipw.weights</span><span class="op" style="color: #5E5E5E;">)</span></span></code></pre></div>
+</details><div class="cell-output cell-output-stdout">
+<pre><code>[1] 2</code></pre>
+</div>
+</div>
+</section><section id="applying-ipw" class="level2"><h2 class="anchored" data-anchor-id="applying-ipw">Applying IPW</h2>
+<section id="unstabilized-weights" class="level3"><h3 class="anchored" data-anchor-id="unstabilized-weights">Unstabilized weights</h3>
+<div class="cell">
+<details><summary>Code</summary><div class="sourceCode" id="cb53" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu" style="color: #4758AB;"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op" style="color: #5E5E5E;">(</span><span class="va" style="color: #111111;">mw</span><span class="op" style="color: #5E5E5E;">&lt;-</span><span class="fu" style="color: #4758AB;"><a href="https://rdrr.io/r/stats/glm.html">glm</a></span><span class="op" style="color: #5E5E5E;">(</span><span class="va" style="color: #111111;">Y</span> <span class="op" style="color: #5E5E5E;">~</span> <span class="va" style="color: #111111;">A</span> , data <span class="op" style="color: #5E5E5E;">=</span> <span class="va" style="color: #111111;">dtB</span>, family<span class="op" style="color: #5E5E5E;">=</span><span class="st" style="color: #20794D;">"binomial"</span>, weights <span class="op" style="color: #5E5E5E;">=</span> <span class="va" style="color: #111111;">tempw</span><span class="op" style="color: #5E5E5E;">$</span><span class="va" style="color: #111111;">ipw.weights</span><span class="op" style="color: #5E5E5E;">)</span><span class="op" style="color: #5E5E5E;">)</span><span class="op" style="color: #5E5E5E;">$</span><span class="va" style="color: #111111;">coef</span></span></code></pre></div>
+</details><div class="cell-output cell-output-stderr">
+<pre><code>Warning in eval(family$initialize): non-integer #successes in a binomial glm!</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>            Estimate Std. Error z value  Pr(&gt;|z|)
+(Intercept)   -2.069     0.1002 -20.645 1.076e-94
+A              1.081     0.1229   8.801 1.354e-18</code></pre>
+</div>
+</div>
+</section><section id="stabilized-weights" class="level3"><h3 class="anchored" data-anchor-id="stabilized-weights">Stabilized weights</h3>
+<div class="cell">
+<details><summary>Code</summary><div class="sourceCode" id="cb56" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu" style="color: #4758AB;"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op" style="color: #5E5E5E;">(</span><span class="va" style="color: #111111;">mws</span><span class="op" style="color: #5E5E5E;">&lt;-</span><span class="fu" style="color: #4758AB;"><a href="https://rdrr.io/r/stats/glm.html">glm</a></span><span class="op" style="color: #5E5E5E;">(</span><span class="va" style="color: #111111;">Y</span> <span class="op" style="color: #5E5E5E;">~</span> <span class="va" style="color: #111111;">A</span> , data <span class="op" style="color: #5E5E5E;">=</span> <span class="va" style="color: #111111;">dtB</span>, family<span class="op" style="color: #5E5E5E;">=</span><span class="st" style="color: #20794D;">"binomial"</span>, weights <span class="op" style="color: #5E5E5E;">=</span> <span class="va" style="color: #111111;">tempsw</span><span class="op" style="color: #5E5E5E;">$</span><span class="va" style="color: #111111;">ipw.weights</span><span class="op" style="color: #5E5E5E;">)</span><span class="op" style="color: #5E5E5E;">)</span><span class="op" style="color: #5E5E5E;">$</span><span class="va" style="color: #111111;">coef</span></span></code></pre></div>
+</details><div class="cell-output cell-output-stderr">
+<pre><code>Warning in eval(family$initialize): non-integer #successes in a binomial glm!</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>            Estimate Std. Error z value  Pr(&gt;|z|)
+(Intercept)   -2.069     0.1319 -15.682 1.996e-55
+A              1.081     0.1713   6.312 2.760e-10</code></pre>
+</div>
+</div>
+</section></section><section id="comparison-1" class="level2"><h2 class="anchored" data-anchor-id="comparison-1">Comparison</h2>
+<div class="cell">
+<details><summary>Code</summary><div class="sourceCode" id="cb59" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu" style="color: #4758AB;">modelsummary</span><span class="fu" style="color: #4758AB;">::</span><span class="fu" style="color: #4758AB;"><a href="https://rdrr.io/pkg/modelsummary/man/modelsummary.html">modelsummary</a></span><span class="op" style="color: #5E5E5E;">(</span>models<span class="op" style="color: #5E5E5E;">=</span><span class="fu" style="color: #4758AB;"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op" style="color: #5E5E5E;">(</span><span class="st" style="color: #20794D;">"marginal"</span><span class="op" style="color: #5E5E5E;">=</span><span class="va" style="color: #111111;">mm</span>,<span class="st" style="color: #20794D;">"conditional"</span><span class="op" style="color: #5E5E5E;">=</span><span class="va" style="color: #111111;">mc</span>,<span class="st" style="color: #20794D;">"IPW"</span><span class="op" style="color: #5E5E5E;">=</span><span class="va" style="color: #111111;">mw</span>,<span class="st" style="color: #20794D;">"IPWs"</span><span class="op" style="color: #5E5E5E;">=</span><span class="va" style="color: #111111;">mws</span><span class="op" style="color: #5E5E5E;">)</span><span class="op" style="color: #5E5E5E;">)</span></span></code></pre></div>
+</details><div class="cell-output cell-output-stderr">
+<pre><code>Warning in eval(family$initialize): non-integer #successes in a binomial glm!
+
+Warning in eval(family$initialize): non-integer #successes in a binomial glm!</code></pre>
+</div>
+<div class="cell-output-display">
+
+<table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<thead><tr>
+<th style="text-align:left;">   </th>
+   <th style="text-align:center;"> marginal </th>
+   <th style="text-align:center;"> conditional </th>
+   <th style="text-align:center;"> &nbsp;IPW </th>
+   <th style="text-align:center;"> &nbsp;IPWs </th>
+  </tr></thead>
+<tbody>
+<tr>
+<td style="text-align:left;"> (Intercept) </td>
+   <td style="text-align:center;"> −2.333 </td>
+   <td style="text-align:center;"> −2.736 </td>
+   <td style="text-align:center;"> −2.069 </td>
+   <td style="text-align:center;"> −2.069 </td>
+  </tr>
+<tr>
+<td style="text-align:left;">  </td>
+   <td style="text-align:center;"> (0.147) </td>
+   <td style="text-align:center;"> (0.165) </td>
+   <td style="text-align:center;"> (0.100) </td>
+   <td style="text-align:center;"> (0.132) </td>
+  </tr>
+<tr>
+<td style="text-align:left;"> A </td>
+   <td style="text-align:center;"> 1.587 </td>
+   <td style="text-align:center;"> 1.211 </td>
+   <td style="text-align:center;"> 1.081 </td>
+   <td style="text-align:center;"> 1.081 </td>
+  </tr>
+<tr>
+<td style="text-align:left;">  </td>
+   <td style="text-align:center;"> (0.180) </td>
+   <td style="text-align:center;"> (0.191) </td>
+   <td style="text-align:center;"> (0.123) </td>
+   <td style="text-align:center;"> (0.171) </td>
+  </tr>
+<tr>
+<td style="text-align:left;"> L </td>
+   <td style="text-align:center;">  </td>
+   <td style="text-align:center;"> 1.614 </td>
+   <td style="text-align:center;">  </td>
+   <td style="text-align:center;">  </td>
+  </tr>
+<tr>
+<td style="text-align:left;box-shadow: 0px 1.5px">  </td>
+   <td style="text-align:center;box-shadow: 0px 1.5px">  </td>
+   <td style="text-align:center;box-shadow: 0px 1.5px"> (0.183) </td>
+   <td style="text-align:center;box-shadow: 0px 1.5px">  </td>
+   <td style="text-align:center;box-shadow: 0px 1.5px">  </td>
+  </tr>
+<tr>
+<td style="text-align:left;"> Num.Obs. </td>
+   <td style="text-align:center;"> 1000 </td>
+   <td style="text-align:center;"> 1000 </td>
+   <td style="text-align:center;"> 1000 </td>
+   <td style="text-align:center;"> 1000 </td>
+  </tr>
+<tr>
+<td style="text-align:left;"> AIC </td>
+   <td style="text-align:center;"> 880.1 </td>
+   <td style="text-align:center;"> 802.5 </td>
+   <td style="text-align:center;"> 1847.3 </td>
+   <td style="text-align:center;"> 1004.4 </td>
+  </tr>
+<tr>
+<td style="text-align:left;"> BIC </td>
+   <td style="text-align:center;"> 889.9 </td>
+   <td style="text-align:center;"> 817.3 </td>
+   <td style="text-align:center;"> 1857.1 </td>
+   <td style="text-align:center;"> 1014.2 </td>
+  </tr>
+<tr>
+<td style="text-align:left;"> Log.Lik. </td>
+   <td style="text-align:center;"> −438.049 </td>
+   <td style="text-align:center;"> −398.272 </td>
+   <td style="text-align:center;"> −921.632 </td>
+   <td style="text-align:center;"> −500.206 </td>
+  </tr>
+<tr>
+<td style="text-align:left;"> F </td>
+   <td style="text-align:center;"> 77.828 </td>
+   <td style="text-align:center;"> 71.500 </td>
+   <td style="text-align:center;"> 77.460 </td>
+   <td style="text-align:center;"> 39.837 </td>
+  </tr>
+<tr>
+<td style="text-align:left;"> RMSE </td>
+   <td style="text-align:center;"> 0.37 </td>
+   <td style="text-align:center;"> 0.35 </td>
+   <td style="text-align:center;"> 0.37 </td>
+   <td style="text-align:center;"> 0.37 </td>
+  </tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="cell">
+<div class="cell-output-display">
+<p>We used R version 4.3.2 <span class="citation" data-cites="base">[@base]</span> and the following R packages: ipw v. 1.2 <span class="citation" data-cites="ipw">[@ipw]</span>, rio v. 0.5.26 <span class="citation" data-cites="rio">[@rio]</span>, simstudy v. 0.7.1 <span class="citation" data-cites="simstudy">[@simstudy]</span>.</p>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   Package Version  Citation
+1     base   4.3.2     @base
+2      ipw     1.2      @ipw
+3      rio  0.5.26      @rio
+4 simstudy   0.7.1 @simstudy</code></pre>
+</div>
+</div>
+</section></section><section id="bibliography" class="level1 unnumbered"><h1 class="unnumbered">Bibliography</h1>
+
+
+</section> ]]></description>
+  <category>code</category>
+  <category>analysis</category>
+  <guid>https://mcdr65.github.io/myblog/posts/noncollaps/index.html</guid>
+  <pubDate>Fri, 01 Dec 2023 23:00:00 GMT</pubDate>
+</item>
 <item>
   <title>Compositions</title>
   <dc:creator>André Meichtry</dc:creator>
@@ -25,8 +709,9 @@
 <p>4 Raters rated a 4-part-composition on <img src="https://latex.codecogs.com/png.latex?n=20"> subjects. See the interactive <em>Tetrahedron</em></p>
 <div class="cell" data-webgl="true">
 <details><summary>Code</summary><div class="sourceCode" id="cb1" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu" style="color: #4758AB;">plot3D</span><span class="op" style="color: #5E5E5E;">(</span><span class="va" style="color: #111111;">datAitch</span>,col<span class="op" style="color: #5E5E5E;">=</span><span class="fu" style="color: #4758AB;"><a href="https://rdrr.io/r/base/numeric.html">as.numeric</a></span><span class="op" style="color: #5E5E5E;">(</span><span class="va" style="color: #111111;">Rater</span><span class="op" style="color: #5E5E5E;">)</span>,size<span class="op" style="color: #5E5E5E;">=</span><span class="fl" style="color: #AD0000;">5</span>,axes<span class="op" style="color: #5E5E5E;">=</span><span class="cn" style="color: #8f5902;">TRUE</span>,coors<span class="op" style="color: #5E5E5E;">=</span><span class="cn" style="color: #8f5902;">TRUE</span><span class="op" style="color: #5E5E5E;">)</span></span></code></pre></div>
-</details><div id="rgl51374" style="width:100%;height:464px;" class="rglWebGL html-widget"></div>
-<script type="application/json" data-for="rgl51374">{"x":{"material":{"color":"#000000","alpha":1,"lit":true,"ambient":"#000000","specular":"#FFFFFF","emission":"#000000","shininess":50,"smooth":true,"front":"filled","back":"filled","size":3,"lwd":1,"fog":true,"point_antialias":false,"line_antialias":false,"texture":null,"textype":"rgb","texmipmap":false,"texminfilter":"linear","texmagfilter":"linear","texenvmap":false,"depth_mask":true,"depth_test":"less","isTransparent":false,"polygon_offset":[0,0],"margin":"","floating":false,"tag":""},"rootSubscene":7,"objects":{"13":{"id":13,"type":"linestrip","material":{"lit":false,"size":2},"vertices":"0","colors":"1","centers":"2","ignoreExtent":false,"flags":32832},"14":{"id":14,"type":"points","material":{"lit":false,"size":5},"vertices":"3","colors":"4","centers":"5","ignoreExtent":false,"flags":34816},"15":{"id":15,"type":"text","material":{"lit":false},"vertices":"6","colors":"7","texts":[["peripheral"],["central"],["cortical"],["vegetative"]],"cex":[[1]],"adj":[[0.5,0.5,0.5]],"centers":"8","family":[["bitmap"]],"font":[[1]],"ignoreExtent":false,"flags":33808},"11":{"id":11,"type":"light","vertices":[[0,0,1]],"colors":[[1,1,1,1],[1,1,1,1],[1,1,1,1]],"viewpoint":true,"finite":false},"10":{"id":10,"type":"background","material":{},"colors":"9","centers":"10","sphere":false,"fogtype":"none","fogscale":1,"flags":32768},"12":{"id":12,"type":"background","material":{"lit":false,"back":"lines"},"colors":"11","centers":"12","sphere":false,"fogtype":"none","fogscale":1,"flags":32768},"7":{"id":7,"type":"subscene","par3d":{"antialias":8,"FOV":30,"ignoreExtent":false,"listeners":7,"mouseMode":{"none":"none","left":"trackball","right":"zoom","middle":"fov","wheel":"pull"},"observer":[0,0,4.24714517593384],"modelMatrix":[[1,0,0,0],[0,1,0,-0.20412415266037],[0,0,1,-4.53582048416138],[0,0,0,1]],"projMatrix":[[3.73205065727234,0,0,0],[0,3.73205065727234,0,0],[0,0,-3.86370325088501,-15.3104658126831],[0,0,-1,0]],"skipRedraw":false,"userMatrix":[[1,0,0,0],[0,1,0,0],[0,0,1,0],[0,0,0,1]],"userProjection":[[1,0,0,0],[0,1,0,0],[0,0,1,0],[0,0,0,1]],"scale":[1,1,1],"viewport":{"x":0,"y":0,"width":1,"height":1},"zoom":1,"bbox":[-0.70710676908493,0.70710676908493,-0.40824830532074,0.816496610641479,-0.288675129413605,0.866025388240814],"windowRect":[117,154,373,410],"family":"bitmap","font":1,"cex":1,"useFreeType":false,"fontname":"fixed","maxClipPlanes":8,"glVersion":4.6,"activeSubscene":0},"embeddings":{"viewport":"replace","projection":"replace","model":"replace","mouse":"replace"},"objects":[12,13,14,15,11],"subscenes":[],"flags":36176}},"crosstalk":{"key":[],"group":[],"id":[],"options":[]},"width":672,"height":480,"context":{"shiny":false,"rmarkdown":null},"buffer":{"accessors":[{"bufferView":0,"componentType":5126,"count":8,"type":"VEC3"},{"bufferView":1,"componentType":5126,"count":1,"type":"VEC4"},{"bufferView":2,"componentType":5126,"count":8,"type":"VEC3"},{"bufferView":3,"componentType":5126,"count":80,"type":"VEC3"},{"bufferView":4,"componentType":5126,"count":80,"type":"VEC4"},{"bufferView":5,"componentType":5126,"count":80,"type":"VEC3"},{"bufferView":6,"componentType":5126,"count":4,"type":"VEC3"},{"bufferView":7,"componentType":5126,"count":1,"type":"VEC4"},{"bufferView":8,"componentType":5126,"count":4,"type":"VEC3"},{"bufferView":9,"componentType":5126,"count":1,"type":"VEC4"},{"bufferView":10,"componentType":5121,"count":1,"type":"VEC3"},{"bufferView":11,"componentType":5121,"count":1,"type":"VEC4"},{"bufferView":12,"componentType":5121,"count":1,"type":"VEC3"}],"bufferViews":[{"buffer":0,"byteLength":96,"byteOffset":0},{"buffer":0,"byteLength":16,"byteOffset":96},{"buffer":0,"byteLength":96,"byteOffset":112},{"buffer":0,"byteLength":960,"byteOffset":208},{"buffer":0,"byteLength":1280,"byteOffset":1168},{"buffer":0,"byteLength":960,"byteOffset":2448},{"buffer":0,"byteLength":48,"byteOffset":3408},{"buffer":0,"byteLength":16,"byteOffset":3456},{"buffer":0,"byteLength":48,"byteOffset":3472},{"buffer":0,"byteLength":16,"byteOffset":3520},{"buffer":0,"byteLength":3,"byteOffset":3536},{"buffer":0,"byteLength":4,"byteOffset":3539},{"buffer":0,"byteLength":3,"byteOffset":3543}],"buffers":[{"byteLength":3546,"bytes":"8wQ1v+wF0b46zZO+8wQ1P+wF0b46zZO+AAAAAOwFUT86zZO+AAAAAAAAAADXs10/8wQ1v+wF\n0b46zZO+AAAAAOwFUT86zZO+8wQ1P+wF0b46zZO+AAAAAAAAAADXs10/v74+P7++Pj+/vj4/\nAACAP/MENb/sBdG+Os2TvvMENT/sBdG+Os2TvgAAAADsBVE/Os2TvgAAAAAAAAAA17NdP/ME\nNb/sBdG+Os2TvgAAAADsBVE/Os2TvvMENT/sBdG+Os2TvgAAAAAAAAAA17NdP8PQkD2Gqcg8\nm9VUvsPQkD3n0/o9rFwxvsPQED1xxJw+rFwxvsPQED7wNye9kHtsPSQ5WT7wN6c9kHtsPiQ5\n2T1xxJw+rFwxvlDHrb1ZxgW9QPqHvgAAAAAAAAAArFwxPsPQkD3n0/o9rFwxPsPQED3yUBK+\nkHtsvcPQEL3n03q9rFwxviQ52T7wNye9kHvsvQAAAADwN6c9kHvsvcPQEL3p7GU+kHtsviQ5\nWT7wNye9Os2TvsPQED4AAMCjrFwxvsPQEL1z3Ye+kHtsvvMENT7wN6e8kHtsvgAAAADn0/o+\nrFwxPsPQkD7n0/o9AACAosPQkD0AAAAArFwxvsPQkD7wN6c9Os2TvgAAAADwNyc+Os2TPiQ5\n2T7wNye+kHtsPVRtfT7wN6c8kHtsPcPQkD7n03o+rFwxvsPQED3sBdE9kHtsvcPQkL7wNye+\nkHtsPcPQkD3n0/o9rFwxPsPQED1z3Yc+kHtsPQAAAADyUJI+kHvsPdvqoj7sBdE9kHtsvvME\nNT7yUBI+kHtsPcPQED7yUJI+kHtsviQ52T3sBdE9kHtsvsPQED4AAMCjrFwxvsPQED7wNye+\nOs2Tvtvqoj7n03o9rFwxvgAAAADsBdE+kHvsPfMENT7yUBI+kHtsPQAAAABZxgU8Os2TviQ5\nWb7yUJK+Os2TvsPQkD3sBVE+kHtsPSQ52T3uHjy+AAAAo8PQkD7n03o+rFwxvsPQED7wNye+\nOs2TvvMEtT7wNyc9kHtsvSQ5WT7wNye9kHtsPWq0Z7wcG2q9Os2TPsPQkL3sBVE+HuzOPq2J\nJr6IwjM+oQJJvvMEtT7wNye9kHtsPdvqor7sBdE9kHtsvvMEtT7wNye9Os2TviJmsT6EkF0+\nOs2TvsPQkD4AAAAArFwxvsWjuD5Te0Q+Os2TviQ52T7wN6c9Os2TvgAAAADp7OU+kHtsPlRt\nfT7sBdE9kHtsvcPQkD4cG2o9somlvVDHLT7sBVE+somlvZdCvD2/Io49soklPk70hT6Cd/K9\nkHvsPbEv9j2IwjO+oQJJPvMENT7p7GU+kHtsvZkV5D63vuG9veMNvlDHrT278Le9kHtsPpdC\nvL278De9KUa3PglMnz0gTcA9oQJJPlDHrbzuHjw+veMNPVRtfT6K2569py+9PAlMnz1xxJw+\nAAAAAMPQkD3n03o+m9XUvSQ52b1XrRq+lqhgvlDHLT5ZxoU9py89PFDHLT0kfxa+m9XUvcPQ\nkD7wN6e9kHtsvcPQEL1z3Yc+kHtsPlRtfT7wN6c8kHtsPQAAAAAAAAAAAAAAAAAAgD8AAAAA\nAAAAAAAAAAAAAIA/AAAAAAAAAAAAAAAAAACAPwAAAAAAAAAAAAAAAAAAgD8AAAAAAAAAAAAA\nAAAAAIA/AAAAAAAAAAAAAAAAAACAPwAAAAAAAAAAAAAAAAAAgD8AAAAAAAAAAAAAAAAAAIA/\nAAAAAAAAAAAAAAAAAACAPwAAAAAAAAAAAAAAAAAAgD8AAAAAAAAAAAAAAAAAAIA/AAAAAAAA\nAAAAAAAAAACAPwAAAAAAAAAAAAAAAAAAgD8AAAAAAAAAAAAAAAAAAIA/AAAAAAAAAAAAAAAA\nAACAPwAAAAAAAAAAAAAAAAAAgD8AAAAAAAAAAAAAAAAAAIA/AAAAAAAAAAAAAAAAAACAPwAA\nAAAAAAAAAAAAAAAAgD8AAAAAAAAAAAAAAAAAAIA/4N9fP6empj7X1tY+AACAP+DfXz+npqY+\n19bWPgAAgD/g318/p6amPtfW1j4AAIA/4N9fP6empj7X1tY+AACAP+DfXz+npqY+19bWPgAA\ngD/g318/p6amPtfW1j4AAIA/4N9fP6empj7X1tY+AACAP+DfXz+npqY+19bWPgAAgD/g318/\np6amPtfW1j4AAIA/4N9fP6empj7X1tY+AACAP+DfXz+npqY+19bWPgAAgD/g318/p6amPtfW\n1j4AAIA/4N9fP6empj7X1tY+AACAP+DfXz+npqY+19bWPgAAgD/g318/p6amPtfW1j4AAIA/\n4N9fP6empj7X1tY+AACAP+DfXz+npqY+19bWPgAAgD/g318/p6amPtfW1j4AAIA/4N9fP6em\npj7X1tY+AACAP+DfXz+npqY+19bWPgAAgD/DwsI+0dBQP5+enj4AAIA/w8LCPtHQUD+fnp4+\nAACAP8PCwj7R0FA/n56ePgAAgD/DwsI+0dBQP5+enj4AAIA/w8LCPtHQUD+fnp4+AACAP8PC\nwj7R0FA/n56ePgAAgD/DwsI+0dBQP5+enj4AAIA/w8LCPtHQUD+fnp4+AACAP8PCwj7R0FA/\nn56ePgAAgD/DwsI+0dBQP5+enj4AAIA/w8LCPtHQUD+fnp4+AACAP8PCwj7R0FA/n56ePgAA\ngD/DwsI+0dBQP5+enj4AAIA/w8LCPtHQUD+fnp4+AACAP8PCwj7R0FA/n56ePgAAgD/DwsI+\n0dBQP5+enj4AAIA/w8LCPtHQUD+fnp4+AACAP8PCwj7R0FA/n56ePgAAgD/DwsI+0dBQP5+e\nnj4AAIA/w8LCPtHQUD+fnp4+AACAP4mICD6Ylxc/5+ZmPwAAgD+JiAg+mJcXP+fmZj8AAIA/\niYgIPpiXFz/n5mY/AACAP4mICD6Ylxc/5+ZmPwAAgD+JiAg+mJcXP+fmZj8AAIA/iYgIPpiX\nFz/n5mY/AACAP4mICD6Ylxc/5+ZmPwAAgD+JiAg+mJcXP+fmZj8AAIA/iYgIPpiXFz/n5mY/\nAACAP4mICD6Ylxc/5+ZmPwAAgD+JiAg+mJcXP+fmZj8AAIA/iYgIPpiXFz/n5mY/AACAP4mI\nCD6Ylxc/5+ZmPwAAgD+JiAg+mJcXP+fmZj8AAIA/iYgIPpiXFz/n5mY/AACAP4mICD6Ylxc/\n5+ZmPwAAgD+JiAg+mJcXP+fmZj8AAIA/iYgIPpiXFz/n5mY/AACAP4mICD6Ylxc/5+ZmPwAA\ngD+JiAg+mJcXP+fmZj8AAIA/w9CQPYapyDyb1VS+w9CQPefT+j2sXDG+w9AQPXHEnD6sXDG+\nw9AQPvA3J72Qe2w9JDlZPvA3pz2Qe2w+JDnZPXHEnD6sXDG+UMetvVnGBb1A+oe+AAAAAAAA\nAACsXDE+w9CQPefT+j2sXDE+w9AQPfJQEr6Qe2y9w9AQvefTer2sXDG+JDnZPvA3J72Qe+y9\nAAAAAPA3pz2Qe+y9w9AQvensZT6Qe2y+JDlZPvA3J706zZO+w9AQPgAAwKOsXDG+w9AQvXPd\nh76Qe2y+8wQ1PvA3p7yQe2y+AAAAAOfT+j6sXDE+w9CQPufT+j0AAICiw9CQPQAAAACsXDG+\nw9CQPvA3pz06zZO+AAAAAPA3Jz46zZM+JDnZPvA3J76Qe2w9VG19PvA3pzyQe2w9w9CQPufT\nej6sXDG+w9AQPewF0T2Qe2y9w9CQvvA3J76Qe2w9w9CQPefT+j2sXDE+w9AQPXPdhz6Qe2w9\nAAAAAPJQkj6Qe+w92+qiPuwF0T2Qe2y+8wQ1PvJQEj6Qe2w9w9AQPvJQkj6Qe2y+JDnZPewF\n0T2Qe2y+w9AQPgAAwKOsXDG+w9AQPvA3J746zZO+2+qiPufTej2sXDG+AAAAAOwF0T6Qe+w9\n8wQ1PvJQEj6Qe2w9AAAAAFnGBTw6zZO+JDlZvvJQkr46zZO+w9CQPewFUT6Qe2w9JDnZPe4e\nPL4AAACjw9CQPufTej6sXDG+w9AQPvA3J746zZO+8wS1PvA3Jz2Qe2y9JDlZPvA3J72Qe2w9\narRnvBwbar06zZM+w9CQvewFUT4e7M4+rYkmvojCMz6hAkm+8wS1PvA3J72Qe2w92+qivuwF\n0T2Qe2y+8wS1PvA3J706zZO+ImaxPoSQXT46zZO+w9CQPgAAAACsXDG+xaO4PlN7RD46zZO+\nJDnZPvA3pz06zZO+AAAAAOns5T6Qe2w+VG19PuwF0T2Qe2y9w9CQPhwbaj2yiaW9UMctPuwF\nUT6yiaW9l0K8Pb8ijj2yiSU+TvSFPoJ38r2Qe+w9sS/2PYjCM76hAkk+8wQ1PunsZT6Qe2y9\nmRXkPre+4b294w2+UMetPbvwt72Qe2w+l0K8vbvwN70pRrc+CUyfPSBNwD2hAkk+UMetvO4e\nPD694w09VG19Porbnr2nL708CUyfPXHEnD4AAAAAw9CQPefTej6b1dS9JDnZvVetGr6WqGC+\nUMctPlnGhT2nLz08UMctPSR/Fr6b1dS9w9CQPvA3p72Qe2y9w9AQvXPdhz6Qe2w+VG19PvA3\npzyQe2w98wQ1v+wF0b46zZO+8wQ1P+wF0b46zZO+AAAAAOwFUT86zZO+AAAAAAAAAADXs10/\nv74+P7++Pj+/vj4/AACAP/MENb/sBdG+Os2TvvMENT/sBdG+Os2TvgAAAADsBVE/Os2TvgAA\nAAAAAAAA17NdP5mYmD6ZmJg+mZiYPgAAgD8AAAABAQEBAAAA"}]},"players":[],"webGLoptions":{"preserveDrawingBuffer":true}},"evals":[],"jsHooks":[]}</script>
+</details><p id="rgl29119-aria" hidden="">3D plot</p>
+<div id="rgl29119" style="width:100%;height:464px;" class="rglWebGL html-widget " aria-labelledby="rgl29119-aria"></div>
+<script type="application/json" data-for="rgl29119">{"x":{"material":{"color":"#000000","alpha":1,"lit":true,"ambient":"#000000","specular":"#FFFFFF","emission":"#000000","shininess":50,"smooth":true,"front":"filled","back":"filled","size":3,"lwd":1,"fog":true,"point_antialias":false,"line_antialias":false,"texture":null,"textype":"rgb","texmode":"modulate","texmipmap":false,"texminfilter":"linear","texmagfilter":"linear","texenvmap":false,"depth_mask":true,"depth_test":"less","isTransparent":false,"polygon_offset":[0,0],"margin":"","floating":false,"tag":"","blend":["src_alpha","one_minus_src_alpha"]},"rootSubscene":1,"objects":{"7":{"id":7,"type":"linestrip","material":{"lit":false,"size":2},"vertices":"0","colors":"1","centers":"2","ignoreExtent":false,"flags":32832},"8":{"id":8,"type":"points","material":{"lit":false,"size":5},"vertices":"3","colors":"4","centers":"5","ignoreExtent":false,"flags":34816},"9":{"id":9,"type":"text","material":{"lit":false},"vertices":"6","colors":"7","texts":[["peripheral"],["central"],["cortical"],["vegetative"]],"cex":[[1]],"adj":[[0.5,0.5,0.5]],"centers":"8","family":[["sans"]],"font":[[1]],"ignoreExtent":false,"flags":33808},"5":{"id":5,"type":"light","vertices":[[0,0,1]],"colors":[[1,1,1,1],[1,1,1,1],[1,1,1,1]],"viewpoint":true,"finite":false},"4":{"id":4,"type":"background","material":{},"colors":"9","centers":"10","sphere":false,"fogtype":"none","fogscale":1,"flags":32768},"6":{"id":6,"type":"background","material":{"lit":false,"back":"lines"},"colors":"11","centers":"12","sphere":false,"fogtype":"none","fogscale":1,"flags":32768},"1":{"id":1,"type":"subscene","par3d":{"antialias":8,"FOV":30,"ignoreExtent":false,"listeners":1,"mouseMode":{"none":"none","left":"trackball","right":"zoom","middle":"fov","wheel":"pull"},"observer":[0,0,4.24714517593384],"modelMatrix":[[1,0,0,0],[0,1,0,-0.20412415266037],[0,0,1,-4.53582048416138],[0,0,0,1]],"projMatrix":[[3.73205065727234,0,0,0],[0,3.73205065727234,0,0],[0,0,-3.86370325088501,-15.3104658126831],[0,0,-1,0]],"skipRedraw":false,"userMatrix":[[1,0,0,0],[0,1,0,0],[0,0,1,0],[0,0,0,1]],"userProjection":[[1,0,0,0],[0,1,0,0],[0,0,1,0],[0,0,0,1]],"scale":[1,1,1],"viewport":{"x":0,"y":0,"width":1,"height":1},"zoom":1,"bbox":[-0.70710676908493,0.70710676908493,-0.40824830532074,0.816496610641479,-0.288675129413605,0.866025388240814],"windowRect":[0,0,256,256],"family":"sans","font":1,"cex":1,"useFreeType":true,"fontname":"NULL","maxClipPlanes":2147483647,"glVersion":"NA","activeSubscene":0},"embeddings":{"viewport":"replace","projection":"replace","model":"replace","mouse":"replace"},"objects":[6,7,8,9,5],"subscenes":[],"flags":36176}},"crosstalk":{"key":[],"group":[],"id":[],"options":[]},"width":672,"height":480,"buffer":{"accessors":[{"bufferView":0,"componentType":5126,"count":8,"type":"VEC3"},{"bufferView":1,"componentType":5126,"count":1,"type":"VEC4"},{"bufferView":2,"componentType":5126,"count":8,"type":"VEC3"},{"bufferView":3,"componentType":5126,"count":80,"type":"VEC3"},{"bufferView":4,"componentType":5121,"count":80,"type":"VEC4","normalized":true},{"bufferView":5,"componentType":5126,"count":80,"type":"VEC3"},{"bufferView":6,"componentType":5126,"count":4,"type":"VEC3"},{"bufferView":7,"componentType":5126,"count":1,"type":"VEC4"},{"bufferView":8,"componentType":5126,"count":4,"type":"VEC3"},{"bufferView":9,"componentType":5126,"count":1,"type":"VEC4"},{"bufferView":10,"componentType":5121,"count":1,"type":"VEC3"},{"bufferView":11,"componentType":5121,"count":1,"type":"VEC4"},{"bufferView":12,"componentType":5121,"count":1,"type":"VEC3"}],"bufferViews":[{"buffer":0,"byteLength":96,"byteOffset":0},{"buffer":0,"byteLength":16,"byteOffset":96},{"buffer":0,"byteLength":96,"byteOffset":112},{"buffer":0,"byteLength":960,"byteOffset":208},{"buffer":0,"byteLength":320,"byteOffset":1168},{"buffer":0,"byteLength":960,"byteOffset":1488},{"buffer":0,"byteLength":48,"byteOffset":2448},{"buffer":0,"byteLength":16,"byteOffset":2496},{"buffer":0,"byteLength":48,"byteOffset":2512},{"buffer":0,"byteLength":16,"byteOffset":2560},{"buffer":0,"byteLength":3,"byteOffset":2576},{"buffer":0,"byteLength":4,"byteOffset":2579},{"buffer":0,"byteLength":3,"byteOffset":2583}],"buffers":[{"byteLength":2586,"bytes":"8wQ1v+wF0b46zZO+8wQ1P+wF0b46zZO+AAAAAOwFUT86zZO+AAAAAAAAAADXs10/8wQ1v+wF\n0b46zZO+AAAAAOwFUT86zZO+8wQ1P+wF0b46zZO+AAAAAAAAAADXs10/v74+P7++Pj+/vj4/\nAACAP/MENb/sBdG+Os2TvvMENT/sBdG+Os2TvgAAAADsBVE/Os2TvgAAAAAAAAAA17NdP/ME\nNb/sBdG+Os2TvgAAAADsBVE/Os2TvvMENT/sBdG+Os2TvgAAAAAAAAAA17NdP8PQkD2Gqcg8\nm9VUvsPQkD3n0/o9rFwxvsPQED1xxJw+rFwxvsPQED7wNye9kHtsPSQ5WT7wN6c9kHtsPiQ5\n2T1xxJw+rFwxvlDHrb1ZxgW9QPqHvgAAAAAAAAAArFwxPsPQkD3n0/o9rFwxPsPQED3yUBK+\nkHtsvcPQEL3n03q9rFwxviQ52T7wNye9kHvsvQAAAADwN6c9kHvsvcPQEL3p7GU+kHtsviQ5\nWT7wNye9Os2TvsPQED4AAMCjrFwxvsPQEL1z3Ye+kHtsvvMENT7wN6e8kHtsvgAAAADn0/o+\nrFwxPsPQkD7n0/o9AACAosPQkD0AAAAArFwxvsPQkD7wN6c9Os2TvgAAAADwNyc+Os2TPiQ5\n2T7wNye+kHtsPVRtfT7wN6c8kHtsPcPQkD7n03o+rFwxvsPQED3sBdE9kHtsvcPQkL7wNye+\nkHtsPcPQkD3n0/o9rFwxPsPQED1z3Yc+kHtsPQAAAADyUJI+kHvsPdvqoj7sBdE9kHtsvvME\nNT7yUBI+kHtsPcPQED7yUJI+kHtsviQ52T3sBdE9kHtsvsPQED4AAMCjrFwxvsPQED7wNye+\nOs2Tvtvqoj7n03o9rFwxvgAAAADsBdE+kHvsPfMENT7yUBI+kHtsPQAAAABZxgU8Os2TviQ5\nWb7yUJK+Os2TvsPQkD3sBVE+kHtsPSQ52T3uHjy+AAAAo8PQkD7n03o+rFwxvsPQED7wNye+\nOs2TvvMEtT7wNyc9kHtsvSQ5WT7wNye9kHtsPWq0Z7wcG2q9Os2TPsPQkL3sBVE+HuzOPq2J\nJr6IwjM+oQJJvvMEtT7wNye9kHtsPdvqor7sBdE9kHtsvvMEtT7wNye9Os2TviJmsT6EkF0+\nOs2TvsPQkD4AAAAArFwxvsWjuD5Te0Q+Os2TviQ52T7wN6c9Os2TvgAAAADp7OU+kHtsPlRt\nfT7sBdE9kHtsvcPQkD4cG2o9somlvVDHLT7sBVE+somlvZdCvD2/Io49soklPk70hT6Cd/K9\nkHvsPbEv9j2IwjO+oQJJPvMENT7p7GU+kHtsvZkV5D63vuG9veMNvlDHrT278Le9kHtsPpdC\nvL278De9KUa3PglMnz0gTcA9oQJJPlDHrbzuHjw+veMNPVRtfT6K2569py+9PAlMnz1xxJw+\nAAAAAMPQkD3n03o+m9XUvSQ52b1XrRq+lqhgvlDHLT5ZxoU9py89PFDHLT0kfxa+m9XUvcPQ\nkD7wN6e9kHtsvcPQEL1z3Yc+kHtsPlRtfT7wN6c8kHtsPQAAAP8AAAD/AAAA/wAAAP8AAAD/\nAAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAA\nAP8AAAD/31Nr/99Ta//fU2v/31Nr/99Ta//fU2v/31Nr/99Ta//fU2v/31Nr/99Ta//fU2v/\n31Nr/99Ta//fU2v/31Nr/99Ta//fU2v/31Nr/99Ta/9h0E//YdBP/2HQT/9h0E//YdBP/2HQ\nT/9h0E//YdBP/2HQT/9h0E//YdBP/2HQT/9h0E//YdBP/2HQT/9h0E//YdBP/2HQT/9h0E//\nYdBP/yKX5v8il+b/Ipfm/yKX5v8il+b/Ipfm/yKX5v8il+b/Ipfm/yKX5v8il+b/Ipfm/yKX\n5v8il+b/Ipfm/yKX5v8il+b/Ipfm/yKX5v8il+b/w9CQPYapyDyb1VS+w9CQPefT+j2sXDG+\nw9AQPXHEnD6sXDG+w9AQPvA3J72Qe2w9JDlZPvA3pz2Qe2w+JDnZPXHEnD6sXDG+UMetvVnG\nBb1A+oe+AAAAAAAAAACsXDE+w9CQPefT+j2sXDE+w9AQPfJQEr6Qe2y9w9AQvefTer2sXDG+\nJDnZPvA3J72Qe+y9AAAAAPA3pz2Qe+y9w9AQvensZT6Qe2y+JDlZPvA3J706zZO+w9AQPgAA\nwKOsXDG+w9AQvXPdh76Qe2y+8wQ1PvA3p7yQe2y+AAAAAOfT+j6sXDE+w9CQPufT+j0AAICi\nw9CQPQAAAACsXDG+w9CQPvA3pz06zZO+AAAAAPA3Jz46zZM+JDnZPvA3J76Qe2w9VG19PvA3\npzyQe2w9w9CQPufTej6sXDG+w9AQPewF0T2Qe2y9w9CQvvA3J76Qe2w9w9CQPefT+j2sXDE+\nw9AQPXPdhz6Qe2w9AAAAAPJQkj6Qe+w92+qiPuwF0T2Qe2y+8wQ1PvJQEj6Qe2w9w9AQPvJQ\nkj6Qe2y+JDnZPewF0T2Qe2y+w9AQPgAAwKOsXDG+w9AQPvA3J746zZO+2+qiPufTej2sXDG+\nAAAAAOwF0T6Qe+w98wQ1PvJQEj6Qe2w9AAAAAFnGBTw6zZO+JDlZvvJQkr46zZO+w9CQPewF\nUT6Qe2w9JDnZPe4ePL4AAACjw9CQPufTej6sXDG+w9AQPvA3J746zZO+8wS1PvA3Jz2Qe2y9\nJDlZPvA3J72Qe2w9arRnvBwbar06zZM+w9CQvewFUT4e7M4+rYkmvojCMz6hAkm+8wS1PvA3\nJ72Qe2w92+qivuwF0T2Qe2y+8wS1PvA3J706zZO+ImaxPoSQXT46zZO+w9CQPgAAAACsXDG+\nxaO4PlN7RD46zZO+JDnZPvA3pz06zZO+AAAAAOns5T6Qe2w+VG19PuwF0T2Qe2y9w9CQPhwb\naj2yiaW9UMctPuwFUT6yiaW9l0K8Pb8ijj2yiSU+TvSFPoJ38r2Qe+w9sS/2PYjCM76hAkk+\n8wQ1PunsZT6Qe2y9mRXkPre+4b294w2+UMetPbvwt72Qe2w+l0K8vbvwN70pRrc+CUyfPSBN\nwD2hAkk+UMetvO4ePD694w09VG19Porbnr2nL708CUyfPXHEnD4AAAAAw9CQPefTej6b1dS9\nJDnZvVetGr6WqGC+UMctPlnGhT2nLz08UMctPSR/Fr6b1dS9w9CQPvA3p72Qe2y9w9AQvXPd\nhz6Qe2w+VG19PvA3pzyQe2w98wQ1v+wF0b46zZO+8wQ1P+wF0b46zZO+AAAAAOwFUT86zZO+\nAAAAAAAAAADXs10/v74+P7++Pj+/vj4/AACAP/MENb/sBdG+Os2TvvMENT/sBdG+Os2TvgAA\nAADsBVE/Os2TvgAAAAAAAAAA17NdP5mYmD6ZmJg+mZiYPgAAgD8AAAABAQEBAAAA"}]},"context":{"shiny":false,"rmarkdown":null},"vertexShader":"#line 2 1\n// File 1 is the vertex shader\n#ifdef GL_ES\n#ifdef GL_FRAGMENT_PRECISION_HIGH\nprecision highp float;\n#else\nprecision mediump float;\n#endif\n#endif\n\nattribute vec3 aPos;\nattribute vec4 aCol;\nuniform mat4 mvMatrix;\nuniform mat4 prMatrix;\nvarying vec4 vCol;\nvarying vec4 vPosition;\n\n#ifdef NEEDS_VNORMAL\nattribute vec3 aNorm;\nuniform mat4 normMatrix;\nvarying vec4 vNormal;\n#endif\n\n#if defined(HAS_TEXTURE) || defined (IS_TEXT)\nattribute vec2 aTexcoord;\nvarying vec2 vTexcoord;\n#endif\n\n#ifdef FIXED_SIZE\nuniform vec3 textScale;\n#endif\n\n#ifdef FIXED_QUADS\nattribute vec3 aOfs;\n#endif\n\n#ifdef IS_TWOSIDED\n#ifdef HAS_NORMALS\nvarying float normz;\nuniform mat4 invPrMatrix;\n#else\nattribute vec3 aPos1;\nattribute vec3 aPos2;\nvarying float normz;\n#endif\n#endif // IS_TWOSIDED\n\n#ifdef FAT_LINES\nattribute vec3 aNext;\nattribute vec2 aPoint;\nvarying vec2 vPoint;\nvarying float vLength;\nuniform float uAspect;\nuniform float uLwd;\n#endif\n\n#ifdef USE_ENVMAP\nvarying vec3 vReflection;\n#endif\n\nvoid main(void) {\n  \n#ifndef IS_BRUSH\n#if defined(NCLIPPLANES) || !defined(FIXED_QUADS) || defined(HAS_FOG) || defined(USE_ENVMAP)\n  vPosition = mvMatrix * vec4(aPos, 1.);\n#endif\n  \n#ifndef FIXED_QUADS\n  gl_Position = prMatrix * vPosition;\n#endif\n#endif // !IS_BRUSH\n  \n#ifdef IS_POINTS\n  gl_PointSize = POINTSIZE;\n#endif\n  \n  vCol = aCol;\n  \n// USE_ENVMAP implies NEEDS_VNORMAL\n\n#ifdef NEEDS_VNORMAL\n  vNormal = normMatrix * vec4(-aNorm, dot(aNorm, aPos));\n#endif\n\n#ifdef USE_ENVMAP\n  vReflection = normalize(reflect(vPosition.xyz/vPosition.w, \n                        normalize(vNormal.xyz/vNormal.w)));\n#endif\n  \n#ifdef IS_TWOSIDED\n#ifdef HAS_NORMALS\n  /* normz should be calculated *after* projection */\n  normz = (invPrMatrix*vNormal).z;\n#else\n  vec4 pos1 = prMatrix*(mvMatrix*vec4(aPos1, 1.));\n  pos1 = pos1/pos1.w - gl_Position/gl_Position.w;\n  vec4 pos2 = prMatrix*(mvMatrix*vec4(aPos2, 1.));\n  pos2 = pos2/pos2.w - gl_Position/gl_Position.w;\n  normz = pos1.x*pos2.y - pos1.y*pos2.x;\n#endif\n#endif // IS_TWOSIDED\n  \n#ifdef NEEDS_VNORMAL\n  vNormal = vec4(normalize(vNormal.xyz/vNormal.w), 1);\n#endif\n  \n#if defined(HAS_TEXTURE) || defined(IS_TEXT)\n  vTexcoord = aTexcoord;\n#endif\n  \n#if defined(FIXED_SIZE) && !defined(ROTATING)\n  vec4 pos = prMatrix * mvMatrix * vec4(aPos, 1.);\n  pos = pos/pos.w;\n  gl_Position = pos + vec4(aOfs*textScale, 0.);\n#endif\n  \n#if defined(IS_SPRITES) && !defined(FIXED_SIZE)\n  vec4 pos = mvMatrix * vec4(aPos, 1.);\n  pos = pos/pos.w + vec4(aOfs,  0.);\n  gl_Position = prMatrix*pos;\n#endif\n  \n#ifdef FAT_LINES\n  /* This code was inspired by Matt Deslauriers' code in \n   https://mattdesl.svbtle.com/drawing-lines-is-hard */\n  vec2 aspectVec = vec2(uAspect, 1.0);\n  mat4 projViewModel = prMatrix * mvMatrix;\n  vec4 currentProjected = projViewModel * vec4(aPos, 1.0);\n  currentProjected = currentProjected/currentProjected.w;\n  vec4 nextProjected = projViewModel * vec4(aNext, 1.0);\n  vec2 currentScreen = currentProjected.xy * aspectVec;\n  vec2 nextScreen = (nextProjected.xy / nextProjected.w) * aspectVec;\n  float len = uLwd;\n  vec2 dir = vec2(1.0, 0.0);\n  vPoint = aPoint;\n  vLength = length(nextScreen - currentScreen)/2.0;\n  vLength = vLength/(vLength + len);\n  if (vLength > 0.0) {\n    dir = normalize(nextScreen - currentScreen);\n  }\n  vec2 normal = vec2(-dir.y, dir.x);\n  dir.x /= uAspect;\n  normal.x /= uAspect;\n  vec4 offset = vec4(len*(normal*aPoint.x*aPoint.y - dir), 0.0, 0.0);\n  gl_Position = currentProjected + offset;\n#endif\n  \n#ifdef IS_BRUSH\n  gl_Position = vec4(aPos, 1.);\n#endif\n}","fragmentShader":"#line 2 2\n// File 2 is the fragment shader\n#ifdef GL_ES\n#ifdef GL_FRAGMENT_PRECISION_HIGH\nprecision highp float;\n#else\nprecision mediump float;\n#endif\n#endif\nvarying vec4 vCol; // carries alpha\nvarying vec4 vPosition;\n#if defined(HAS_TEXTURE) || defined (IS_TEXT)\nvarying vec2 vTexcoord;\nuniform sampler2D uSampler;\n#endif\n\n#ifdef HAS_FOG\nuniform int uFogMode;\nuniform vec3 uFogColor;\nuniform vec4 uFogParms;\n#endif\n\n#if defined(IS_LIT) && !defined(FIXED_QUADS)\nvarying vec4 vNormal;\n#endif\n\n#if NCLIPPLANES > 0\nuniform vec4 vClipplane[NCLIPPLANES];\n#endif\n\n#if NLIGHTS > 0\nuniform mat4 mvMatrix;\n#endif\n\n#ifdef IS_LIT\nuniform vec3 emission;\nuniform float shininess;\n#if NLIGHTS > 0\nuniform vec3 ambient[NLIGHTS];\nuniform vec3 specular[NLIGHTS]; // light*material\nuniform vec3 diffuse[NLIGHTS];\nuniform vec3 lightDir[NLIGHTS];\nuniform bool viewpoint[NLIGHTS];\nuniform bool finite[NLIGHTS];\n#endif\n#endif // IS_LIT\n\n#ifdef IS_TWOSIDED\nuniform bool front;\nvarying float normz;\n#endif\n\n#ifdef FAT_LINES\nvarying vec2 vPoint;\nvarying float vLength;\n#endif\n\n#ifdef USE_ENVMAP\nvarying vec3 vReflection;\n#endif\n\nvoid main(void) {\n  vec4 fragColor;\n#ifdef FAT_LINES\n  vec2 point = vPoint;\n  bool neg = point.y < 0.0;\n  point.y = neg ? (point.y + vLength)/(1.0 - vLength) :\n                 -(point.y - vLength)/(1.0 - vLength);\n#if defined(IS_TRANSPARENT) && defined(IS_LINESTRIP)\n  if (neg && length(point) <= 1.0) discard;\n#endif\n  point.y = min(point.y, 0.0);\n  if (length(point) > 1.0) discard;\n#endif // FAT_LINES\n  \n#ifdef ROUND_POINTS\n  vec2 coord = gl_PointCoord - vec2(0.5);\n  if (length(coord) > 0.5) discard;\n#endif\n  \n#if NCLIPPLANES > 0\n  for (int i = 0; i < NCLIPPLANES; i++)\n    if (dot(vPosition, vClipplane[i]) < 0.0) discard;\n#endif\n    \n#ifdef FIXED_QUADS\n    vec3 n = vec3(0., 0., 1.);\n#elif defined(IS_LIT)\n    vec3 n = normalize(vNormal.xyz);\n#endif\n    \n#ifdef IS_TWOSIDED\n    if ((normz <= 0.) != front) discard;\n#endif\n\n#ifdef IS_LIT\n    vec3 eye = normalize(-vPosition.xyz/vPosition.w);\n    vec3 lightdir;\n    vec4 colDiff;\n    vec3 halfVec;\n    vec4 lighteffect = vec4(emission, 0.);\n    vec3 col;\n    float nDotL;\n#ifdef FIXED_QUADS\n    n = -faceforward(n, n, eye);\n#endif\n    \n#if NLIGHTS > 0\n    for (int i=0;i<NLIGHTS;i++) {\n      colDiff = vec4(vCol.rgb * diffuse[i], vCol.a);\n      lightdir = lightDir[i];\n      if (!viewpoint[i])\n        lightdir = (mvMatrix * vec4(lightdir, 1.)).xyz;\n      if (!finite[i]) {\n        halfVec = normalize(lightdir + eye);\n      } else {\n        lightdir = normalize(lightdir - vPosition.xyz/vPosition.w);\n        halfVec = normalize(lightdir + eye);\n      }\n      col = ambient[i];\n      nDotL = dot(n, lightdir);\n      col = col + max(nDotL, 0.) * colDiff.rgb;\n      col = col + pow(max(dot(halfVec, n), 0.), shininess) * specular[i];\n      lighteffect = lighteffect + vec4(col, colDiff.a);\n    }\n#endif\n    \n#else // not IS_LIT\n    vec4 colDiff = vCol;\n    vec4 lighteffect = colDiff;\n#endif\n    \n#ifdef IS_TEXT\n    vec4 textureColor = lighteffect*texture2D(uSampler, vTexcoord);\n#endif\n    \n#ifdef HAS_TEXTURE\n\n// These calculations use the definitions from \n// https://docs.gl/gl3/glTexEnv\n\n#ifdef USE_ENVMAP\n    float m = 2.0 * sqrt(dot(vReflection, vReflection) + 2.0*vReflection.z + 1.0);\n    vec4 textureColor = texture2D(uSampler, vReflection.xy / m + vec2(0.5, 0.5));\n#else\n    vec4 textureColor = texture2D(uSampler, vTexcoord);\n#endif\n\n#ifdef TEXTURE_rgb\n\n#if defined(TEXMODE_replace) || defined(TEXMODE_decal)\n    textureColor = vec4(textureColor.rgb, lighteffect.a);\n#endif \n\n#ifdef TEXMODE_modulate\n    textureColor = lighteffect*vec4(textureColor.rgb, 1.);\n#endif\n\n#ifdef TEXMODE_blend\n    textureColor = vec4((1. - textureColor.rgb) * lighteffect.rgb, lighteffect.a);\n#endif\n\n#ifdef TEXMODE_add\n    textureColor = vec4(lighteffect.rgb + textureColor.rgb, lighteffect.a);\n#endif\n\n#endif //TEXTURE_rgb\n        \n#ifdef TEXTURE_rgba\n\n#ifdef TEXMODE_replace\n// already done\n#endif \n\n#ifdef TEXMODE_modulate\n    textureColor = lighteffect*textureColor;\n#endif\n\n#ifdef TEXMODE_decal\n    textureColor = vec4((1. - textureColor.a)*lighteffect.rgb) +\n                     textureColor.a*textureColor.rgb, \n                     lighteffect.a);\n#endif\n\n#ifdef TEXMODE_blend\n    textureColor = vec4((1. - textureColor.rgb) * lighteffect.rgb,\n                    lighteffect.a*textureColor.a);\n#endif\n\n#ifdef TEXMODE_add\n    textureColor = vec4(lighteffect.rgb + textureColor.rgb,\n                    lighteffect.a*textureColor.a);\n#endif\n    \n#endif //TEXTURE_rgba\n    \n#ifdef TEXTURE_alpha\n#if defined(TEXMODE_replace) || defined(TEXMODE_decal)\n    textureColor = vec4(lighteffect.rgb, textureColor.a);\n#endif \n\n#if defined(TEXMODE_modulate) || defined(TEXMODE_blend) || defined(TEXMODE_add)\n    textureColor = vec4(lighteffect.rgb, lighteffect.a*textureColor.a);\n#endif\n \n#endif\n    \n// The TEXTURE_luminance values are not from that reference    \n#ifdef TEXTURE_luminance\n    float luminance = dot(vec3(1.,1.,1.),textureColor.rgb)/3.;\n\n#if defined(TEXMODE_replace) || defined(TEXMODE_decal)\n    textureColor = vec4(luminance, luminance, luminance, lighteffect.a);\n#endif \n\n#ifdef TEXMODE_modulate\n    textureColor = vec4(luminance*lighteffect.rgb, lighteffect.a);\n#endif\n\n#ifdef TEXMODE_blend\n    textureColor = vec4((1. - luminance)*lighteffect.rgb,\n                        lighteffect.a);\n#endif\n\n#ifdef TEXMODE_add\n    textureColor = vec4(luminance + lighteffect.rgb, lighteffect.a);\n#endif\n\n#endif // TEXTURE_luminance\n \n    \n#ifdef TEXTURE_luminance_alpha\n    float luminance = dot(vec3(1.,1.,1.),textureColor.rgb)/3.;\n\n#if defined(TEXMODE_replace) || defined(TEXMODE_decal)\n    textureColor = vec4(luminance, luminance, luminance, textureColor.a);\n#endif \n\n#ifdef TEXMODE_modulate\n    textureColor = vec4(luminance*lighteffect.rgb, \n                        textureColor.a*lighteffect.a);\n#endif\n\n#ifdef TEXMODE_blend\n    textureColor = vec4((1. - luminance)*lighteffect.rgb,\n                        textureColor.a*lighteffect.a);\n#endif\n\n#ifdef TEXMODE_add\n    textureColor = vec4(luminance + lighteffect.rgb, \n                        textureColor.a*lighteffect.a);\n\n#endif\n\n#endif // TEXTURE_luminance_alpha\n    \n    fragColor = textureColor;\n\n#elif defined(IS_TEXT)\n    if (textureColor.a < 0.1)\n      discard;\n    else\n      fragColor = textureColor;\n#else\n    fragColor = lighteffect;\n#endif // HAS_TEXTURE\n    \n#ifdef HAS_FOG\n    // uFogParms elements: x = near, y = far, z = fogscale, w = (1-sin(FOV/2))/(1+sin(FOV/2))\n    // In Exp and Exp2: use density = density/far\n    // fogF will be the proportion of fog\n    // Initialize it to the linear value\n    float fogF;\n    if (uFogMode > 0) {\n      fogF = (uFogParms.y - vPosition.z/vPosition.w)/(uFogParms.y - uFogParms.x);\n      if (uFogMode > 1)\n        fogF = mix(uFogParms.w, 1.0, fogF);\n      fogF = fogF*uFogParms.z;\n      if (uFogMode == 2)\n        fogF = 1.0 - exp(-fogF);\n      // Docs are wrong: use (density*c)^2, not density*c^2\n      // https://gitlab.freedesktop.org/mesa/mesa/-/blob/master/src/mesa/swrast/s_fog.c#L58\n      else if (uFogMode == 3)\n        fogF = 1.0 - exp(-fogF*fogF);\n      fogF = clamp(fogF, 0.0, 1.0);\n      gl_FragColor = vec4(mix(fragColor.rgb, uFogColor, fogF), fragColor.a);\n    } else gl_FragColor = fragColor;\n#else\n    gl_FragColor = fragColor;\n#endif // HAS_FOG\n    \n}","players":[],"webGLoptions":{"preserveDrawingBuffer":true}},"evals":[],"jsHooks":[]}</script>
 </div>
 
 
@@ -66,7 +751,7 @@
 <p>Ich bin eine Frau und ich fühle mich belästigt von den In-Endungen, von dem Binnen-I und dem ganzen syntaktischen Gleichberechtigungsgefummel. Die fast extremistischen Züge des Verweiblichungswahns von Sprache haben wohl mit der Tradition des Alice Schwarzer Opferfeminismus zu tun. Offenbar haben bis heute manche mental nicht aus der weiblichen Opferrolle herausgefunden. Als Therapie und als Beleg des weiblichen Selbstbewusstseins fordere ich das generische Maskulinum daher zurück. Ich mache auch gleich ernst damit und verabschiede mich an dieser Stelle im maskulinen Gestus von Ihnen, lieber Leser, liebe Bürger, liebe Staatssekretäre, liebe Feministinnen, liebe Kritiker. Das fühlt sich gut an. (<strong>Dagmar Rosenfeld</strong>, in der Wochenzeitung die Zeit (2014) in einem „Aufschrei“)</p>
 </blockquote>
 <p>Inzwischen wird auch in Frage gestellt, dass das <strong>biologische Geschlecht</strong> zweiwertig ist, die Biologie an sich wird als Naturwissenschaft nicht mehr ernst genommen. Ich hätte natürlich nie gedacht, dass ich mich eines Tages dafür rechtfertigen muss, im Statistik-Unterricht das biologische Geschlecht als Beispiel für eine zweiwertige kategoriale Variable heranzuziehen. Dazu ein Artikel aus unverdächtiger Quelle: <a href="https://www.emma.de/artikel/viele-geschlechter-das-ist-unfug-339689">Viele Geschlechter? Das ist Unfug!</a></p>
-<p>Ob die extremen Anstrengungen für die so genannte <strong>Gleichstellung</strong> am Ende wirklich zielführend sind, wage ich doch sehr stark zu bezweifeln. So haben z.B. Länder mit hohem Gleichstellungsaufwand eine tieferen Frauen-Anteil an MINT Hochschul-Abschlüssen als Länder, die doch eher nicht als sehr matriarchalisch gelten. Trotz massiven Anstrengungen drängen Frauen in Skandinavien wieder mehr in klassische Frauenberufe. Das sollte uns zu denken geben.</p>
+<p>Ob die extremen Anstrengungen für die so genannte <strong>Gleichstellung</strong> (das etwas ganz anderes ist als <strong>Gleichberechtigung</strong>) am Ende wirklich zielführend sind, wage ich doch sehr stark zu bezweifeln. So haben z.B. Länder mit hohem Gleichstellungsaufwand eine tieferen Frauen-Anteil an MINT Hochschul-Abschlüssen als Länder, die doch eher nicht als sehr matriarchalisch gelten. Trotz massiven Anstrengungen drängen Frauen in Skandinavien wieder mehr in klassische Frauenberufe. Das sollte uns zu denken geben.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p></p><figcaption class="figure-caption">Gender-Equality Paradox in Science, Technology, Engineering and Mathematics. See Stoet and Geary, 2018. See also corrigendum, 2019, and reply to Richardson et al., 2020.</figcaption><p></p>
@@ -90,8 +775,11 @@
   <description><![CDATA[ <section id="example-data" class="level2"><h2 class="anchored" data-anchor-id="example-data">Example Data</h2>
 <p>Triceps skinfold thickness dataset: The data are derived from an anthropometric study of 892 females under 50 years in three Gambian villages in West Africa.</p>
 <div class="cell">
-<details><summary>Code</summary><div class="sourceCode" id="cb1" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw" style="color: #003B4F;"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op" style="color: #5E5E5E;">(</span><span class="va" style="color: #111111;">MultiKink</span><span class="op" style="color: #5E5E5E;">)</span></span>
-<span><span class="kw" style="color: #003B4F;"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op" style="color: #5E5E5E;">(</span><span class="va" style="color: #111111;"><a href="https://ggplot2.tidyverse.org">ggplot2</a></span><span class="op" style="color: #5E5E5E;">)</span></span>
+<details><summary>Code</summary><div class="sourceCode" id="cb1" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw" style="color: #003B4F;"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op" style="color: #5E5E5E;">(</span><span class="va" style="color: #111111;">MultiKink</span><span class="op" style="color: #5E5E5E;">)</span></span></code></pre></div>
+</details><div class="cell-output cell-output-stderr">
+<pre><code>Warning in .recacheSubclasses(def@className, def, env): undefined subclass "numericVector" of class "Mnumeric"; definition not updated</code></pre>
+</div>
+<details><summary>Code</summary><div class="sourceCode" id="cb3" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw" style="color: #003B4F;"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op" style="color: #5E5E5E;">(</span><span class="va" style="color: #111111;"><a href="https://ggplot2.tidyverse.org">ggplot2</a></span><span class="op" style="color: #5E5E5E;">)</span></span>
 <span><span class="kw" style="color: #003B4F;"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op" style="color: #5E5E5E;">(</span><span class="va" style="color: #111111;"><a href="https://personality-project.org/r/psych/">psych</a></span><span class="op" style="color: #5E5E5E;">)</span></span></code></pre></div>
 </details><div class="cell-output cell-output-stderr">
 <pre><code>
@@ -104,7 +792,7 @@ Attaching package: 'psych'</code></pre>
 </div>
 </div>
 <div class="cell">
-<details><summary>Code</summary><div class="sourceCode" id="cb4" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu" style="color: #4758AB;"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op" style="color: #5E5E5E;">(</span><span class="st" style="color: #20794D;">"triceps"</span><span class="op" style="color: #5E5E5E;">)</span></span>
+<details><summary>Code</summary><div class="sourceCode" id="cb6" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu" style="color: #4758AB;"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op" style="color: #5E5E5E;">(</span><span class="st" style="color: #20794D;">"triceps"</span><span class="op" style="color: #5E5E5E;">)</span></span>
 <span><span class="fu" style="color: #4758AB;"><a href="https://rdrr.io/pkg/psych/man/headtail.html">headTail</a></span><span class="op" style="color: #5E5E5E;">(</span><span class="va" style="color: #111111;">triceps</span><span class="op" style="color: #5E5E5E;">)</span></span></code></pre></div>
 </details><div class="cell-output cell-output-stdout">
 <pre><code>      age lntriceps triceps
@@ -118,7 +806,7 @@ Attaching package: 'psych'</code></pre>
 891 14.63       2.2       9
 892 30.14       2.1     8.2</code></pre>
 </div>
-<details><summary>Code</summary><div class="sourceCode" id="cb6" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;">tri.age.plot</span> <span class="op" style="color: #5E5E5E;">&lt;-</span> <span class="fu" style="color: #4758AB;"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op" style="color: #5E5E5E;">(</span><span class="va" style="color: #111111;">triceps</span>, <span class="fu" style="color: #4758AB;"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op" style="color: #5E5E5E;">(</span>x<span class="op" style="color: #5E5E5E;">=</span><span class="va" style="color: #111111;">age</span>, y<span class="op" style="color: #5E5E5E;">=</span><span class="va" style="color: #111111;">triceps</span><span class="op" style="color: #5E5E5E;">)</span><span class="op" style="color: #5E5E5E;">)</span> <span class="op" style="color: #5E5E5E;">+</span></span>
+<details><summary>Code</summary><div class="sourceCode" id="cb8" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;">tri.age.plot</span> <span class="op" style="color: #5E5E5E;">&lt;-</span> <span class="fu" style="color: #4758AB;"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op" style="color: #5E5E5E;">(</span><span class="va" style="color: #111111;">triceps</span>, <span class="fu" style="color: #4758AB;"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op" style="color: #5E5E5E;">(</span>x<span class="op" style="color: #5E5E5E;">=</span><span class="va" style="color: #111111;">age</span>, y<span class="op" style="color: #5E5E5E;">=</span><span class="va" style="color: #111111;">triceps</span><span class="op" style="color: #5E5E5E;">)</span><span class="op" style="color: #5E5E5E;">)</span> <span class="op" style="color: #5E5E5E;">+</span></span>
 <span>                 <span class="fu" style="color: #4758AB;"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op" style="color: #5E5E5E;">(</span>alpha<span class="op" style="color: #5E5E5E;">=</span><span class="fl" style="color: #AD0000;">0.55</span>, color<span class="op" style="color: #5E5E5E;">=</span><span class="st" style="color: #20794D;">"black"</span><span class="op" style="color: #5E5E5E;">)</span> <span class="op" style="color: #5E5E5E;">+</span> </span>
 <span>                 <span class="fu" style="color: #4758AB;"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_minimal</a></span><span class="op" style="color: #5E5E5E;">(</span><span class="op" style="color: #5E5E5E;">)</span> </span>
 <span><span class="va" style="color: #111111;">tri.age.plot</span></span></code></pre></div>
@@ -129,25 +817,29 @@ Attaching package: 'psych'</code></pre>
 </section><section id="polynomial-regression" class="level2"><h2 class="anchored" data-anchor-id="polynomial-regression">Polynomial regression</h2>
 <p>Using <code><a href="https://rdrr.io/r/stats/poly.html">poly()</a></code> in <code><a href="https://rdrr.io/r/stats/lm.html">lm()</a></code>:</p>
 <div class="cell">
-<details><summary>Code</summary><div class="sourceCode" id="cb7" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;">model.cubic.poly</span> <span class="op" style="color: #5E5E5E;">&lt;-</span> <span class="fu" style="color: #4758AB;"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op" style="color: #5E5E5E;">(</span><span class="va" style="color: #111111;">triceps</span><span class="op" style="color: #5E5E5E;">~</span><span class="fu" style="color: #4758AB;"><a href="https://rdrr.io/r/stats/poly.html">poly</a></span><span class="op" style="color: #5E5E5E;">(</span><span class="va" style="color: #111111;">age</span>,<span class="fl" style="color: #AD0000;">3</span>,raw<span class="op" style="color: #5E5E5E;">=</span><span class="cn" style="color: #8f5902;">TRUE</span><span class="op" style="color: #5E5E5E;">)</span>,data<span class="op" style="color: #5E5E5E;">=</span><span class="va" style="color: #111111;">triceps</span><span class="op" style="color: #5E5E5E;">)</span></span>
+<details><summary>Code</summary><div class="sourceCode" id="cb9" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;">model.cubic.poly</span> <span class="op" style="color: #5E5E5E;">&lt;-</span> <span class="fu" style="color: #4758AB;"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op" style="color: #5E5E5E;">(</span><span class="va" style="color: #111111;">triceps</span><span class="op" style="color: #5E5E5E;">~</span><span class="fu" style="color: #4758AB;"><a href="https://rdrr.io/r/stats/poly.html">poly</a></span><span class="op" style="color: #5E5E5E;">(</span><span class="va" style="color: #111111;">age</span>,<span class="fl" style="color: #AD0000;">3</span>,raw<span class="op" style="color: #5E5E5E;">=</span><span class="cn" style="color: #8f5902;">TRUE</span><span class="op" style="color: #5E5E5E;">)</span>,data<span class="op" style="color: #5E5E5E;">=</span><span class="va" style="color: #111111;">triceps</span><span class="op" style="color: #5E5E5E;">)</span></span>
 <span><span class="co" style="color: #5E5E5E;">## the same model:</span></span>
 <span><span class="co" style="color: #5E5E5E;">## model.cubic &lt;- lm(triceps~age + I(age^2) + I(age^3),</span></span>
 <span><span class="co" style="color: #5E5E5E;">##                   data=triceps)</span></span>
 <span><span class="va" style="color: #111111;">tri.age.plot</span> <span class="op" style="color: #5E5E5E;">+</span> </span>
 <span>   <span class="fu" style="color: #4758AB;"><a href="https://ggplot2.tidyverse.org/reference/geom_smooth.html">stat_smooth</a></span><span class="op" style="color: #5E5E5E;">(</span>method <span class="op" style="color: #5E5E5E;">=</span> <span class="st" style="color: #20794D;">"lm"</span>, </span>
 <span>               formula <span class="op" style="color: #5E5E5E;">=</span> <span class="va" style="color: #111111;">y</span><span class="op" style="color: #5E5E5E;">~</span><span class="fu" style="color: #4758AB;"><a href="https://rdrr.io/r/stats/poly.html">poly</a></span><span class="op" style="color: #5E5E5E;">(</span><span class="va" style="color: #111111;">x</span>,<span class="fl" style="color: #AD0000;">3</span>,raw<span class="op" style="color: #5E5E5E;">=</span><span class="cn" style="color: #8f5902;">T</span><span class="op" style="color: #5E5E5E;">)</span>, size <span class="op" style="color: #5E5E5E;">=</span> <span class="fl" style="color: #AD0000;">1</span><span class="op" style="color: #5E5E5E;">)</span></span></code></pre></div>
-</details><div class="cell-output-display">
+</details><div class="cell-output cell-output-stderr">
+<pre><code>Warning: Using `size` aesthetic for lines was deprecated in ggplot2 3.4.0.
+ℹ Please use `linewidth` instead.</code></pre>
+</div>
+<div class="cell-output-display">
 <p><img src="https://mcdr65.github.io/myblog/posts/fromLMtoSplines/index_files/figure-html/polynomial-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 </section><section id="cross-validation-of-different-polynomials" class="level2"><h2 class="anchored" data-anchor-id="cross-validation-of-different-polynomials">Cross-validation of different polynomials</h2>
 <section id="rmse-for-quadratic" class="level3"><h3 class="anchored" data-anchor-id="rmse-for-quadratic">RMSE for quadratic</h3>
 <div class="cell">
-<details><summary>Code</summary><div class="sourceCode" id="cb8" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw" style="color: #003B4F;"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op" style="color: #5E5E5E;">(</span><span class="va" style="color: #111111;"><a href="https://github.com/topepo/caret/">caret</a></span><span class="op" style="color: #5E5E5E;">)</span></span></code></pre></div>
+<details><summary>Code</summary><div class="sourceCode" id="cb11" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw" style="color: #003B4F;"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op" style="color: #5E5E5E;">(</span><span class="va" style="color: #111111;"><a href="https://github.com/topepo/caret/">caret</a></span><span class="op" style="color: #5E5E5E;">)</span></span></code></pre></div>
 </details><div class="cell-output cell-output-stderr">
 <pre><code>Loading required package: lattice</code></pre>
 </div>
-<details><summary>Code</summary><div class="sourceCode" id="cb10" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu" style="color: #4758AB;"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op" style="color: #5E5E5E;">(</span><span class="fl" style="color: #AD0000;">1234</span><span class="op" style="color: #5E5E5E;">)</span></span>
+<details><summary>Code</summary><div class="sourceCode" id="cb13" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu" style="color: #4758AB;"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op" style="color: #5E5E5E;">(</span><span class="fl" style="color: #AD0000;">1234</span><span class="op" style="color: #5E5E5E;">)</span></span>
 <span><span class="va" style="color: #111111;">trC.lm</span> <span class="op" style="color: #5E5E5E;">&lt;-</span> <span class="fu" style="color: #4758AB;"><a href="https://rdrr.io/pkg/caret/man/trainControl.html">trainControl</a></span><span class="op" style="color: #5E5E5E;">(</span>method <span class="op" style="color: #5E5E5E;">=</span> <span class="st" style="color: #20794D;">"repeatedcv"</span>, </span>
 <span>                       number <span class="op" style="color: #5E5E5E;">=</span> <span class="fl" style="color: #AD0000;">10</span>,         </span>
 <span>                       repeats <span class="op" style="color: #5E5E5E;">=</span> <span class="fl" style="color: #AD0000;">10</span><span class="op" style="color: #5E5E5E;">)</span>        </span>
@@ -157,13 +849,13 @@ Attaching package: 'psych'</code></pre>
 <span>                       trControl <span class="op" style="color: #5E5E5E;">=</span> <span class="va" style="color: #111111;">trC.lm</span><span class="op" style="color: #5E5E5E;">)</span>    </span>
 <span><span class="va" style="color: #111111;">pol.model</span><span class="op" style="color: #5E5E5E;">$</span><span class="va" style="color: #111111;">results</span><span class="op" style="color: #5E5E5E;">[</span><span class="fl" style="color: #AD0000;">2</span><span class="op" style="color: #5E5E5E;">]</span></span></code></pre></div>
 </details><div class="cell-output cell-output-stdout">
-<pre><code>      RMSE
-1 3.865866</code></pre>
+<pre><code>   RMSE
+1 3.866</code></pre>
 </div>
 </div>
 </section><section id="rmse-for-different-degrees" class="level3"><h3 class="anchored" data-anchor-id="rmse-for-different-degrees">RMSE for different degrees</h3>
 <div class="cell">
-<details><summary>Code</summary><div class="sourceCode" id="cb12" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;">my.pol.f</span> <span class="op" style="color: #5E5E5E;">&lt;-</span> <span class="kw" style="color: #003B4F;">function</span><span class="op" style="color: #5E5E5E;">(</span><span class="va" style="color: #111111;">x</span><span class="op" style="color: #5E5E5E;">)</span><span class="op" style="color: #5E5E5E;">{</span></span>
+<details><summary>Code</summary><div class="sourceCode" id="cb15" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;">my.pol.f</span> <span class="op" style="color: #5E5E5E;">&lt;-</span> <span class="kw" style="color: #003B4F;">function</span><span class="op" style="color: #5E5E5E;">(</span><span class="va" style="color: #111111;">x</span><span class="op" style="color: #5E5E5E;">)</span><span class="op" style="color: #5E5E5E;">{</span></span>
 <span>    <span class="va" style="color: #111111;">xx</span><span class="op" style="color: #5E5E5E;">&lt;-</span><span class="fu" style="color: #4758AB;"><a href="https://rdrr.io/r/stats/poly.html">poly</a></span><span class="op" style="color: #5E5E5E;">(</span><span class="va" style="color: #111111;">triceps</span><span class="op" style="color: #5E5E5E;">$</span><span class="va" style="color: #111111;">age</span>, <span class="va" style="color: #111111;">x</span>, raw<span class="op" style="color: #5E5E5E;">=</span><span class="cn" style="color: #8f5902;">T</span><span class="op" style="color: #5E5E5E;">)</span>    </span>
 <span>    <span class="va" style="color: #111111;">new.data</span>  <span class="op" style="color: #5E5E5E;">&lt;-</span> <span class="fu" style="color: #4758AB;"><a href="https://rdrr.io/r/base/cbind.html">cbind</a></span><span class="op" style="color: #5E5E5E;">(</span>triceps<span class="op" style="color: #5E5E5E;">=</span><span class="va" style="color: #111111;">triceps</span><span class="op" style="color: #5E5E5E;">$</span><span class="va" style="color: #111111;">triceps</span>, <span class="va" style="color: #111111;">xx</span><span class="op" style="color: #5E5E5E;">)</span>                                 </span>
 <span>    <span class="va" style="color: #111111;">pol.model</span> <span class="op" style="color: #5E5E5E;">&lt;-</span> <span class="fu" style="color: #4758AB;"><a href="https://rdrr.io/pkg/caret/man/train.html">train</a></span><span class="op" style="color: #5E5E5E;">(</span><span class="va" style="color: #111111;">triceps</span><span class="op" style="color: #5E5E5E;">~</span><span class="va" style="color: #111111;">.</span>, data <span class="op" style="color: #5E5E5E;">=</span> <span class="va" style="color: #111111;">new.data</span>,method <span class="op" style="color: #5E5E5E;">=</span> <span class="st" style="color: #20794D;">"lm"</span><span class="op" style="color: #5E5E5E;">)</span>    </span>
@@ -172,12 +864,12 @@ Attaching package: 'psych'</code></pre>
 <span></span>
 <span><span class="fu" style="color: #4758AB;"><a href="https://rdrr.io/r/base/t.html">t</a></span><span class="op" style="color: #5E5E5E;">(</span><span class="fu" style="color: #4758AB;"><a href="https://rdrr.io/r/base/lapply.html">sapply</a></span><span class="op" style="color: #5E5E5E;">(</span><span class="fl" style="color: #AD0000;">1</span><span class="op" style="color: #5E5E5E;">:</span><span class="fl" style="color: #AD0000;">10</span>, <span class="va" style="color: #111111;">my.pol.f</span><span class="op" style="color: #5E5E5E;">)</span><span class="op" style="color: #5E5E5E;">)</span></span></code></pre></div>
 </details><div class="cell-output cell-output-stdout">
-<pre><code>     RMSE     RMSE     RMSE     RMSE    RMSE     RMSE     RMSE     RMSE     RMSE     RMSE    
-[1,] 3.984711 4.083302 3.830449 3.77627 3.787051 3.740982 3.847184 3.803367 3.866925 3.803712</code></pre>
+<pre><code>     RMSE  RMSE  RMSE RMSE  RMSE  RMSE  RMSE  RMSE  RMSE  RMSE 
+[1,] 3.985 4.083 3.83 3.776 3.787 3.741 3.847 3.803 3.867 3.804</code></pre>
 </div>
 </div>
 <div class="cell">
-<details><summary>Code</summary><div class="sourceCode" id="cb14" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;">tri.age.plot</span> <span class="op" style="color: #5E5E5E;">+</span> </span>
+<details><summary>Code</summary><div class="sourceCode" id="cb17" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;">tri.age.plot</span> <span class="op" style="color: #5E5E5E;">+</span> </span>
 <span>   <span class="fu" style="color: #4758AB;"><a href="https://ggplot2.tidyverse.org/reference/geom_smooth.html">stat_smooth</a></span><span class="op" style="color: #5E5E5E;">(</span>method <span class="op" style="color: #5E5E5E;">=</span> <span class="st" style="color: #20794D;">"lm"</span>, </span>
 <span>               formula <span class="op" style="color: #5E5E5E;">=</span> <span class="va" style="color: #111111;">y</span><span class="op" style="color: #5E5E5E;">~</span><span class="fu" style="color: #4758AB;"><a href="https://rdrr.io/r/stats/poly.html">poly</a></span><span class="op" style="color: #5E5E5E;">(</span><span class="va" style="color: #111111;">x</span>,<span class="fl" style="color: #AD0000;">6</span>,raw<span class="op" style="color: #5E5E5E;">=</span><span class="cn" style="color: #8f5902;">T</span><span class="op" style="color: #5E5E5E;">)</span>, size <span class="op" style="color: #5E5E5E;">=</span> <span class="fl" style="color: #AD0000;">1</span><span class="op" style="color: #5E5E5E;">)</span></span></code></pre></div>
 </details><div class="cell-output-display">
@@ -190,7 +882,7 @@ Attaching package: 'psych'</code></pre>
 <p>where the coefficients differ in different parts of the range of <img src="https://latex.codecogs.com/png.latex?X">. The points where the coefficients change are called <em>knots</em> <img src="https://latex.codecogs.com/png.latex?%5Cxi_k">, <img src="https://latex.codecogs.com/png.latex?k=1,%5Cdots,K">.</p>
 <p>Let us begin with a piecewise linear (degree=1):</p>
 <div class="cell">
-<details><summary>Code</summary><div class="sourceCode" id="cb15" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;">pred1</span> <span class="op" style="color: #5E5E5E;">&lt;-</span> <span class="fu" style="color: #4758AB;"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span><span class="op" style="color: #5E5E5E;">(</span><span class="fu" style="color: #4758AB;"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op" style="color: #5E5E5E;">(</span><span class="va" style="color: #111111;">triceps</span><span class="op" style="color: #5E5E5E;">~</span><span class="va" style="color: #111111;">age</span>, </span>
+<details><summary>Code</summary><div class="sourceCode" id="cb18" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;">pred1</span> <span class="op" style="color: #5E5E5E;">&lt;-</span> <span class="fu" style="color: #4758AB;"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span><span class="op" style="color: #5E5E5E;">(</span><span class="fu" style="color: #4758AB;"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op" style="color: #5E5E5E;">(</span><span class="va" style="color: #111111;">triceps</span><span class="op" style="color: #5E5E5E;">~</span><span class="va" style="color: #111111;">age</span>, </span>
 <span>                    data <span class="op" style="color: #5E5E5E;">=</span> <span class="va" style="color: #111111;">triceps</span><span class="op" style="color: #5E5E5E;">[</span><span class="va" style="color: #111111;">triceps</span><span class="op" style="color: #5E5E5E;">$</span><span class="va" style="color: #111111;">age</span><span class="op" style="color: #5E5E5E;">&lt;</span><span class="fl" style="color: #AD0000;">5</span>,<span class="op" style="color: #5E5E5E;">]</span><span class="op" style="color: #5E5E5E;">)</span><span class="op" style="color: #5E5E5E;">)</span></span>
 <span><span class="va" style="color: #111111;">pred2</span> <span class="op" style="color: #5E5E5E;">&lt;-</span> <span class="fu" style="color: #4758AB;"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span><span class="op" style="color: #5E5E5E;">(</span><span class="fu" style="color: #4758AB;"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op" style="color: #5E5E5E;">(</span><span class="va" style="color: #111111;">triceps</span><span class="op" style="color: #5E5E5E;">~</span><span class="va" style="color: #111111;">age</span>, </span>
 <span>                    data <span class="op" style="color: #5E5E5E;">=</span> <span class="va" style="color: #111111;">triceps</span><span class="op" style="color: #5E5E5E;">[</span><span class="va" style="color: #111111;">triceps</span><span class="op" style="color: #5E5E5E;">$</span><span class="va" style="color: #111111;">age</span> <span class="op" style="color: #5E5E5E;">&gt;=</span><span class="fl" style="color: #AD0000;">5</span> <span class="op" style="color: #5E5E5E;">&amp;</span> <span class="va" style="color: #111111;">triceps</span><span class="op" style="color: #5E5E5E;">$</span><span class="va" style="color: #111111;">age</span><span class="op" style="color: #5E5E5E;">&lt;</span><span class="fl" style="color: #AD0000;">10</span>,<span class="op" style="color: #5E5E5E;">]</span><span class="op" style="color: #5E5E5E;">)</span><span class="op" style="color: #5E5E5E;">)</span></span>
@@ -226,7 +918,7 @@ Attaching package: 'psych'</code></pre>
 <p><img src="https://latex.codecogs.com/png.latex?Y_i=%5Cbeta_0+%5Cbeta_1x_i+%5Cbeta_2%20h(x_i,5)+%5Ccdots+%5Cbeta_6%20h(x_i,40)%20+%20%5Cepsilon_i"></p>
 <p>This can be done -by hand- or with B-splines <code><a href="https://rdrr.io/r/splines/bs.html">splines::bs()</a></code></p>
 <div class="cell">
-<details><summary>Code</summary><div class="sourceCode" id="cb16" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;">pred7</span> <span class="op" style="color: #5E5E5E;">&lt;-</span> <span class="fu" style="color: #4758AB;"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span><span class="op" style="color: #5E5E5E;">(</span><span class="fu" style="color: #4758AB;"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op" style="color: #5E5E5E;">(</span><span class="va" style="color: #111111;">triceps</span><span class="op" style="color: #5E5E5E;">~</span> <span class="va" style="color: #111111;">age</span> <span class="op" style="color: #5E5E5E;">+</span> <span class="fu" style="color: #4758AB;"><a href="https://rdrr.io/r/base/AsIs.html">I</a></span><span class="op" style="color: #5E5E5E;">(</span><span class="op" style="color: #5E5E5E;">(</span><span class="va" style="color: #111111;">age</span><span class="op" style="color: #5E5E5E;">-</span><span class="fl" style="color: #AD0000;">5</span><span class="op" style="color: #5E5E5E;">)</span><span class="op" style="color: #5E5E5E;">*</span><span class="op" style="color: #5E5E5E;">(</span><span class="va" style="color: #111111;">age</span><span class="op" style="color: #5E5E5E;">&gt;=</span><span class="fl" style="color: #AD0000;">5</span><span class="op" style="color: #5E5E5E;">)</span><span class="op" style="color: #5E5E5E;">)</span> <span class="op" style="color: #5E5E5E;">+</span></span>
+<details><summary>Code</summary><div class="sourceCode" id="cb19" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;">pred7</span> <span class="op" style="color: #5E5E5E;">&lt;-</span> <span class="fu" style="color: #4758AB;"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span><span class="op" style="color: #5E5E5E;">(</span><span class="fu" style="color: #4758AB;"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op" style="color: #5E5E5E;">(</span><span class="va" style="color: #111111;">triceps</span><span class="op" style="color: #5E5E5E;">~</span> <span class="va" style="color: #111111;">age</span> <span class="op" style="color: #5E5E5E;">+</span> <span class="fu" style="color: #4758AB;"><a href="https://rdrr.io/r/base/AsIs.html">I</a></span><span class="op" style="color: #5E5E5E;">(</span><span class="op" style="color: #5E5E5E;">(</span><span class="va" style="color: #111111;">age</span><span class="op" style="color: #5E5E5E;">-</span><span class="fl" style="color: #AD0000;">5</span><span class="op" style="color: #5E5E5E;">)</span><span class="op" style="color: #5E5E5E;">*</span><span class="op" style="color: #5E5E5E;">(</span><span class="va" style="color: #111111;">age</span><span class="op" style="color: #5E5E5E;">&gt;=</span><span class="fl" style="color: #AD0000;">5</span><span class="op" style="color: #5E5E5E;">)</span><span class="op" style="color: #5E5E5E;">)</span> <span class="op" style="color: #5E5E5E;">+</span></span>
 <span>                                   <span class="fu" style="color: #4758AB;"><a href="https://rdrr.io/r/base/AsIs.html">I</a></span><span class="op" style="color: #5E5E5E;">(</span><span class="op" style="color: #5E5E5E;">(</span><span class="va" style="color: #111111;">age</span><span class="op" style="color: #5E5E5E;">-</span><span class="fl" style="color: #AD0000;">10</span><span class="op" style="color: #5E5E5E;">)</span><span class="op" style="color: #5E5E5E;">*</span><span class="op" style="color: #5E5E5E;">(</span><span class="va" style="color: #111111;">age</span> <span class="op" style="color: #5E5E5E;">&gt;=</span> <span class="fl" style="color: #AD0000;">10</span><span class="op" style="color: #5E5E5E;">)</span><span class="op" style="color: #5E5E5E;">)</span> <span class="op" style="color: #5E5E5E;">+</span></span>
 <span>                                   <span class="fu" style="color: #4758AB;"><a href="https://rdrr.io/r/base/AsIs.html">I</a></span><span class="op" style="color: #5E5E5E;">(</span><span class="op" style="color: #5E5E5E;">(</span><span class="va" style="color: #111111;">age</span><span class="op" style="color: #5E5E5E;">-</span><span class="fl" style="color: #AD0000;">20</span><span class="op" style="color: #5E5E5E;">)</span><span class="op" style="color: #5E5E5E;">*</span><span class="op" style="color: #5E5E5E;">(</span><span class="va" style="color: #111111;">age</span> <span class="op" style="color: #5E5E5E;">&gt;=</span> <span class="fl" style="color: #AD0000;">20</span><span class="op" style="color: #5E5E5E;">)</span><span class="op" style="color: #5E5E5E;">)</span> <span class="op" style="color: #5E5E5E;">+</span></span>
 <span>                                   <span class="fu" style="color: #4758AB;"><a href="https://rdrr.io/r/base/AsIs.html">I</a></span><span class="op" style="color: #5E5E5E;">(</span><span class="op" style="color: #5E5E5E;">(</span><span class="va" style="color: #111111;">age</span><span class="op" style="color: #5E5E5E;">-</span><span class="fl" style="color: #AD0000;">30</span><span class="op" style="color: #5E5E5E;">)</span><span class="op" style="color: #5E5E5E;">*</span><span class="op" style="color: #5E5E5E;">(</span><span class="va" style="color: #111111;">age</span> <span class="op" style="color: #5E5E5E;">&gt;=</span> <span class="fl" style="color: #AD0000;">30</span><span class="op" style="color: #5E5E5E;">)</span><span class="op" style="color: #5E5E5E;">)</span> <span class="op" style="color: #5E5E5E;">+</span></span>
@@ -250,7 +942,7 @@ Attaching package: 'psych'</code></pre>
 <p><img src="https://latex.codecogs.com/png.latex?h(x,%20%5Cxi)=(x-%5Cxi)_%7B+%7D%5E2=%0A%5Cbegin%7Bcases%7D%0A%20%20(x-%5Cxi)%5E2,%20%5Ctext%7B%5C,if%5C,%7D%20x%3E%5Cxi%5C%5C%0A%20%200,%20%5Ctext%7B%5C,else%7D,%0A%5Cend%7Bcases%7D%0A"></p>
 <p>we have as regression equation <img src="https://latex.codecogs.com/png.latex?Y_i=%5Cbeta_0+%5Cbeta_1x_i+%5Cbeta_2x_i%5E2+%5Cbeta_3%20h(x_i,5)+%5Ccdots+%5Cbeta_7%20h(x_i,40)%20+%20%5Cepsilon_i"></p>
 <div class="cell">
-<details><summary>Code</summary><div class="sourceCode" id="cb17" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;">pred.quadsmooth</span> <span class="op" style="color: #5E5E5E;">&lt;-</span> <span class="fu" style="color: #4758AB;"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span><span class="op" style="color: #5E5E5E;">(</span><span class="fu" style="color: #4758AB;"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op" style="color: #5E5E5E;">(</span><span class="va" style="color: #111111;">triceps</span><span class="op" style="color: #5E5E5E;">~</span> <span class="va" style="color: #111111;">age</span> <span class="op" style="color: #5E5E5E;">+</span> <span class="fu" style="color: #4758AB;"><a href="https://rdrr.io/r/base/AsIs.html">I</a></span><span class="op" style="color: #5E5E5E;">(</span><span class="va" style="color: #111111;">age</span><span class="op" style="color: #5E5E5E;">^</span><span class="fl" style="color: #AD0000;">2</span><span class="op" style="color: #5E5E5E;">)</span> <span class="op" style="color: #5E5E5E;">+</span> </span>
+<details><summary>Code</summary><div class="sourceCode" id="cb20" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;">pred.quadsmooth</span> <span class="op" style="color: #5E5E5E;">&lt;-</span> <span class="fu" style="color: #4758AB;"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span><span class="op" style="color: #5E5E5E;">(</span><span class="fu" style="color: #4758AB;"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op" style="color: #5E5E5E;">(</span><span class="va" style="color: #111111;">triceps</span><span class="op" style="color: #5E5E5E;">~</span> <span class="va" style="color: #111111;">age</span> <span class="op" style="color: #5E5E5E;">+</span> <span class="fu" style="color: #4758AB;"><a href="https://rdrr.io/r/base/AsIs.html">I</a></span><span class="op" style="color: #5E5E5E;">(</span><span class="va" style="color: #111111;">age</span><span class="op" style="color: #5E5E5E;">^</span><span class="fl" style="color: #AD0000;">2</span><span class="op" style="color: #5E5E5E;">)</span> <span class="op" style="color: #5E5E5E;">+</span> </span>
 <span>                    <span class="fu" style="color: #4758AB;"><a href="https://rdrr.io/r/base/AsIs.html">I</a></span><span class="op" style="color: #5E5E5E;">(</span><span class="op" style="color: #5E5E5E;">(</span><span class="va" style="color: #111111;">age</span><span class="op" style="color: #5E5E5E;">-</span><span class="fl" style="color: #AD0000;">5</span><span class="op" style="color: #5E5E5E;">)</span><span class="op" style="color: #5E5E5E;">^</span><span class="fl" style="color: #AD0000;">2</span><span class="op" style="color: #5E5E5E;">*</span><span class="op" style="color: #5E5E5E;">(</span><span class="va" style="color: #111111;">age</span><span class="op" style="color: #5E5E5E;">&gt;=</span><span class="fl" style="color: #AD0000;">5</span><span class="op" style="color: #5E5E5E;">)</span><span class="op" style="color: #5E5E5E;">)</span> <span class="op" style="color: #5E5E5E;">+</span></span>
 <span>                    <span class="fu" style="color: #4758AB;"><a href="https://rdrr.io/r/base/AsIs.html">I</a></span><span class="op" style="color: #5E5E5E;">(</span><span class="op" style="color: #5E5E5E;">(</span><span class="va" style="color: #111111;">age</span><span class="op" style="color: #5E5E5E;">-</span><span class="fl" style="color: #AD0000;">10</span><span class="op" style="color: #5E5E5E;">)</span><span class="op" style="color: #5E5E5E;">^</span><span class="fl" style="color: #AD0000;">2</span><span class="op" style="color: #5E5E5E;">*</span><span class="op" style="color: #5E5E5E;">(</span><span class="va" style="color: #111111;">age</span><span class="op" style="color: #5E5E5E;">&gt;=</span><span class="fl" style="color: #AD0000;">10</span><span class="op" style="color: #5E5E5E;">)</span><span class="op" style="color: #5E5E5E;">)</span> <span class="op" style="color: #5E5E5E;">+</span></span>
 <span>                    <span class="fu" style="color: #4758AB;"><a href="https://rdrr.io/r/base/AsIs.html">I</a></span><span class="op" style="color: #5E5E5E;">(</span><span class="op" style="color: #5E5E5E;">(</span><span class="va" style="color: #111111;">age</span><span class="op" style="color: #5E5E5E;">-</span><span class="fl" style="color: #AD0000;">20</span><span class="op" style="color: #5E5E5E;">)</span><span class="op" style="color: #5E5E5E;">^</span><span class="fl" style="color: #AD0000;">2</span><span class="op" style="color: #5E5E5E;">*</span><span class="op" style="color: #5E5E5E;">(</span><span class="va" style="color: #111111;">age</span><span class="op" style="color: #5E5E5E;">&gt;=</span><span class="fl" style="color: #AD0000;">20</span><span class="op" style="color: #5E5E5E;">)</span><span class="op" style="color: #5E5E5E;">)</span> <span class="op" style="color: #5E5E5E;">+</span></span>
@@ -276,12 +968,12 @@ Attaching package: 'psych'</code></pre>
 </section><section id="natural-spline" class="level3"><h3 class="anchored" data-anchor-id="natural-spline">Natural Spline</h3>
 <p>Natural splines have an additional restriction that the fitted curve <em>linear at the extremes</em>, <code><a href="https://rdrr.io/r/splines/ns.html">splines::ns()</a></code></p>
 <div class="cell">
-<details><summary>Code</summary><div class="sourceCode" id="cb18" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;">cub.splines.bs</span> <span class="op" style="color: #5E5E5E;">&lt;-</span> <span class="fu" style="color: #4758AB;"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op" style="color: #5E5E5E;">(</span><span class="va" style="color: #111111;">triceps</span> <span class="op" style="color: #5E5E5E;">~</span> <span class="fu" style="color: #4758AB;"><a href="https://rdrr.io/r/splines/bs.html">bs</a></span><span class="op" style="color: #5E5E5E;">(</span><span class="va" style="color: #111111;">age</span>, knots <span class="op" style="color: #5E5E5E;">=</span> <span class="fu" style="color: #4758AB;"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op" style="color: #5E5E5E;">(</span><span class="fl" style="color: #AD0000;">5</span>,<span class="fl" style="color: #AD0000;">10</span>,<span class="fl" style="color: #AD0000;">20</span>,<span class="fl" style="color: #AD0000;">30</span>,<span class="fl" style="color: #AD0000;">40</span><span class="op" style="color: #5E5E5E;">)</span><span class="op" style="color: #5E5E5E;">)</span>, data<span class="op" style="color: #5E5E5E;">=</span><span class="va" style="color: #111111;">triceps</span><span class="op" style="color: #5E5E5E;">)</span></span>
+<details><summary>Code</summary><div class="sourceCode" id="cb21" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;">cub.splines.bs</span> <span class="op" style="color: #5E5E5E;">&lt;-</span> <span class="fu" style="color: #4758AB;"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op" style="color: #5E5E5E;">(</span><span class="va" style="color: #111111;">triceps</span> <span class="op" style="color: #5E5E5E;">~</span> <span class="fu" style="color: #4758AB;"><a href="https://rdrr.io/r/splines/bs.html">bs</a></span><span class="op" style="color: #5E5E5E;">(</span><span class="va" style="color: #111111;">age</span>, knots <span class="op" style="color: #5E5E5E;">=</span> <span class="fu" style="color: #4758AB;"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op" style="color: #5E5E5E;">(</span><span class="fl" style="color: #AD0000;">5</span>,<span class="fl" style="color: #AD0000;">10</span>,<span class="fl" style="color: #AD0000;">20</span>,<span class="fl" style="color: #AD0000;">30</span>,<span class="fl" style="color: #AD0000;">40</span><span class="op" style="color: #5E5E5E;">)</span><span class="op" style="color: #5E5E5E;">)</span>, data<span class="op" style="color: #5E5E5E;">=</span><span class="va" style="color: #111111;">triceps</span><span class="op" style="color: #5E5E5E;">)</span></span>
 <span><span class="va" style="color: #111111;">cub.splines.ns</span> <span class="op" style="color: #5E5E5E;">&lt;-</span> <span class="fu" style="color: #4758AB;"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op" style="color: #5E5E5E;">(</span><span class="va" style="color: #111111;">triceps</span> <span class="op" style="color: #5E5E5E;">~</span> <span class="fu" style="color: #4758AB;"><a href="https://rdrr.io/r/splines/ns.html">ns</a></span><span class="op" style="color: #5E5E5E;">(</span><span class="va" style="color: #111111;">age</span>, knots <span class="op" style="color: #5E5E5E;">=</span> <span class="fu" style="color: #4758AB;"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op" style="color: #5E5E5E;">(</span><span class="fl" style="color: #AD0000;">5</span>,<span class="fl" style="color: #AD0000;">10</span>,<span class="fl" style="color: #AD0000;">20</span>,<span class="fl" style="color: #AD0000;">30</span>,<span class="fl" style="color: #AD0000;">40</span><span class="op" style="color: #5E5E5E;">)</span><span class="op" style="color: #5E5E5E;">)</span>, data<span class="op" style="color: #5E5E5E;">=</span><span class="va" style="color: #111111;">triceps</span><span class="op" style="color: #5E5E5E;">)</span></span></code></pre></div>
 </details>
 </div>
 <div class="cell">
-<details><summary>Code</summary><div class="sourceCode" id="cb19" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;">tri.age.plot</span> <span class="op" style="color: #5E5E5E;">&lt;-</span> <span class="fu" style="color: #4758AB;"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op" style="color: #5E5E5E;">(</span><span class="va" style="color: #111111;">triceps</span>, <span class="fu" style="color: #4758AB;"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op" style="color: #5E5E5E;">(</span>x<span class="op" style="color: #5E5E5E;">=</span><span class="va" style="color: #111111;">age</span>, y<span class="op" style="color: #5E5E5E;">=</span><span class="va" style="color: #111111;">triceps</span><span class="op" style="color: #5E5E5E;">)</span><span class="op" style="color: #5E5E5E;">)</span> <span class="op" style="color: #5E5E5E;">+</span></span>
+<details><summary>Code</summary><div class="sourceCode" id="cb22" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;">tri.age.plot</span> <span class="op" style="color: #5E5E5E;">&lt;-</span> <span class="fu" style="color: #4758AB;"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op" style="color: #5E5E5E;">(</span><span class="va" style="color: #111111;">triceps</span>, <span class="fu" style="color: #4758AB;"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op" style="color: #5E5E5E;">(</span>x<span class="op" style="color: #5E5E5E;">=</span><span class="va" style="color: #111111;">age</span>, y<span class="op" style="color: #5E5E5E;">=</span><span class="va" style="color: #111111;">triceps</span><span class="op" style="color: #5E5E5E;">)</span><span class="op" style="color: #5E5E5E;">)</span> <span class="op" style="color: #5E5E5E;">+</span></span>
 <span>                 <span class="fu" style="color: #4758AB;"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op" style="color: #5E5E5E;">(</span>alpha<span class="op" style="color: #5E5E5E;">=</span><span class="fl" style="color: #AD0000;">0.55</span>, color<span class="op" style="color: #5E5E5E;">=</span><span class="st" style="color: #20794D;">"black"</span><span class="op" style="color: #5E5E5E;">)</span> <span class="op" style="color: #5E5E5E;">+</span> </span>
 <span>                 <span class="fu" style="color: #4758AB;"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_minimal</a></span><span class="op" style="color: #5E5E5E;">(</span><span class="op" style="color: #5E5E5E;">)</span> </span>
 <span><span class="va" style="color: #111111;">tri.age.plot</span> <span class="op" style="color: #5E5E5E;">+</span></span>
@@ -308,12 +1000,11 @@ Attaching package: 'psych'</code></pre>
 <section id="lambda-determined-with-cross-validation" class="level3"><h3 class="anchored" data-anchor-id="lambda-determined-with-cross-validation">
 <img src="https://latex.codecogs.com/png.latex?%5Clambda"> determined with cross-validation</h3>
 <div class="cell">
-<details><summary>Code</summary><div class="sourceCode" id="cb20" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;">sspline</span> <span class="op" style="color: #5E5E5E;">&lt;-</span> <span class="fu" style="color: #4758AB;"><a href="https://rdrr.io/r/stats/smooth.spline.html">smooth.spline</a></span><span class="op" style="color: #5E5E5E;">(</span>x<span class="op" style="color: #5E5E5E;">=</span><span class="va" style="color: #111111;">triceps</span><span class="op" style="color: #5E5E5E;">$</span><span class="va" style="color: #111111;">age</span>, y<span class="op" style="color: #5E5E5E;">=</span><span class="va" style="color: #111111;">triceps</span><span class="op" style="color: #5E5E5E;">$</span><span class="va" style="color: #111111;">triceps</span>, cv<span class="op" style="color: #5E5E5E;">=</span><span class="cn" style="color: #8f5902;">TRUE</span><span class="op" style="color: #5E5E5E;">)</span></span></code></pre></div>
+<details><summary>Code</summary><div class="sourceCode" id="cb23" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;">sspline</span> <span class="op" style="color: #5E5E5E;">&lt;-</span> <span class="fu" style="color: #4758AB;"><a href="https://rdrr.io/r/stats/smooth.spline.html">smooth.spline</a></span><span class="op" style="color: #5E5E5E;">(</span>x<span class="op" style="color: #5E5E5E;">=</span><span class="va" style="color: #111111;">triceps</span><span class="op" style="color: #5E5E5E;">$</span><span class="va" style="color: #111111;">age</span>, y<span class="op" style="color: #5E5E5E;">=</span><span class="va" style="color: #111111;">triceps</span><span class="op" style="color: #5E5E5E;">$</span><span class="va" style="color: #111111;">triceps</span>, cv<span class="op" style="color: #5E5E5E;">=</span><span class="cn" style="color: #8f5902;">TRUE</span><span class="op" style="color: #5E5E5E;">)</span></span></code></pre></div>
 </details><div class="cell-output cell-output-stderr">
-<pre><code>Warning in smooth.spline(x = triceps$age, y = triceps$triceps, cv = TRUE): cross-validation with non-unique 'x' values
-seems doubtful</code></pre>
+<pre><code>Warning in smooth.spline(x = triceps$age, y = triceps$triceps, cv = TRUE): cross-validation with non-unique 'x' values seems doubtful</code></pre>
 </div>
-<details><summary>Code</summary><div class="sourceCode" id="cb22" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu" style="color: #4758AB;"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op" style="color: #5E5E5E;">(</span><span class="va" style="color: #111111;">triceps</span><span class="op" style="color: #5E5E5E;">$</span><span class="va" style="color: #111111;">age</span>, <span class="va" style="color: #111111;">triceps</span><span class="op" style="color: #5E5E5E;">$</span><span class="va" style="color: #111111;">triceps</span><span class="op" style="color: #5E5E5E;">)</span></span>
+<details><summary>Code</summary><div class="sourceCode" id="cb25" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu" style="color: #4758AB;"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op" style="color: #5E5E5E;">(</span><span class="va" style="color: #111111;">triceps</span><span class="op" style="color: #5E5E5E;">$</span><span class="va" style="color: #111111;">age</span>, <span class="va" style="color: #111111;">triceps</span><span class="op" style="color: #5E5E5E;">$</span><span class="va" style="color: #111111;">triceps</span><span class="op" style="color: #5E5E5E;">)</span></span>
 <span><span class="fu" style="color: #4758AB;"><a href="https://rdrr.io/r/graphics/lines.html">lines</a></span><span class="op" style="color: #5E5E5E;">(</span><span class="va" style="color: #111111;">sspline</span>, lwd<span class="op" style="color: #5E5E5E;">=</span><span class="fl" style="color: #AD0000;">3</span>,col<span class="op" style="color: #5E5E5E;">=</span><span class="st" style="color: #20794D;">"red"</span><span class="op" style="color: #5E5E5E;">)</span></span></code></pre></div>
 </details><div class="cell-output-display">
 <p><img src="https://mcdr65.github.io/myblog/posts/fromLMtoSplines/index_files/figure-html/unnamed-chunk-20-1.png" class="img-fluid" width="672"></p>
@@ -321,7 +1012,7 @@ seems doubtful</code></pre>
 </div>
 </section><section id="the-extremes-no-smooth-and-max-smooth" class="level3"><h3 class="anchored" data-anchor-id="the-extremes-no-smooth-and-max-smooth">The extremes: no smooth and max smooth</h3>
 <div class="cell">
-<details><summary>Code</summary><div class="sourceCode" id="cb23" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;">ssplineNosmooth</span> <span class="op" style="color: #5E5E5E;">&lt;-</span> <span class="fu" style="color: #4758AB;"><a href="https://rdrr.io/r/stats/smooth.spline.html">smooth.spline</a></span><span class="op" style="color: #5E5E5E;">(</span>x<span class="op" style="color: #5E5E5E;">=</span><span class="va" style="color: #111111;">triceps</span><span class="op" style="color: #5E5E5E;">$</span><span class="va" style="color: #111111;">age</span>, y<span class="op" style="color: #5E5E5E;">=</span><span class="va" style="color: #111111;">triceps</span><span class="op" style="color: #5E5E5E;">$</span><span class="va" style="color: #111111;">triceps</span>, lambda<span class="op" style="color: #5E5E5E;">=</span><span class="fl" style="color: #AD0000;">0</span><span class="op" style="color: #5E5E5E;">)</span></span>
+<details><summary>Code</summary><div class="sourceCode" id="cb26" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;">ssplineNosmooth</span> <span class="op" style="color: #5E5E5E;">&lt;-</span> <span class="fu" style="color: #4758AB;"><a href="https://rdrr.io/r/stats/smooth.spline.html">smooth.spline</a></span><span class="op" style="color: #5E5E5E;">(</span>x<span class="op" style="color: #5E5E5E;">=</span><span class="va" style="color: #111111;">triceps</span><span class="op" style="color: #5E5E5E;">$</span><span class="va" style="color: #111111;">age</span>, y<span class="op" style="color: #5E5E5E;">=</span><span class="va" style="color: #111111;">triceps</span><span class="op" style="color: #5E5E5E;">$</span><span class="va" style="color: #111111;">triceps</span>, lambda<span class="op" style="color: #5E5E5E;">=</span><span class="fl" style="color: #AD0000;">0</span><span class="op" style="color: #5E5E5E;">)</span></span>
 <span><span class="va" style="color: #111111;">ssplineMaxsmooth</span> <span class="op" style="color: #5E5E5E;">&lt;-</span> <span class="fu" style="color: #4758AB;"><a href="https://rdrr.io/r/stats/smooth.spline.html">smooth.spline</a></span><span class="op" style="color: #5E5E5E;">(</span>x<span class="op" style="color: #5E5E5E;">=</span><span class="va" style="color: #111111;">triceps</span><span class="op" style="color: #5E5E5E;">$</span><span class="va" style="color: #111111;">age</span>, y<span class="op" style="color: #5E5E5E;">=</span><span class="va" style="color: #111111;">triceps</span><span class="op" style="color: #5E5E5E;">$</span><span class="va" style="color: #111111;">triceps</span>, lambda<span class="op" style="color: #5E5E5E;">=</span><span class="fl" style="color: #AD0000;">100</span><span class="op" style="color: #5E5E5E;">)</span></span>
 <span><span class="fu" style="color: #4758AB;"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op" style="color: #5E5E5E;">(</span><span class="va" style="color: #111111;">triceps</span><span class="op" style="color: #5E5E5E;">$</span><span class="va" style="color: #111111;">age</span>, <span class="va" style="color: #111111;">triceps</span><span class="op" style="color: #5E5E5E;">$</span><span class="va" style="color: #111111;">triceps</span><span class="op" style="color: #5E5E5E;">)</span></span>
 <span><span class="fu" style="color: #4758AB;"><a href="https://rdrr.io/r/graphics/lines.html">lines</a></span><span class="op" style="color: #5E5E5E;">(</span><span class="va" style="color: #111111;">ssplineNosmooth</span>, lwd<span class="op" style="color: #5E5E5E;">=</span><span class="fl" style="color: #AD0000;">2</span>,col<span class="op" style="color: #5E5E5E;">=</span><span class="st" style="color: #20794D;">"red"</span><span class="op" style="color: #5E5E5E;">)</span></span>
@@ -336,14 +1027,14 @@ seems doubtful</code></pre>
 </section></section><section id="generalized-additive-model" class="level2"><h2 class="anchored" data-anchor-id="generalized-additive-model">Generalized additive model</h2>
 <p>Using <code><a href="https://rdrr.io/pkg/mgcv/man/gam.html">mgcv::gam()</a></code></p>
 <div class="cell">
-<details><summary>Code</summary><div class="sourceCode" id="cb24" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw" style="color: #003B4F;"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op" style="color: #5E5E5E;">(</span><span class="va" style="color: #111111;">mgcv</span><span class="op" style="color: #5E5E5E;">)</span></span></code></pre></div>
+<details><summary>Code</summary><div class="sourceCode" id="cb27" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw" style="color: #003B4F;"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op" style="color: #5E5E5E;">(</span><span class="va" style="color: #111111;">mgcv</span><span class="op" style="color: #5E5E5E;">)</span></span></code></pre></div>
 </details><div class="cell-output cell-output-stderr">
 <pre><code>Loading required package: nlme</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>This is mgcv 1.8-35. For overview type 'help("mgcv-package")'.</code></pre>
+<pre><code>This is mgcv 1.8-42. For overview type 'help("mgcv-package")'.</code></pre>
 </div>
-<details><summary>Code</summary><div class="sourceCode" id="cb27" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;">gamtri</span><span class="op" style="color: #5E5E5E;">&lt;-</span><span class="fu" style="color: #4758AB;"><a href="https://rdrr.io/pkg/mgcv/man/gam.html">gam</a></span><span class="op" style="color: #5E5E5E;">(</span><span class="va" style="color: #111111;">triceps</span><span class="op" style="color: #5E5E5E;">~</span><span class="fu" style="color: #4758AB;"><a href="https://rdrr.io/pkg/mgcv/man/s.html">s</a></span><span class="op" style="color: #5E5E5E;">(</span><span class="va" style="color: #111111;">age</span>,bs<span class="op" style="color: #5E5E5E;">=</span><span class="st" style="color: #20794D;">"cr"</span><span class="op" style="color: #5E5E5E;">)</span>,data<span class="op" style="color: #5E5E5E;">=</span><span class="va" style="color: #111111;">triceps</span><span class="op" style="color: #5E5E5E;">)</span></span>
+<details><summary>Code</summary><div class="sourceCode" id="cb30" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va" style="color: #111111;">gamtri</span><span class="op" style="color: #5E5E5E;">&lt;-</span><span class="fu" style="color: #4758AB;"><a href="https://rdrr.io/pkg/mgcv/man/gam.html">gam</a></span><span class="op" style="color: #5E5E5E;">(</span><span class="va" style="color: #111111;">triceps</span><span class="op" style="color: #5E5E5E;">~</span><span class="fu" style="color: #4758AB;"><a href="https://rdrr.io/pkg/mgcv/man/s.html">s</a></span><span class="op" style="color: #5E5E5E;">(</span><span class="va" style="color: #111111;">age</span>,bs<span class="op" style="color: #5E5E5E;">=</span><span class="st" style="color: #20794D;">"cr"</span><span class="op" style="color: #5E5E5E;">)</span>,data<span class="op" style="color: #5E5E5E;">=</span><span class="va" style="color: #111111;">triceps</span><span class="op" style="color: #5E5E5E;">)</span></span>
 <span><span class="fu" style="color: #4758AB;"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op" style="color: #5E5E5E;">(</span><span class="va" style="color: #111111;">gamtri</span><span class="op" style="color: #5E5E5E;">)</span></span></code></pre></div>
 </details><div class="cell-output cell-output-stdout">
 <pre><code>
@@ -355,16 +1046,16 @@ triceps ~ s(age, bs = "cr")
 
 Parametric coefficients:
             Estimate Std. Error t value Pr(&gt;|t|)
-(Intercept)   9.7024     0.1255   77.29   &lt;2e-16
+(Intercept)    9.702      0.126    77.3   &lt;2e-16
 
 Approximate significance of smooth terms:
-         edf Ref.df    F p-value
-s(age) 6.706  7.539 85.6  &lt;2e-16
+        edf Ref.df    F p-value
+s(age) 6.71   7.54 85.6  &lt;2e-16
 
 R-sq.(adj) =  0.419   Deviance explained = 42.3%
 GCV =  14.18  Scale est. = 14.057    n = 892</code></pre>
 </div>
-<details><summary>Code</summary><div class="sourceCode" id="cb29" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu" style="color: #4758AB;"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op" style="color: #5E5E5E;">(</span><span class="va" style="color: #111111;">gamtri</span><span class="op" style="color: #5E5E5E;">)</span></span></code></pre></div>
+<details><summary>Code</summary><div class="sourceCode" id="cb32" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu" style="color: #4758AB;"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op" style="color: #5E5E5E;">(</span><span class="va" style="color: #111111;">gamtri</span><span class="op" style="color: #5E5E5E;">)</span></span></code></pre></div>
 </details><div class="cell-output-display">
 <p><img src="https://mcdr65.github.io/myblog/posts/fromLMtoSplines/index_files/figure-html/GAM-1.png" class="img-fluid" width="672"></p>
 </div>
