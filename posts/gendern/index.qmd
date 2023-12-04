@@ -4,8 +4,6 @@ date: "2022-10-25"
 description: "Gegen Identitätspolitik"
 categories: [meinung]
 draft: false
-resource:
-  - gendersterntaler.pdf
 ---
 
 
@@ -49,7 +47,9 @@ Für **Tomas Kubelik** ist die Sprache unschuldig. Hier ein unterhaltsamer, humo
 > Sie sind in sich widersprüchlich, sie sind nicht konsequent durchführbar, sie stossen an die Grenzen von Logik, Praktikabilität und Akzeptanz. Sie sind unästhetisch, unökonomisch und irreführend. (**Tomas Kubelik**, [Vortrag](https://youtu.be/Ri-kVYDTEAk) und [Text](https://www.fazitmagazin.at/2014/04/das-missverstaendnis-vom-grammatikalischen-geschlecht/))
 
 
-Für **Ingo Meyer** ([Das Märchen von Gendersterntaler](gendersterntaler.pdf)) ist das Hauptargument gegen das Gendern:
+
+Für **Ingo Meyer** [Das Märchen vom Gendersterntaler](https://www.berliner-zeitung.de/wochenende/gendern-ist-eine-sprachliche-katastrophe-li.158476)
+ist das Hauptargument gegen das Gendern:
 
 > Sprache entwickelt sich seit Jahrhunderten. Was funktioniert, setzt sich durch;
 > was die Verständigung erschwert, wird abgeschliffen. Nie ist es ohne Schaden gelungen, diesen
