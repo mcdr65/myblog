@@ -4457,13 +4457,55 @@ G             0.6117     0.2043  2.9938 0.002927</code></pre>
 </div>
 </div>
 <div class="cell column-page">
-<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">require</a></span><span class="op">(</span><span class="st"><a href="http://r-survey.r-forge.r-project.org/survey/">&quot;survey&quot;</a></span><span class="op">)</span></span>
-<span><span class="va">msm</span> <span class="op">&lt;-</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/survey/man/svyglm.html">svyglm</a></span><span class="op">(</span><span class="va">Ydich</span> <span class="op">~</span> <span class="va">G</span>, family<span class="op">=</span><span class="st">&quot;binomial&quot;</span>,design <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/survey/man/svydesign.html">svydesign</a></span><span class="op">(</span><span class="op">~</span> <span class="fl">1</span>, weights <span class="op">=</span><span class="op">~</span><span class="va">sw</span>,data <span class="op">=</span> <span class="va">dat</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">msm</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">require</a></span><span class="op">(</span><span class="st"><a href="http://r-survey.r-forge.r-project.org/survey/">&quot;survey&quot;</a></span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Loading required package: survey</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Loading required package: grid</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Loading required package: Matrix</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Loading required package: survival</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+Attaching package: &#39;survey&#39;</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following object is masked from &#39;package:graphics&#39;:
+
+    dotchart</code></pre>
+</div>
+<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">msm</span> <span class="op">&lt;-</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/survey/man/svyglm.html">svyglm</a></span><span class="op">(</span><span class="va">Ydich</span> <span class="op">~</span> <span class="va">G</span>, family<span class="op">=</span><span class="st">&quot;binomial&quot;</span>,design <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/survey/man/svydesign.html">svydesign</a></span><span class="op">(</span><span class="op">~</span> <span class="fl">1</span>, weights <span class="op">=</span><span class="op">~</span><span class="va">sw</span>,data <span class="op">=</span> <span class="va">dat</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in eval(family$initialize): non-integer #successes in a binomial glm!</code></pre>
+</div>
+<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">msm</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+svyglm(formula = Ydich ~ G, design = svydesign(~1, weights = ~sw, 
+    data = dat), family = &quot;binomial&quot;)
+
+Survey design:
+svydesign(~1, weights = ~sw, data = dat)
+
+Coefficients:
+            Estimate Std. Error t value Pr(&gt;|t|)
+(Intercept)  -0.0683     0.1417   -0.48   0.6301
+G             0.6117     0.2042    3.00   0.0029
+
+(Dispersion parameter for binomial family taken to be 1.003)
+
+Number of Fisher Scoring iterations: 4</code></pre>
+</div>
 </div>
 </section></section><section id="comparison" class="level2 page-columns page-full"><h2 class="anchored" data-anchor-id="comparison">Comparison</h2>
 <div class="cell page-columns page-full">
-<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">modelsummary</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/modelsummary/man/modelsummary.html">modelsummary</a></span><span class="op">(</span>models<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="st">&quot;marginal&quot;</span><span class="op">=</span><span class="va">modM</span>,<span class="st">&quot;conditional&quot;</span><span class="op">=</span><span class="va">modC</span>,<span class="st">&quot;IPW&quot;</span><span class="op">=</span><span class="va">modW</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">modelsummary</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/modelsummary/man/modelsummary.html">modelsummary</a></span><span class="op">(</span>models<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="st">&quot;marginal&quot;</span><span class="op">=</span><span class="va">modM</span>,<span class="st">&quot;conditional&quot;</span><span class="op">=</span><span class="va">modC</span>,<span class="st">&quot;IPW&quot;</span><span class="op">=</span><span class="va">modW</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display column-page">
 
 <table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
@@ -4572,7 +4614,7 @@ Important
 
 </div>
 <div class="cell column-page">
-<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/str.html">str</a></span><span class="op">(</span><span class="va">bwt</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/str.html">str</a></span><span class="op">(</span><span class="va">bwt</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>&#39;data.frame&#39;:   189 obs. of  9 variables:
  $ low     : int  0 0 0 0 0 0 0 0 0 0 ...
@@ -4587,14 +4629,14 @@ Important
 </div>
 </div>
 <div class="cell column-page">
-<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">glm_smoke</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/glm.html">glm</a></span><span class="op">(</span><span class="va">low</span> <span class="op">~</span> <span class="va">smoke</span>, data <span class="op">=</span> <span class="va">bwt</span>, family <span class="op">=</span> <span class="va">binomial</span><span class="op">)</span></span>
+<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">glm_smoke</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/glm.html">glm</a></span><span class="op">(</span><span class="va">low</span> <span class="op">~</span> <span class="va">smoke</span>, data <span class="op">=</span> <span class="va">bwt</span>, family <span class="op">=</span> <span class="va">binomial</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">glm_smoke</span><span class="op">)</span><span class="op">$</span><span class="va">coef</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>            Estimate Std. Error z value  Pr(&gt;|z|)
 (Intercept)  -1.0871     0.2147  -5.062 4.142e-07
 smoke         0.7041     0.3196   2.203 2.762e-02</code></pre>
 </div>
-<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">glm_multi_1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/glm.html">glm</a></span><span class="op">(</span><span class="va">low</span> <span class="op">~</span> <span class="va">smoke</span> <span class="op">+</span> <span class="va">socclass</span>, data <span class="op">=</span> <span class="va">bwt</span>, family <span class="op">=</span> <span class="va">binomial</span><span class="op">)</span></span>
+<div class="sourceCode" id="cb30"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">glm_multi_1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/glm.html">glm</a></span><span class="op">(</span><span class="va">low</span> <span class="op">~</span> <span class="va">smoke</span> <span class="op">+</span> <span class="va">socclass</span>, data <span class="op">=</span> <span class="va">bwt</span>, family <span class="op">=</span> <span class="va">binomial</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">glm_multi_1</span><span class="op">)</span><span class="op">$</span><span class="va">coef</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>            Estimate Std. Error z value  Pr(&gt;|z|)
@@ -4605,17 +4647,17 @@ socclassIII    1.109     0.4003   2.769 5.618e-03</code></pre>
 </div>
 </div>
 <div class="cell column-page">
-<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">temp</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/ipw/man/ipwpoint.html">ipwpoint</a></span><span class="op">(</span>exposure<span class="op">=</span><span class="va">smoke</span>,family <span class="op">=</span> <span class="st">&quot;binomial&quot;</span>,link <span class="op">=</span> <span class="st">&quot;logit&quot;</span>,data<span class="op">=</span><span class="va">bwt</span>,</span>
+<div class="sourceCode" id="cb32"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">temp</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/ipw/man/ipwpoint.html">ipwpoint</a></span><span class="op">(</span>exposure<span class="op">=</span><span class="va">smoke</span>,family <span class="op">=</span> <span class="st">&quot;binomial&quot;</span>,link <span class="op">=</span> <span class="st">&quot;logit&quot;</span>,data<span class="op">=</span><span class="va">bwt</span>,</span>
 <span>                 numerator<span class="op">=</span><span class="op">~</span><span class="fl">1</span>,denominator<span class="op">=</span><span class="op">~</span><span class="va">socclass</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">temp</span><span class="op">$</span><span class="va">ipw.weights</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
   0.723   0.723   0.741   1.000   1.328   2.186 </code></pre>
 </div>
-<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">bwt</span><span class="op">$</span><span class="va">sw</span><span class="op">&lt;-</span><span class="va">temp</span><span class="op">$</span><span class="va">ipw.weights</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb34"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">bwt</span><span class="op">$</span><span class="va">sw</span><span class="op">&lt;-</span><span class="va">temp</span><span class="op">$</span><span class="va">ipw.weights</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell column-page">
-<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">modW</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/stats/glm.html">glm</a></span><span class="op">(</span><span class="va">low</span><span class="op">~</span><span class="va">smoke</span>,weights<span class="op">=</span><span class="va">sw</span>,data<span class="op">=</span><span class="va">bwt</span>,family<span class="op">=</span><span class="va">quasibinomial</span><span class="op">)</span></span>
+<div class="sourceCode" id="cb35"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">modW</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/stats/glm.html">glm</a></span><span class="op">(</span><span class="va">low</span><span class="op">~</span><span class="va">smoke</span>,weights<span class="op">=</span><span class="va">sw</span>,data<span class="op">=</span><span class="va">bwt</span>,family<span class="op">=</span><span class="va">quasibinomial</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">modW</span><span class="op">)</span><span class="op">$</span><span class="va">coef</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>            Estimate Std. Error t value  Pr(&gt;|t|)
@@ -4641,7 +4683,7 @@ Important
 </div>
 </div>
 <div class="cell page-columns page-full">
-<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">modelsummary</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/modelsummary/man/modelsummary.html">modelsummary</a></span><span class="op">(</span>models<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="st">&quot;marginal&quot;</span><span class="op">=</span><span class="va">glm_smoke</span>,<span class="st">&quot;conditional&quot;</span><span class="op">=</span><span class="va">glm_multi_1</span>,<span class="st">&quot;IPW&quot;</span><span class="op">=</span><span class="va">modW</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb37"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">modelsummary</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/modelsummary/man/modelsummary.html">modelsummary</a></span><span class="op">(</span>models<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="st">&quot;marginal&quot;</span><span class="op">=</span><span class="va">glm_smoke</span>,<span class="st">&quot;conditional&quot;</span><span class="op">=</span><span class="va">glm_multi_1</span>,<span class="st">&quot;IPW&quot;</span><span class="op">=</span><span class="va">modW</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display column-page">
 
 <table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
@@ -4744,7 +4786,7 @@ Important
 <p>See <a href="https://www.r-bloggers.com/2017/12/when-you-use-inverse-probability-weighting-for-estimation-what-are-the-weights-actually-doing/">Example</a> for marginal structural models in this context.</p>
 <section id="simulate-some-data" class="level2 page-columns page-full"><h2 class="anchored" data-anchor-id="simulate-some-data">Simulate some data</h2>
 <div class="cell column-page">
-<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/kgoldfeld/simstudy">simstudy</a></span><span class="op">)</span></span>
+<div class="sourceCode" id="cb38"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/kgoldfeld/simstudy">simstudy</a></span><span class="op">)</span></span>
 <span><span class="co"># define the data</span></span>
 <span><span class="va">defB</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://kgoldfeld.github.io/simstudy/reference/defData.html">defData</a></span><span class="op">(</span>varname <span class="op">=</span> <span class="st">&quot;L&quot;</span>, formula <span class="op">=</span><span class="fl">0.27</span>, </span>
 <span>                dist <span class="op">=</span> <span class="st">&quot;binary&quot;</span><span class="op">)</span></span>
@@ -4767,7 +4809,7 @@ Important
 </div>
 </div>
 <div class="cell column-page">
-<div class="sourceCode" id="cb30"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="fl">2002</span><span class="op">)</span></span>
+<div class="sourceCode" id="cb40"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="fl">2002</span><span class="op">)</span></span>
 <span><span class="va">Nnew</span><span class="op">&lt;-</span><span class="fl">1000</span></span>
 <span><span class="va">dtB</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://kgoldfeld.github.io/simstudy/reference/genData.html">genData</a></span><span class="op">(</span><span class="va">Nnew</span>, <span class="va">defB</span><span class="op">)</span></span>
 <span><span class="va">dtB</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -4788,7 +4830,7 @@ Important
 </div>
 </section><section id="true-causal-effect-based-on-potential-outcomes" class="level2 page-columns page-full"><h2 class="anchored" data-anchor-id="true-causal-effect-based-on-potential-outcomes">True causal effect (based on potential outcomes)</h2>
 <div class="cell column-page">
-<div class="sourceCode" id="cb32"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">odds</span> <span class="op">&lt;-</span> <span class="kw">function</span> <span class="op">(</span><span class="va">p</span><span class="op">)</span> <span class="op">{</span></span>
+<div class="sourceCode" id="cb42"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">odds</span> <span class="op">&lt;-</span> <span class="kw">function</span> <span class="op">(</span><span class="va">p</span><span class="op">)</span> <span class="op">{</span></span>
 <span>    <span class="kw"><a href="https://rdrr.io/r/base/function.html">return</a></span><span class="op">(</span><span class="op">(</span><span class="va">p</span><span class="op">/</span><span class="op">(</span><span class="fl">1</span> <span class="op">-</span> <span class="va">p</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="op">}</span></span>
 <span></span>
@@ -4800,7 +4842,7 @@ Important
 </section><section id="conditional-effect" class="level2 page-columns page-full"><h2 class="anchored" data-anchor-id="conditional-effect">Conditional effect</h2>
 <p>The true conditional causal effect of <span class="math inline">\(A\)</span> is 1.</p>
 <div class="cell column-page">
-<div class="sourceCode" id="cb34"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">mc</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/stats/glm.html">glm</a></span><span class="op">(</span><span class="va">Y</span> <span class="op">~</span> <span class="va">A</span> <span class="op">+</span> <span class="va">L</span> , data <span class="op">=</span> <span class="va">dtB</span>, family<span class="op">=</span><span class="st">&quot;binomial&quot;</span><span class="op">)</span></span>
+<div class="sourceCode" id="cb44"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">mc</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/stats/glm.html">glm</a></span><span class="op">(</span><span class="va">Y</span> <span class="op">~</span> <span class="va">A</span> <span class="op">+</span> <span class="va">L</span> , data <span class="op">=</span> <span class="va">dtB</span>, family<span class="op">=</span><span class="st">&quot;binomial&quot;</span><span class="op">)</span></span>
 <span><span class="va">mc</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
@@ -4817,7 +4859,7 @@ Residual Deviance: 797  AIC: 803</code></pre>
 </div>
 <p>This estimate for <span class="math inline">\(A\)</span> is a good estimate of the conditional effect in the population, based on the potential outcomes at each level of <span class="math inline">\(L\)</span></p>
 <div class="cell column-page">
-<div class="sourceCode" id="cb36"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">dtB</span><span class="op">[</span>, <span class="fu">.</span><span class="op">(</span>LOR <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html">log</a></span><span class="op">(</span> <span class="fu">odds</span><span class="op">(</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">Y1</span><span class="op">)</span> <span class="op">)</span> <span class="op">/</span> <span class="fu">odds</span><span class="op">(</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">Y0</span><span class="op">)</span> <span class="op">)</span> <span class="op">)</span> <span class="op">)</span>, keyby <span class="op">=</span> <span class="va">L</span><span class="op">]</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb46"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">dtB</span><span class="op">[</span>, <span class="fu">.</span><span class="op">(</span>LOR <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html">log</a></span><span class="op">(</span> <span class="fu">odds</span><span class="op">(</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">Y1</span><span class="op">)</span> <span class="op">)</span> <span class="op">/</span> <span class="fu">odds</span><span class="op">(</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">Y0</span><span class="op">)</span> <span class="op">)</span> <span class="op">)</span> <span class="op">)</span>, keyby <span class="op">=</span> <span class="va">L</span><span class="op">]</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>   L   LOR
 1: 0 1.104
@@ -4827,7 +4869,7 @@ Residual Deviance: 797  AIC: 803</code></pre>
 </section><section id="marginal-effect" class="level2 page-columns page-full"><h2 class="anchored" data-anchor-id="marginal-effect">Marginal effect</h2>
 <p>The marginal estimate is biased both for the conditional effect and the marginal causal effect.</p>
 <div class="cell column-page">
-<div class="sourceCode" id="cb38"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">mm</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/stats/glm.html">glm</a></span><span class="op">(</span><span class="va">Y</span> <span class="op">~</span> <span class="va">A</span> , data <span class="op">=</span> <span class="va">dtB</span>, family<span class="op">=</span><span class="st">&quot;binomial&quot;</span><span class="op">)</span></span>
+<div class="sourceCode" id="cb48"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">mm</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/stats/glm.html">glm</a></span><span class="op">(</span><span class="va">Y</span> <span class="op">~</span> <span class="va">A</span> , data <span class="op">=</span> <span class="va">dtB</span>, family<span class="op">=</span><span class="st">&quot;binomial&quot;</span><span class="op">)</span></span>
 <span><span class="va">mm</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
@@ -4844,12 +4886,12 @@ Residual Deviance: 876  AIC: 880</code></pre>
 </div>
 </section><section id="numerator-and-denominator-model" class="level2 page-columns page-full"><h2 class="anchored" data-anchor-id="numerator-and-denominator-model">Numerator and Denominator model</h2>
 <div class="cell column-page">
-<div class="sourceCode" id="cb40"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">numModel</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/glm.html">glm</a></span><span class="op">(</span><span class="va">A</span> <span class="op">~</span> <span class="fl">1</span>, data <span class="op">=</span> <span class="va">dtB</span>, family <span class="op">=</span> <span class="st">&quot;binomial&quot;</span><span class="op">)</span></span>
+<div class="sourceCode" id="cb50"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">numModel</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/glm.html">glm</a></span><span class="op">(</span><span class="va">A</span> <span class="op">~</span> <span class="fl">1</span>, data <span class="op">=</span> <span class="va">dtB</span>, family <span class="op">=</span> <span class="st">&quot;binomial&quot;</span><span class="op">)</span></span>
 <span><span class="va">denModel</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/glm.html">glm</a></span><span class="op">(</span><span class="va">A</span> <span class="op">~</span> <span class="va">L</span>, data <span class="op">=</span> <span class="va">dtB</span>, family <span class="op">=</span> <span class="st">&quot;binomial&quot;</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section><section id="stabilized-weights-by-hand" class="level2 page-columns page-full"><h2 class="anchored" data-anchor-id="stabilized-weights-by-hand">Stabilized weights by hand</h2>
 <div class="cell column-page">
-<div class="sourceCode" id="cb41"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">dtB</span><span class="op">[</span>, <span class="va">pA0</span> <span class="op">:=</span> <span class="fu"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span><span class="op">(</span><span class="va">numModel</span>, type <span class="op">=</span> <span class="st">&quot;response&quot;</span><span class="op">)</span><span class="op">]</span></span>
+<div class="sourceCode" id="cb51"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">dtB</span><span class="op">[</span>, <span class="va">pA0</span> <span class="op">:=</span> <span class="fu"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span><span class="op">(</span><span class="va">numModel</span>, type <span class="op">=</span> <span class="st">&quot;response&quot;</span><span class="op">)</span><span class="op">]</span></span>
 <span><span class="va">dtB</span><span class="op">[</span>, <span class="va">pA</span> <span class="op">:=</span> <span class="fu"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span><span class="op">(</span><span class="va">denModel</span>, type <span class="op">=</span> <span class="st">&quot;response&quot;</span><span class="op">)</span><span class="op">]</span></span>
 <span><span class="va">defB2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://kgoldfeld.github.io/simstudy/reference/defDataAdd.html">defDataAdd</a></span><span class="op">(</span>varname <span class="op">=</span> <span class="st">&quot;IPW&quot;</span>, </span>
 <span>                    formula <span class="op">=</span> <span class="st">&quot;(A*pA0+(1-A)*(1-pA0))/((A * pA) + ((1 - A) * (1 - pA)))&quot;</span>, </span>
@@ -4867,28 +4909,28 @@ Residual Deviance: 876  AIC: 880</code></pre>
 </div>
 </div>
 <div class="cell column-page">
-<div class="sourceCode" id="cb43"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/unique.html">unique</a></span><span class="op">(</span><span class="va">dtB</span><span class="op">$</span><span class="va">IPW</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb53"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/unique.html">unique</a></span><span class="op">(</span><span class="va">dtB</span><span class="op">$</span><span class="va">IPW</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 0.8673 0.6297 1.7578 1.2639</code></pre>
 </div>
 </div>
 </section><section id="stabilized-weights-with-ipw-package" class="level2 page-columns page-full"><h2 class="anchored" data-anchor-id="stabilized-weights-with-ipw-package">Stabilized weights with <strong>ipw</strong> package</h2>
 <div class="cell column-page">
-<div class="sourceCode" id="cb45"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">tempsw</span><span class="op">&lt;-</span><span class="fu">ipw</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/ipw/man/ipwpoint.html">ipwpoint</a></span><span class="op">(</span>exposure<span class="op">=</span><span class="va">A</span>,family<span class="op">=</span><span class="st">&quot;binomial&quot;</span>,link<span class="op">=</span><span class="st">&quot;logit&quot;</span>,numerator<span class="op">=</span><span class="op">~</span><span class="fl">1</span>,denominator <span class="op">=</span> <span class="op">~</span><span class="va">L</span>,data<span class="op">=</span><span class="va">dtB</span><span class="op">)</span></span>
+<div class="sourceCode" id="cb55"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">tempsw</span><span class="op">&lt;-</span><span class="fu">ipw</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/ipw/man/ipwpoint.html">ipwpoint</a></span><span class="op">(</span>exposure<span class="op">=</span><span class="va">A</span>,family<span class="op">=</span><span class="st">&quot;binomial&quot;</span>,link<span class="op">=</span><span class="st">&quot;logit&quot;</span>,numerator<span class="op">=</span><span class="op">~</span><span class="fl">1</span>,denominator <span class="op">=</span> <span class="op">~</span><span class="va">L</span>,data<span class="op">=</span><span class="va">dtB</span><span class="op">)</span></span>
 <span><span class="va">tempw</span><span class="op">&lt;-</span><span class="fu">ipw</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/ipw/man/ipwpoint.html">ipwpoint</a></span><span class="op">(</span>exposure<span class="op">=</span><span class="va">A</span>,family<span class="op">=</span><span class="st">&quot;binomial&quot;</span>,link<span class="op">=</span><span class="st">&quot;logit&quot;</span>,denominator <span class="op">=</span> <span class="op">~</span><span class="va">L</span>,data<span class="op">=</span><span class="va">dtB</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/unique.html">unique</a></span><span class="op">(</span><span class="va">tempsw</span><span class="op">$</span><span class="va">ipw.weights</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 0.8673 0.6297 1.7578 1.2639</code></pre>
 </div>
-<div class="sourceCode" id="cb47"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">tempsw</span><span class="op">$</span><span class="va">ipw.weights</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb57"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">tempsw</span><span class="op">$</span><span class="va">ipw.weights</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 1</code></pre>
 </div>
-<div class="sourceCode" id="cb49"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/unique.html">unique</a></span><span class="op">(</span><span class="va">tempw</span><span class="op">$</span><span class="va">ipw.weights</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb59"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/unique.html">unique</a></span><span class="op">(</span><span class="va">tempw</span><span class="op">$</span><span class="va">ipw.weights</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 1.503 1.489 3.047 2.988</code></pre>
 </div>
-<div class="sourceCode" id="cb51"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">tempw</span><span class="op">$</span><span class="va">ipw.weights</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb61"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">tempw</span><span class="op">$</span><span class="va">ipw.weights</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 2</code></pre>
 </div>
@@ -4896,7 +4938,7 @@ Residual Deviance: 876  AIC: 880</code></pre>
 </section><section id="applying-ipw" class="level2 page-columns page-full"><h2 class="anchored" data-anchor-id="applying-ipw">Applying IPW</h2>
 <section id="unstabilized-weights" class="level3 page-columns page-full"><h3 class="anchored" data-anchor-id="unstabilized-weights">Unstabilized weights</h3>
 <div class="cell column-page">
-<div class="sourceCode" id="cb53"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">mw</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/stats/glm.html">glm</a></span><span class="op">(</span><span class="va">Y</span> <span class="op">~</span> <span class="va">A</span> , data <span class="op">=</span> <span class="va">dtB</span>, family<span class="op">=</span><span class="st">&quot;binomial&quot;</span>, weights <span class="op">=</span> <span class="va">tempw</span><span class="op">$</span><span class="va">ipw.weights</span><span class="op">)</span><span class="op">)</span><span class="op">$</span><span class="va">coef</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb63"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">mw</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/stats/glm.html">glm</a></span><span class="op">(</span><span class="va">Y</span> <span class="op">~</span> <span class="va">A</span> , data <span class="op">=</span> <span class="va">dtB</span>, family<span class="op">=</span><span class="st">&quot;binomial&quot;</span>, weights <span class="op">=</span> <span class="va">tempw</span><span class="op">$</span><span class="va">ipw.weights</span><span class="op">)</span><span class="op">)</span><span class="op">$</span><span class="va">coef</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning in eval(family$initialize): non-integer #successes in a binomial glm!</code></pre>
 </div>
@@ -4908,7 +4950,7 @@ A              1.081     0.1229   8.801 1.354e-18</code></pre>
 </div>
 </section><section id="stabilized-weights" class="level3 page-columns page-full"><h3 class="anchored" data-anchor-id="stabilized-weights">Stabilized weights</h3>
 <div class="cell column-page">
-<div class="sourceCode" id="cb56"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">mws</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/stats/glm.html">glm</a></span><span class="op">(</span><span class="va">Y</span> <span class="op">~</span> <span class="va">A</span> , data <span class="op">=</span> <span class="va">dtB</span>, family<span class="op">=</span><span class="st">&quot;binomial&quot;</span>, weights <span class="op">=</span> <span class="va">tempsw</span><span class="op">$</span><span class="va">ipw.weights</span><span class="op">)</span><span class="op">)</span><span class="op">$</span><span class="va">coef</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb66"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">mws</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/stats/glm.html">glm</a></span><span class="op">(</span><span class="va">Y</span> <span class="op">~</span> <span class="va">A</span> , data <span class="op">=</span> <span class="va">dtB</span>, family<span class="op">=</span><span class="st">&quot;binomial&quot;</span>, weights <span class="op">=</span> <span class="va">tempsw</span><span class="op">$</span><span class="va">ipw.weights</span><span class="op">)</span><span class="op">)</span><span class="op">$</span><span class="va">coef</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning in eval(family$initialize): non-integer #successes in a binomial glm!</code></pre>
 </div>
@@ -4920,7 +4962,7 @@ A              1.081     0.1713   6.312 2.760e-10</code></pre>
 </div>
 </section></section><section id="comparison-1" class="level2 page-columns page-full"><h2 class="anchored" data-anchor-id="comparison-1">Comparison</h2>
 <div class="cell page-columns page-full">
-<div class="sourceCode" id="cb59"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">modelsummary</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/modelsummary/man/modelsummary.html">modelsummary</a></span><span class="op">(</span>models<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="st">&quot;marginal&quot;</span><span class="op">=</span><span class="va">mm</span>,<span class="st">&quot;conditional&quot;</span><span class="op">=</span><span class="va">mc</span>,<span class="st">&quot;IPW&quot;</span><span class="op">=</span><span class="va">mw</span>,<span class="st">&quot;IPWs&quot;</span><span class="op">=</span><span class="va">mws</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb69"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">modelsummary</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/modelsummary/man/modelsummary.html">modelsummary</a></span><span class="op">(</span>models<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="st">&quot;marginal&quot;</span><span class="op">=</span><span class="va">mm</span>,<span class="st">&quot;conditional&quot;</span><span class="op">=</span><span class="va">mc</span>,<span class="st">&quot;IPW&quot;</span><span class="op">=</span><span class="va">mw</span>,<span class="st">&quot;IPWs&quot;</span><span class="op">=</span><span class="va">mws</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning in eval(family$initialize): non-integer #successes in a binomial glm!
 
@@ -5027,14 +5069,17 @@ Warning in eval(family$initialize): non-integer #successes in a binomial glm!</c
 </div>
 <div class="cell page-columns page-full">
 <div class="cell-output-display column-page">
-<p>We used R version 4.3.2 <span class="citation" data-cites="base">(<a href="#ref-base" role="doc-biblioref">R Core Team 2023</a>)</span> and the following R packages: ipw v. 1.2 <span class="citation" data-cites="ipw">(<a href="#ref-ipw" role="doc-biblioref">van der Wal and Geskus 2011</a>)</span>, rio v. 0.5.26 <span class="citation" data-cites="rio">(<a href="#ref-rio" role="doc-biblioref">Chan et al. 2021</a>)</span>, simstudy v. 0.7.1 <span class="citation" data-cites="simstudy">(<a href="#ref-simstudy" role="doc-biblioref">Goldfeld and Wujciak-Jens 2020</a>)</span>.</p>
+<p>We used R version 4.3.2 <span class="citation" data-cites="base">(<a href="#ref-base" role="doc-biblioref">R Core Team 2023</a>)</span> and the following R packages: ipw v. 1.2 <span class="citation" data-cites="ipw">(<a href="#ref-ipw" role="doc-biblioref">van der Wal and Geskus 2011</a>)</span>, Matrix v. 1.5.4.1 <span class="citation" data-cites="Matrix">(<a href="#ref-Matrix" role="doc-biblioref">Bates, Maechler, and Jagan 2023</a>)</span>, rio v. 0.5.26 <span class="citation" data-cites="rio">(<a href="#ref-rio" role="doc-biblioref">Chan et al. 2021</a>)</span>, simstudy v. 0.7.1 <span class="citation" data-cites="simstudy">(<a href="#ref-simstudy" role="doc-biblioref">Goldfeld and Wujciak-Jens 2020</a>)</span>, survey v. 4.0 <span class="citation" data-cites="survey2004 survey2010 survey2020">(<a href="#ref-survey2004" role="doc-biblioref">Lumley 2004</a>, <a href="#ref-survey2010" role="doc-biblioref">2010</a>, <a href="#ref-survey2020" role="doc-biblioref">2020</a>)</span>, survival v. 3.5.5 [@].</p>
 </div>
 <div class="cell-output cell-output-stdout">
-<pre><code>   Package Version  Citation
-1     base   4.3.2     @base
-2      ipw     1.2      @ipw
-3      rio  0.5.26      @rio
-4 simstudy   0.7.1 @simstudy</code></pre>
+<pre><code>   Package Version                              Citation
+1     base   4.3.2                                 @base
+2      ipw     1.2                                  @ipw
+3   Matrix 1.5.4.1                               @Matrix
+4      rio  0.5.26                                  @rio
+5 simstudy   0.7.1                             @simstudy
+6   survey     4.0 @survey2004; @survey2010; @survey2020
+7 survival   3.5.5                                     @</code></pre>
 </div>
 </div>
 </section></section><section id="bibliography" class="level1 unnumbered">
@@ -5044,11 +5089,23 @@ Warning in eval(family$initialize): non-integer #successes in a binomial glm!</c
 
 
 </section><div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography"><h2 class="anchored quarto-appendix-heading">Bibliography</h2><div id="refs" class="references csl-bib-body hanging-indent" role="doc-bibliography">
+<div id="ref-Matrix" class="csl-entry" role="doc-biblioentry">
+Bates, Douglas, Martin Maechler, and Mikael Jagan. 2023. <em><span>Matrix</span>: Sparse and Dense Matrix Classes and Methods</em>. <a href="https://CRAN.R-project.org/package=Matrix">https://CRAN.R-project.org/package=Matrix</a>.
+</div>
 <div id="ref-rio" class="csl-entry" role="doc-biblioentry">
 Chan, Chung-hong, Geoffrey CH Chan, Thomas J. Leeper, and Jason Becker. 2021. <em><span class="nocase">rio</span>: A Swiss-Army Knife for Data File i/o</em>.
 </div>
 <div id="ref-simstudy" class="csl-entry" role="doc-biblioentry">
 Goldfeld, Keith, and Jacob Wujciak-Jens. 2020. <span>“<span class="nocase">simstudy</span>: Illuminating Research Methods Through Data Generation.”</span> <em>Journal of Open Source Software</em> 5 (54): 2763. <a href="https://doi.org/10.21105/joss.02763">https://doi.org/10.21105/joss.02763</a>.
+</div>
+<div id="ref-survey2004" class="csl-entry" role="doc-biblioentry">
+Lumley, Thomas. 2004. <span>“Analysis of Complex Survey Samples.”</span> <em>Journal of Statistical Software</em> 9 (1): 1–19.
+</div>
+<div id="ref-survey2010" class="csl-entry" role="doc-biblioentry">
+———. 2010. <em>Complex Surveys: A Guide to Analysis Using r: A Guide to Analysis Using r</em>. John Wiley; Sons.
+</div>
+<div id="ref-survey2020" class="csl-entry" role="doc-biblioentry">
+———. 2020. <span>“<span class="nocase">survey</span>: Analysis of Complex Survey Samples.”</span>
 </div>
 <div id="ref-base" class="csl-entry" role="doc-biblioentry">
 R Core Team. 2023. <em><span>R</span>: A Language and Environment for Statistical Computing</em>. Vienna, Austria: R Foundation for Statistical Computing. <a href="https://www.R-project.org/">https://www.R-project.org/</a>.
@@ -5356,328 +5413,327 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 });
 </script><script src="data:application/javascript; charset=utf-8;base64,KCgpPT57Y29uc3QgZT13aW5kb3cubWF0Y2hNZWRpYSgiKHByZWZlcnMtY29sb3Itc2NoZW1lOiBkYXJrKSIpLm1hdGNoZXM/ImdpdGh1Yi1kYXJrIjoiZ2l0aHViLWxpZ2h0Iix0PW5ldyBVUkwobG9jYXRpb24uaHJlZiksbj10LnNlYXJjaFBhcmFtcy5nZXQoInV0dGVyYW5jZXMiKTtuJiYobG9jYWxTdG9yYWdlLnNldEl0ZW0oInV0dGVyYW5jZXMtc2Vzc2lvbiIsbiksdC5zZWFyY2hQYXJhbXMuZGVsZXRlKCJ1dHRlcmFuY2VzIiksaGlzdG9yeS5yZXBsYWNlU3RhdGUodm9pZCAwLGRvY3VtZW50LnRpdGxlLHQuaHJlZikpO2xldCByPWRvY3VtZW50LmN1cnJlbnRTY3JpcHQ7dm9pZCAwPT09ciYmKHI9ZG9jdW1lbnQucXVlcnlTZWxlY3Rvcignc2NyaXB0W3NyY149Imh0dHBzOi8vdXR0ZXJhbmMuZXMvY2xpZW50LmpzIl0sc2NyaXB0W3NyY149Imh0dHA6Ly9sb2NhbGhvc3Q6NDAwMC9jbGllbnQuanMiXScpKTtjb25zdCBpPXt9O2ZvcihsZXQgZT0wO2U8ci5hdHRyaWJ1dGVzLmxlbmd0aDtlKyspe2NvbnN0IHQ9ci5hdHRyaWJ1dGVzLml0ZW0oZSk7aVt0Lm5hbWUucmVwbGFjZSgvXmRhdGEtLywiIildPXQudmFsdWV9InByZWZlcnJlZC1jb2xvci1zY2hlbWUiPT09aS50aGVtZSYmKGkudGhlbWU9ZSk7Y29uc3QgYT1kb2N1bWVudC5xdWVyeVNlbGVjdG9yKCJsaW5rW3JlbD0nY2Fub25pY2FsJ10iKTtpLnVybD1hP2EuaHJlZjp0Lm9yaWdpbit0LnBhdGhuYW1lK3Quc2VhcmNoLGkub3JpZ2luPXQub3JpZ2luLGkucGF0aG5hbWU9dC5wYXRobmFtZS5sZW5ndGg8Mj8iaW5kZXgiOnQucGF0aG5hbWUuc3Vic3RyKDEpLnJlcGxhY2UoL1wuXHcrJC8sIiIpLGkudGl0bGU9ZG9jdW1lbnQudGl0bGU7Y29uc3Qgcz1kb2N1bWVudC5xdWVyeVNlbGVjdG9yKCJtZXRhW25hbWU9J2Rlc2NyaXB0aW9uJ10iKTtpLmRlc2NyaXB0aW9uPXM/cy5jb250ZW50OiIiO2NvbnN0IG89ZW5jb2RlVVJJQ29tcG9uZW50KGkuZGVzY3JpcHRpb24pLmxlbmd0aDtvPjFlMyYmKGkuZGVzY3JpcHRpb249aS5kZXNjcmlwdGlvbi5zdWJzdHIoMCxNYXRoLmZsb29yKDFlMyppLmRlc2NyaXB0aW9uLmxlbmd0aC9vKSkpO2NvbnN0IGM9ZG9jdW1lbnQucXVlcnlTZWxlY3RvcigibWV0YVtwcm9wZXJ0eT0nb2c6dGl0bGUnXSxtZXRhW25hbWU9J29nOnRpdGxlJ10iKTtpWyJvZzp0aXRsZSJdPWM/Yy5jb250ZW50OiIiLGkuc2Vzc2lvbj1ufHxsb2NhbFN0b3JhZ2UuZ2V0SXRlbSgidXR0ZXJhbmNlcy1zZXNzaW9uIil8fCIiLGRvY3VtZW50LmhlYWQuaW5zZXJ0QWRqYWNlbnRIVE1MKCJhZnRlcmJlZ2luIiwiPHN0eWxlPlxuICAgIC51dHRlcmFuY2VzIHtcbiAgICAgIHBvc2l0aW9uOiByZWxhdGl2ZTtcbiAgICAgIGJveC1zaXppbmc6IGJvcmRlci1ib3g7XG4gICAgICB3aWR0aDogMTAwJTtcbiAgICAgIG1heC13aWR0aDogNzYwcHg7XG4gICAgICBtYXJnaW4tbGVmdDogYXV0bztcbiAgICAgIG1hcmdpbi1yaWdodDogYXV0bztcbiAgICB9XG4gICAgLnV0dGVyYW5jZXMtZnJhbWUge1xuICAgICAgY29sb3Itc2NoZW1lOiBsaWdodDtcbiAgICAgIHBvc2l0aW9uOiBhYnNvbHV0ZTtcbiAgICAgIGxlZnQ6IDA7XG4gICAgICByaWdodDogMDtcbiAgICAgIHdpZHRoOiAxcHg7XG4gICAgICBtaW4td2lkdGg6IDEwMCU7XG4gICAgICBtYXgtd2lkdGg6IDEwMCU7XG4gICAgICBoZWlnaHQ6IDEwMCU7XG4gICAgICBib3JkZXI6IDA7XG4gICAgfVxuICA8L3N0eWxlPiIpO2NvbnN0IGw9ci5zcmMubWF0Y2goL15odHRwczpcL1wvdXR0ZXJhbmNcLmVzfGh0dHA6XC9cL2xvY2FsaG9zdDpcZCsvKVswXSxoPWAke2x9L3V0dGVyYW5jZXMuaHRtbGA7ci5pbnNlcnRBZGphY2VudEhUTUwoImFmdGVyZW5kIixgPGRpdiBjbGFzcz0idXR0ZXJhbmNlcyI+XG4gICAgPGlmcmFtZSBjbGFzcz0idXR0ZXJhbmNlcy1mcmFtZSIgdGl0bGU9IkNvbW1lbnRzIiBzY3JvbGxpbmc9Im5vIiBzcmM9IiR7aH0/JHtuZXcgVVJMU2VhcmNoUGFyYW1zKGkpfSIgbG9hZGluZz0ibGF6eSI+PC9pZnJhbWU+XG4gIDwvZGl2PmApO2NvbnN0IG09ci5uZXh0RWxlbWVudFNpYmxpbmc7ci5wYXJlbnRFbGVtZW50LnJlbW92ZUNoaWxkKHIpLGFkZEV2ZW50TGlzdGVuZXIoIm1lc3NhZ2UiLChlPT57aWYoZS5vcmlnaW4hPT1sKXJldHVybjtjb25zdCB0PWUuZGF0YTt0JiYicmVzaXplIj09PXQudHlwZSYmdC5oZWlnaHQmJihtLnN0eWxlLmhlaWdodD1gJHt0LmhlaWdodH1weGApfSkpfSkoKTsKLy8jIHNvdXJjZU1hcHBpbmdVUkw9Y2xpZW50LmpzLm1hcAo=" repo="mcdr65/myblog" issue-term="pathname" theme="github-light" crossorigin="anonymous" async>
 </script><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class>
-<div class="sourceCode" id="cb62" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
-<span id="cb62-2"><a href="#cb62-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> &quot;Noncollapsibility of the odds ratio&quot;</span></span>
-<span id="cb62-3"><a href="#cb62-3" aria-hidden="true" tabindex="-1"></a><span class="an">date:</span><span class="co"> &quot;2023-12-02&quot;</span></span>
-<span id="cb62-4"><a href="#cb62-4" aria-hidden="true" tabindex="-1"></a><span class="an">description:</span><span class="co"> &quot;IPW-analysis&quot;</span></span>
-<span id="cb62-5"><a href="#cb62-5" aria-hidden="true" tabindex="-1"></a><span class="an">categories:</span><span class="co"> [code, analysis]</span></span>
-<span id="cb62-6"><a href="#cb62-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-7"><a href="#cb62-7" aria-hidden="true" tabindex="-1"></a><span class="an">bibliography:</span><span class="co"> </span></span>
-<span id="cb62-8"><a href="#cb62-8" aria-hidden="true" tabindex="-1"></a><span class="co">  - &quot;/home/meichtry/Templates/Rcite.bib&quot;</span></span>
-<span id="cb62-9"><a href="#cb62-9" aria-hidden="true" tabindex="-1"></a><span class="co">  - grateful-refs.bib</span></span>
-<span id="cb62-10"><a href="#cb62-10" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
-<span id="cb62-11"><a href="#cb62-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-12"><a href="#cb62-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-13"><a href="#cb62-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-14"><a href="#cb62-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-15"><a href="#cb62-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-16"><a href="#cb62-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-17"><a href="#cb62-17" aria-hidden="true" tabindex="-1"></a><span class="fu"># Noncollapsibility</span></span>
-<span id="cb62-18"><a href="#cb62-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-19"><a href="#cb62-19" aria-hidden="true" tabindex="-1"></a>We simulate data from GLM with **non-confounding** covariate $C$:</span>
-<span id="cb62-20"><a href="#cb62-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-21"><a href="#cb62-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-22"><a href="#cb62-22" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-23"><a href="#cb62-23" aria-hidden="true" tabindex="-1"></a><span class="in">```{r }</span></span>
-<span id="cb62-24"><a href="#cb62-24" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">3</span>)</span>
-<span id="cb62-25"><a href="#cb62-25" aria-hidden="true" tabindex="-1"></a>N <span class="ot">&lt;-</span> <span class="dv">400</span></span>
-<span id="cb62-26"><a href="#cb62-26" aria-hidden="true" tabindex="-1"></a>C <span class="ot">&lt;-</span> <span class="fu">sort</span>(<span class="fu">runif</span>(N,<span class="sc">-</span><span class="dv">8</span>,<span class="dv">8</span>)) <span class="co">#non-confounding C</span></span>
-<span id="cb62-27"><a href="#cb62-27" aria-hidden="true" tabindex="-1"></a>G<span class="ot">&lt;-</span><span class="fu">sample</span>(<span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">1</span>),N,<span class="at">replace=</span><span class="cn">TRUE</span>)</span>
-<span id="cb62-28"><a href="#cb62-28" aria-hidden="true" tabindex="-1"></a>beta0<span class="ot">&lt;-</span><span class="dv">0</span></span>
-<span id="cb62-29"><a href="#cb62-29" aria-hidden="true" tabindex="-1"></a>beta1<span class="ot">&lt;-</span><span class="fu">log</span>(<span class="dv">10</span>)</span>
-<span id="cb62-30"><a href="#cb62-30" aria-hidden="true" tabindex="-1"></a>beta2<span class="ot">&lt;-</span><span class="dv">1</span></span>
-<span id="cb62-31"><a href="#cb62-31" aria-hidden="true" tabindex="-1"></a><span class="do">##Logistic </span></span>
-<span id="cb62-32"><a href="#cb62-32" aria-hidden="true" tabindex="-1"></a>etai<span class="ot">&lt;-</span>beta0<span class="sc">+</span>beta1<span class="sc">*</span>G<span class="sc">+</span>beta2<span class="sc">*</span>C</span>
-<span id="cb62-33"><a href="#cb62-33" aria-hidden="true" tabindex="-1"></a>pii<span class="ot">&lt;-</span><span class="fu">exp</span>(etai)<span class="sc">/</span>(<span class="dv">1</span><span class="sc">+</span><span class="fu">exp</span>(etai))</span>
-<span id="cb62-34"><a href="#cb62-34" aria-hidden="true" tabindex="-1"></a>Ydich <span class="ot">&lt;-</span><span class="fu">rbinom</span>(G,<span class="at">size=</span><span class="dv">1</span>,<span class="at">prob=</span>pii)</span>
-<span id="cb62-35"><a href="#cb62-35" aria-hidden="true" tabindex="-1"></a>dat<span class="ot">&lt;-</span><span class="fu">data.frame</span>(C,G,Ydich)</span>
-<span id="cb62-36"><a href="#cb62-36" aria-hidden="true" tabindex="-1"></a><span class="fu">cor</span>(dat)</span>
-<span id="cb62-37"><a href="#cb62-37" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb62-38"><a href="#cb62-38" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-39"><a href="#cb62-39" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-40"><a href="#cb62-40" aria-hidden="true" tabindex="-1"></a><span class="in">```{r }</span></span>
-<span id="cb62-41"><a href="#cb62-41" aria-hidden="true" tabindex="-1"></a>modC<span class="ot">&lt;-</span><span class="fu">glm</span>(Ydich<span class="sc">~</span>G<span class="sc">+</span>C,<span class="at">family=</span><span class="st">&quot;binomial&quot;</span>)</span>
-<span id="cb62-42"><a href="#cb62-42" aria-hidden="true" tabindex="-1"></a>modM<span class="ot">&lt;-</span><span class="fu">glm</span>(Ydich<span class="sc">~</span>G,<span class="at">family=</span><span class="st">&quot;binomial&quot;</span>)</span>
-<span id="cb62-43"><a href="#cb62-43" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb62-44"><a href="#cb62-44" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-45"><a href="#cb62-45" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-46"><a href="#cb62-46" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-47"><a href="#cb62-47" aria-hidden="true" tabindex="-1"></a><span class="fu">## Illustrate non-collapsibility</span></span>
-<span id="cb62-48"><a href="#cb62-48" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-49"><a href="#cb62-49" aria-hidden="true" tabindex="-1"></a><span class="in">```{r }</span></span>
-<span id="cb62-50"><a href="#cb62-50" aria-hidden="true" tabindex="-1"></a>pred<span class="ot">&lt;-</span><span class="fu">predict</span>(modM,<span class="at">type=</span><span class="st">&quot;response&quot;</span>,<span class="at">se.fit=</span><span class="cn">TRUE</span>)</span>
-<span id="cb62-51"><a href="#cb62-51" aria-hidden="true" tabindex="-1"></a>predgA<span class="ot">&lt;-</span><span class="fu">predict</span>(modC,<span class="at">newdata=</span><span class="fu">data.frame</span>(<span class="at">C=</span>C[G<span class="sc">==</span><span class="dv">0</span>],<span class="at">G=</span><span class="dv">0</span>),<span class="at">se.fit=</span><span class="cn">TRUE</span>,<span class="at">type=</span><span class="st">&quot;response&quot;</span>)</span>
-<span id="cb62-52"><a href="#cb62-52" aria-hidden="true" tabindex="-1"></a>predgB<span class="ot">&lt;-</span><span class="fu">predict</span>(modC,<span class="at">newdata=</span><span class="fu">data.frame</span>(<span class="at">C=</span>C[G<span class="sc">==</span><span class="dv">1</span>],<span class="at">G=</span><span class="dv">1</span>),<span class="at">se.fit=</span><span class="cn">TRUE</span>,<span class="at">type=</span><span class="st">&quot;response&quot;</span>)</span>
-<span id="cb62-53"><a href="#cb62-53" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(C,Ydich,<span class="at">col=</span><span class="fu">c</span>(<span class="st">&quot;blue&quot;</span>,<span class="st">&quot;red&quot;</span>)[G<span class="sc">+</span><span class="dv">1</span>],<span class="at">ylab=</span><span class="st">&quot;Probability&quot;</span>)</span>
-<span id="cb62-54"><a href="#cb62-54" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(<span class="fu">sort</span>(C[G<span class="sc">==</span><span class="dv">0</span>]),<span class="fu">sort</span>(predgA<span class="sc">$</span>fit),<span class="at">col=</span><span class="st">&quot;blue&quot;</span>)</span>
-<span id="cb62-55"><a href="#cb62-55" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(<span class="fu">sort</span>(C[G<span class="sc">==</span><span class="dv">1</span>]),<span class="fu">sort</span>(predgB<span class="sc">$</span>fit),<span class="at">col=</span><span class="st">&quot;red&quot;</span>)</span>
-<span id="cb62-56"><a href="#cb62-56" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">a=</span><span class="fu">mean</span>(pii[G<span class="sc">==</span><span class="dv">0</span>]),<span class="at">b=</span><span class="dv">0</span>,<span class="at">col=</span><span class="st">&quot;blue&quot;</span>,<span class="at">lty=</span><span class="dv">2</span>)</span>
-<span id="cb62-57"><a href="#cb62-57" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">a=</span><span class="fu">mean</span>(pii[G<span class="sc">==</span><span class="dv">1</span>]),<span class="at">b=</span><span class="dv">0</span>,<span class="at">col=</span><span class="st">&quot;red&quot;</span>,<span class="at">lty=</span><span class="dv">2</span>)</span>
-<span id="cb62-58"><a href="#cb62-58" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb62-59"><a href="#cb62-59" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-60"><a href="#cb62-60" aria-hidden="true" tabindex="-1"></a><span class="fu">## Marginal model</span></span>
-<span id="cb62-61"><a href="#cb62-61" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-62"><a href="#cb62-62" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-63"><a href="#cb62-63" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-64"><a href="#cb62-64" aria-hidden="true" tabindex="-1"></a><span class="in">```{r }</span></span>
-<span id="cb62-65"><a href="#cb62-65" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(modM)<span class="sc">$</span>coef</span>
-<span id="cb62-66"><a href="#cb62-66" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb62-67"><a href="#cb62-67" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-68"><a href="#cb62-68" aria-hidden="true" tabindex="-1"></a><span class="fu">## Conditional model</span></span>
-<span id="cb62-69"><a href="#cb62-69" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-70"><a href="#cb62-70" aria-hidden="true" tabindex="-1"></a>Effect of $G$ is larger, even though $C$ is not a confounder. This is due to **non-collapsibility of the odds ratio**</span>
-<span id="cb62-71"><a href="#cb62-71" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-72"><a href="#cb62-72" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-73"><a href="#cb62-73" aria-hidden="true" tabindex="-1"></a><span class="in">```{r }</span></span>
-<span id="cb62-74"><a href="#cb62-74" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(modC)<span class="sc">$</span>coef</span>
-<span id="cb62-75"><a href="#cb62-75" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb62-76"><a href="#cb62-76" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-77"><a href="#cb62-77" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-78"><a href="#cb62-78" aria-hidden="true" tabindex="-1"></a><span class="fu">## IPW-model</span></span>
-<span id="cb62-79"><a href="#cb62-79" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-80"><a href="#cb62-80" aria-hidden="true" tabindex="-1"></a>Estimate inverse probability weights to fit marginal structural</span>
-<span id="cb62-81"><a href="#cb62-81" aria-hidden="true" tabindex="-1"></a>     models in a point treatment situation. </span>
-<span id="cb62-82"><a href="#cb62-82" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-83"><a href="#cb62-83" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-84"><a href="#cb62-84" aria-hidden="true" tabindex="-1"></a><span class="fu">### Weights</span></span>
-<span id="cb62-85"><a href="#cb62-85" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-86"><a href="#cb62-86" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-87"><a href="#cb62-87" aria-hidden="true" tabindex="-1"></a><span class="in">```{r }</span></span>
-<span id="cb62-88"><a href="#cb62-88" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ipw)</span>
-<span id="cb62-89"><a href="#cb62-89" aria-hidden="true" tabindex="-1"></a>temp <span class="ot">&lt;-</span> <span class="fu">ipwpoint</span>(<span class="at">exposure=</span>G,<span class="at">family =</span> <span class="st">&quot;binomial&quot;</span>,<span class="at">link =</span> <span class="st">&quot;logit&quot;</span>,<span class="at">data=</span>dat,<span class="at">numerator =</span><span class="sc">~</span><span class="dv">1</span>,<span class="at">denominator =</span> <span class="sc">~</span> C)</span>
-<span id="cb62-90"><a href="#cb62-90" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(temp<span class="sc">$</span>ipw.weights)</span>
-<span id="cb62-91"><a href="#cb62-91" aria-hidden="true" tabindex="-1"></a>dat<span class="sc">$</span>sw<span class="ot">&lt;-</span>temp<span class="sc">$</span>ipw.weights</span>
-<span id="cb62-92"><a href="#cb62-92" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb62-93"><a href="#cb62-93" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-94"><a href="#cb62-94" aria-hidden="true" tabindex="-1"></a><span class="fu">### Marginal structural model</span></span>
-<span id="cb62-95"><a href="#cb62-95" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-96"><a href="#cb62-96" aria-hidden="true" tabindex="-1"></a>Marginal structural model for the causal effect of $X$ on $Y$ corrected for confounding by $C$ using inverse probability weighting</span>
-<span id="cb62-97"><a href="#cb62-97" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-98"><a href="#cb62-98" aria-hidden="true" tabindex="-1"></a><span class="in">```{r }</span></span>
-<span id="cb62-99"><a href="#cb62-99" aria-hidden="true" tabindex="-1"></a>modW<span class="ot">&lt;-</span><span class="fu">glm</span>(Ydich<span class="sc">~</span>G,<span class="at">weights=</span>sw,<span class="at">data=</span>dat,<span class="at">family=</span>quasibinomial)</span>
-<span id="cb62-100"><a href="#cb62-100" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(modW)<span class="sc">$</span>coef</span>
-<span id="cb62-101"><a href="#cb62-101" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb62-102"><a href="#cb62-102" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-103"><a href="#cb62-103" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-104"><a href="#cb62-104" aria-hidden="true" tabindex="-1"></a><span class="in">```{r eval=FALSE}</span></span>
-<span id="cb62-105"><a href="#cb62-105" aria-hidden="true" tabindex="-1"></a><span class="fu">require</span>(<span class="st">&quot;survey&quot;</span>)</span>
-<span id="cb62-106"><a href="#cb62-106" aria-hidden="true" tabindex="-1"></a>msm <span class="ot">&lt;-</span> (<span class="fu">svyglm</span>(Ydich <span class="sc">~</span> G, <span class="at">family=</span><span class="st">&quot;binomial&quot;</span>,<span class="at">design =</span> <span class="fu">svydesign</span>(<span class="sc">~</span> <span class="dv">1</span>, <span class="at">weights =</span><span class="sc">~</span>sw,<span class="at">data =</span> dat)))</span>
-<span id="cb62-107"><a href="#cb62-107" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(msm)</span>
-<span id="cb62-108"><a href="#cb62-108" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb62-109"><a href="#cb62-109" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-110"><a href="#cb62-110" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-111"><a href="#cb62-111" aria-hidden="true" tabindex="-1"></a><span class="fu">## Comparison</span></span>
-<span id="cb62-112"><a href="#cb62-112" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-113"><a href="#cb62-113" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-114"><a href="#cb62-114" aria-hidden="true" tabindex="-1"></a><span class="in">```{r }</span></span>
-<span id="cb62-115"><a href="#cb62-115" aria-hidden="true" tabindex="-1"></a>modelsummary<span class="sc">::</span><span class="fu">modelsummary</span>(<span class="at">models=</span><span class="fu">list</span>(<span class="st">&quot;marginal&quot;</span><span class="ot">=</span>modM,<span class="st">&quot;conditional&quot;</span><span class="ot">=</span>modC,<span class="st">&quot;IPW&quot;</span><span class="ot">=</span>modW))</span>
-<span id="cb62-116"><a href="#cb62-116" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb62-117"><a href="#cb62-117" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-118"><a href="#cb62-118" aria-hidden="true" tabindex="-1"></a>::: {.callout-important}</span>
-<span id="cb62-119"><a href="#cb62-119" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>conditional-marginal=noncollaps+confouding</span>
-<span id="cb62-120"><a href="#cb62-120" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>IPW-marginal=confounding</span>
-<span id="cb62-121"><a href="#cb62-121" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>conditional-IPW=noncollaps</span>
-<span id="cb62-122"><a href="#cb62-122" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb62-123"><a href="#cb62-123" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-124"><a href="#cb62-124" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-125"><a href="#cb62-125" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-126"><a href="#cb62-126" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-127"><a href="#cb62-127" aria-hidden="true" tabindex="-1"></a><span class="fu"># Example smoking and children weight</span></span>
-<span id="cb62-128"><a href="#cb62-128" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-129"><a href="#cb62-129" aria-hidden="true" tabindex="-1"></a><span class="in">```{r echo=FALSE}</span></span>
-<span id="cb62-130"><a href="#cb62-130" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rio)</span>
-<span id="cb62-131"><a href="#cb62-131" aria-hidden="true" tabindex="-1"></a>bwt <span class="ot">&lt;-</span> <span class="fu">import</span>(<span class="st">&quot;bwt_full.csv&quot;</span>)</span>
-<span id="cb62-132"><a href="#cb62-132" aria-hidden="true" tabindex="-1"></a><span class="co">#bwt$low &lt;- factor(bwt$low, levels = c(0,1), labels = c(&quot;no&quot;, &quot;yes&quot;))</span></span>
-<span id="cb62-133"><a href="#cb62-133" aria-hidden="true" tabindex="-1"></a><span class="co">#bwt$smoke &lt;- factor(bwt$smoke, levels = c(0,1), labels = c(&quot;no&quot;, &quot;yes&quot;))</span></span>
-<span id="cb62-134"><a href="#cb62-134" aria-hidden="true" tabindex="-1"></a>bwt<span class="sc">$</span>socclass <span class="ot">&lt;-</span> <span class="fu">factor</span>(bwt<span class="sc">$</span>socclass, <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">&quot;I&quot;</span>, <span class="st">&quot;II&quot;</span>, <span class="st">&quot;III&quot;</span>), <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">&quot;I&quot;</span>, <span class="st">&quot;II&quot;</span>, <span class="st">&quot;III&quot;</span>))</span>
-<span id="cb62-135"><a href="#cb62-135" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb62-136"><a href="#cb62-136" aria-hidden="true" tabindex="-1"></a><span class="in">```{r }</span></span>
-<span id="cb62-137"><a href="#cb62-137" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(bwt)</span>
-<span id="cb62-138"><a href="#cb62-138" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb62-139"><a href="#cb62-139" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-140"><a href="#cb62-140" aria-hidden="true" tabindex="-1"></a><span class="in">```{r }</span></span>
-<span id="cb62-141"><a href="#cb62-141" aria-hidden="true" tabindex="-1"></a>glm_smoke <span class="ot">&lt;-</span> <span class="fu">glm</span>(low <span class="sc">~</span> smoke, <span class="at">data =</span> bwt, <span class="at">family =</span> binomial)</span>
-<span id="cb62-142"><a href="#cb62-142" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(glm_smoke)<span class="sc">$</span>coef</span>
-<span id="cb62-143"><a href="#cb62-143" aria-hidden="true" tabindex="-1"></a>glm_multi_1 <span class="ot">&lt;-</span> <span class="fu">glm</span>(low <span class="sc">~</span> smoke <span class="sc">+</span> socclass, <span class="at">data =</span> bwt, <span class="at">family =</span> binomial)</span>
-<span id="cb62-144"><a href="#cb62-144" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(glm_multi_1)<span class="sc">$</span>coef</span>
-<span id="cb62-145"><a href="#cb62-145" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb62-146"><a href="#cb62-146" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-147"><a href="#cb62-147" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-148"><a href="#cb62-148" aria-hidden="true" tabindex="-1"></a><span class="in">```{r }</span></span>
-<span id="cb62-149"><a href="#cb62-149" aria-hidden="true" tabindex="-1"></a>temp <span class="ot">&lt;-</span> <span class="fu">ipwpoint</span>(<span class="at">exposure=</span>smoke,<span class="at">family =</span> <span class="st">&quot;binomial&quot;</span>,<span class="at">link =</span> <span class="st">&quot;logit&quot;</span>,<span class="at">data=</span>bwt,</span>
-<span id="cb62-150"><a href="#cb62-150" aria-hidden="true" tabindex="-1"></a>                 <span class="at">numerator=</span><span class="sc">~</span><span class="dv">1</span>,<span class="at">denominator=</span><span class="sc">~</span>socclass)</span>
-<span id="cb62-151"><a href="#cb62-151" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(temp<span class="sc">$</span>ipw.weights)</span>
-<span id="cb62-152"><a href="#cb62-152" aria-hidden="true" tabindex="-1"></a>bwt<span class="sc">$</span>sw<span class="ot">&lt;-</span>temp<span class="sc">$</span>ipw.weights</span>
-<span id="cb62-153"><a href="#cb62-153" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb62-154"><a href="#cb62-154" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-155"><a href="#cb62-155" aria-hidden="true" tabindex="-1"></a><span class="in">```{r }</span></span>
-<span id="cb62-156"><a href="#cb62-156" aria-hidden="true" tabindex="-1"></a>modW<span class="ot">&lt;-</span><span class="fu">glm</span>(low<span class="sc">~</span>smoke,<span class="at">weights=</span>sw,<span class="at">data=</span>bwt,<span class="at">family=</span>quasibinomial)</span>
-<span id="cb62-157"><a href="#cb62-157" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(modW)<span class="sc">$</span>coef</span>
-<span id="cb62-158"><a href="#cb62-158" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb62-159"><a href="#cb62-159" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-160"><a href="#cb62-160" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-161"><a href="#cb62-161" aria-hidden="true" tabindex="-1"></a>::: {.callout-important}</span>
-<span id="cb62-162"><a href="#cb62-162" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>conditional-marginal=noncollaps+confouding</span>
-<span id="cb62-163"><a href="#cb62-163" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>IPW-marginal=confounding</span>
-<span id="cb62-164"><a href="#cb62-164" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>conditional-IPW=noncollaps</span>
-<span id="cb62-165"><a href="#cb62-165" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb62-166"><a href="#cb62-166" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-167"><a href="#cb62-167" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-168"><a href="#cb62-168" aria-hidden="true" tabindex="-1"></a><span class="in">```{r }</span></span>
-<span id="cb62-169"><a href="#cb62-169" aria-hidden="true" tabindex="-1"></a>modelsummary<span class="sc">::</span><span class="fu">modelsummary</span>(<span class="at">models=</span><span class="fu">list</span>(<span class="st">&quot;marginal&quot;</span><span class="ot">=</span>glm_smoke,<span class="st">&quot;conditional&quot;</span><span class="ot">=</span>glm_multi_1,<span class="st">&quot;IPW&quot;</span><span class="ot">=</span>modW))</span>
-<span id="cb62-170"><a href="#cb62-170" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb62-171"><a href="#cb62-171" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-172"><a href="#cb62-172" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-173"><a href="#cb62-173" aria-hidden="true" tabindex="-1"></a><span class="fu"># Potential outcomes</span></span>
-<span id="cb62-174"><a href="#cb62-174" aria-hidden="true" tabindex="-1"></a>See <span class="co">[</span><span class="ot">Example</span><span class="co">](https://www.r-bloggers.com/2017/12/when-you-use-inverse-probability-weighting-for-estimation-what-are-the-weights-actually-doing/)</span> for marginal structural models in this context.</span>
-<span id="cb62-175"><a href="#cb62-175" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-176"><a href="#cb62-176" aria-hidden="true" tabindex="-1"></a><span class="fu">## Simulate some data</span></span>
-<span id="cb62-177"><a href="#cb62-177" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-178"><a href="#cb62-178" aria-hidden="true" tabindex="-1"></a><span class="in">```{r }</span></span>
-<span id="cb62-179"><a href="#cb62-179" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(simstudy)</span>
-<span id="cb62-180"><a href="#cb62-180" aria-hidden="true" tabindex="-1"></a><span class="co"># define the data</span></span>
-<span id="cb62-181"><a href="#cb62-181" aria-hidden="true" tabindex="-1"></a>defB <span class="ot">&lt;-</span> <span class="fu">defData</span>(<span class="at">varname =</span> <span class="st">&quot;L&quot;</span>, <span class="at">formula =</span><span class="fl">0.27</span>, </span>
-<span id="cb62-182"><a href="#cb62-182" aria-hidden="true" tabindex="-1"></a>                <span class="at">dist =</span> <span class="st">&quot;binary&quot;</span>)</span>
-<span id="cb62-183"><a href="#cb62-183" aria-hidden="true" tabindex="-1"></a>defB <span class="ot">&lt;-</span> <span class="fu">defData</span>(defB, <span class="at">varname =</span> <span class="st">&quot;Y0&quot;</span>, <span class="at">formula =</span> <span class="st">&quot;-2.5 + 1.75*L&quot;</span>, </span>
-<span id="cb62-184"><a href="#cb62-184" aria-hidden="true" tabindex="-1"></a>                <span class="at">dist =</span> <span class="st">&quot;binary&quot;</span>, <span class="at">link =</span> <span class="st">&quot;logit&quot;</span>)</span>
-<span id="cb62-185"><a href="#cb62-185" aria-hidden="true" tabindex="-1"></a>defB <span class="ot">&lt;-</span> <span class="fu">defData</span>(defB, <span class="at">varname =</span> <span class="st">&quot;Y1&quot;</span>, <span class="at">formula =</span> <span class="st">&quot;-1.5 + 1.75*L&quot;</span>, </span>
-<span id="cb62-186"><a href="#cb62-186" aria-hidden="true" tabindex="-1"></a>                <span class="at">dist =</span> <span class="st">&quot;binary&quot;</span>, <span class="at">link =</span> <span class="st">&quot;logit&quot;</span>)</span>
-<span id="cb62-187"><a href="#cb62-187" aria-hidden="true" tabindex="-1"></a>defB <span class="ot">&lt;-</span> <span class="fu">defData</span>(defB, <span class="at">varname =</span> <span class="st">&quot;A&quot;</span>, <span class="at">formula =</span> <span class="st">&quot;0.315 + 0.352 * L&quot;</span>, </span>
-<span id="cb62-188"><a href="#cb62-188" aria-hidden="true" tabindex="-1"></a>                <span class="at">dist =</span> <span class="st">&quot;binary&quot;</span>)</span>
-<span id="cb62-189"><a href="#cb62-189" aria-hidden="true" tabindex="-1"></a>defB <span class="ot">&lt;-</span> <span class="fu">defData</span>(defB, <span class="at">varname =</span> <span class="st">&quot;Y&quot;</span>, <span class="at">formula =</span> <span class="st">&quot;Y0 + A * (Y1 - Y0)&quot;</span>, </span>
-<span id="cb62-190"><a href="#cb62-190" aria-hidden="true" tabindex="-1"></a>                <span class="at">dist =</span> <span class="st">&quot;nonrandom&quot;</span>)</span>
-<span id="cb62-191"><a href="#cb62-191" aria-hidden="true" tabindex="-1"></a>defB</span>
-<span id="cb62-192"><a href="#cb62-192" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb62-193"><a href="#cb62-193" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-194"><a href="#cb62-194" aria-hidden="true" tabindex="-1"></a><span class="in">```{r }</span></span>
-<span id="cb62-195"><a href="#cb62-195" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">2002</span>)</span>
-<span id="cb62-196"><a href="#cb62-196" aria-hidden="true" tabindex="-1"></a>Nnew<span class="ot">&lt;-</span><span class="dv">1000</span></span>
-<span id="cb62-197"><a href="#cb62-197" aria-hidden="true" tabindex="-1"></a>dtB <span class="ot">&lt;-</span> <span class="fu">genData</span>(Nnew, defB)</span>
-<span id="cb62-198"><a href="#cb62-198" aria-hidden="true" tabindex="-1"></a>dtB</span>
-<span id="cb62-199"><a href="#cb62-199" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb62-200"><a href="#cb62-200" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-201"><a href="#cb62-201" aria-hidden="true" tabindex="-1"></a><span class="fu">## True causal effect (based on potential outcomes)</span></span>
-<span id="cb62-202"><a href="#cb62-202" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-203"><a href="#cb62-203" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-204"><a href="#cb62-204" aria-hidden="true" tabindex="-1"></a><span class="in">```{r }</span></span>
-<span id="cb62-205"><a href="#cb62-205" aria-hidden="true" tabindex="-1"></a>odds <span class="ot">&lt;-</span> <span class="cf">function</span> (p) {</span>
-<span id="cb62-206"><a href="#cb62-206" aria-hidden="true" tabindex="-1"></a>    <span class="fu">return</span>((p<span class="sc">/</span>(<span class="dv">1</span> <span class="sc">-</span> p)))</span>
-<span id="cb62-207"><a href="#cb62-207" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb62-208"><a href="#cb62-208" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-209"><a href="#cb62-209" aria-hidden="true" tabindex="-1"></a>dtB[, <span class="fu">log</span>( <span class="fu">odds</span>( <span class="fu">mean</span>(Y1) ) <span class="sc">/</span> <span class="fu">odds</span>( <span class="fu">mean</span>(Y0) ) )]</span>
-<span id="cb62-210"><a href="#cb62-210" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb62-211"><a href="#cb62-211" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-212"><a href="#cb62-212" aria-hidden="true" tabindex="-1"></a><span class="fu">## Conditional effect</span></span>
-<span id="cb62-213"><a href="#cb62-213" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-214"><a href="#cb62-214" aria-hidden="true" tabindex="-1"></a>The true conditional causal effect of $A$ is 1.</span>
-<span id="cb62-215"><a href="#cb62-215" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-216"><a href="#cb62-216" aria-hidden="true" tabindex="-1"></a><span class="in">```{r }</span></span>
-<span id="cb62-217"><a href="#cb62-217" aria-hidden="true" tabindex="-1"></a>mc<span class="ot">&lt;-</span><span class="fu">glm</span>(Y <span class="sc">~</span> A <span class="sc">+</span> L , <span class="at">data =</span> dtB, <span class="at">family=</span><span class="st">&quot;binomial&quot;</span>)</span>
-<span id="cb62-218"><a href="#cb62-218" aria-hidden="true" tabindex="-1"></a>mc</span>
-<span id="cb62-219"><a href="#cb62-219" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb62-220"><a href="#cb62-220" aria-hidden="true" tabindex="-1"></a>This estimate for $A$ is a good estimate of the conditional effect in the population, based on the potential outcomes at each level of $L$</span>
-<span id="cb62-221"><a href="#cb62-221" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-222"><a href="#cb62-222" aria-hidden="true" tabindex="-1"></a><span class="in">```{r }</span></span>
-<span id="cb62-223"><a href="#cb62-223" aria-hidden="true" tabindex="-1"></a>dtB[, .(<span class="at">LOR =</span> <span class="fu">log</span>( <span class="fu">odds</span>( <span class="fu">mean</span>(Y1) ) <span class="sc">/</span> <span class="fu">odds</span>( <span class="fu">mean</span>(Y0) ) ) ), keyby <span class="ot">=</span> L]</span>
-<span id="cb62-224"><a href="#cb62-224" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb62-225"><a href="#cb62-225" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-226"><a href="#cb62-226" aria-hidden="true" tabindex="-1"></a><span class="fu">## Marginal effect</span></span>
-<span id="cb62-227"><a href="#cb62-227" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-228"><a href="#cb62-228" aria-hidden="true" tabindex="-1"></a>The marginal estimate is biased both for the conditional effect and the marginal causal effect.</span>
-<span id="cb62-229"><a href="#cb62-229" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-230"><a href="#cb62-230" aria-hidden="true" tabindex="-1"></a><span class="in">```{r }</span></span>
-<span id="cb62-231"><a href="#cb62-231" aria-hidden="true" tabindex="-1"></a>mm<span class="ot">&lt;-</span><span class="fu">glm</span>(Y <span class="sc">~</span> A , <span class="at">data =</span> dtB, <span class="at">family=</span><span class="st">&quot;binomial&quot;</span>)</span>
-<span id="cb62-232"><a href="#cb62-232" aria-hidden="true" tabindex="-1"></a>mm</span>
-<span id="cb62-233"><a href="#cb62-233" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb62-234"><a href="#cb62-234" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-235"><a href="#cb62-235" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-236"><a href="#cb62-236" aria-hidden="true" tabindex="-1"></a><span class="fu">## Numerator and Denominator model</span></span>
-<span id="cb62-237"><a href="#cb62-237" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-238"><a href="#cb62-238" aria-hidden="true" tabindex="-1"></a><span class="in">```{r }</span></span>
-<span id="cb62-239"><a href="#cb62-239" aria-hidden="true" tabindex="-1"></a>numModel <span class="ot">&lt;-</span> <span class="fu">glm</span>(A <span class="sc">~</span> <span class="dv">1</span>, <span class="at">data =</span> dtB, <span class="at">family =</span> <span class="st">&quot;binomial&quot;</span>)</span>
-<span id="cb62-240"><a href="#cb62-240" aria-hidden="true" tabindex="-1"></a>denModel <span class="ot">&lt;-</span> <span class="fu">glm</span>(A <span class="sc">~</span> L, <span class="at">data =</span> dtB, <span class="at">family =</span> <span class="st">&quot;binomial&quot;</span>)</span>
-<span id="cb62-241"><a href="#cb62-241" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb62-242"><a href="#cb62-242" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-243"><a href="#cb62-243" aria-hidden="true" tabindex="-1"></a><span class="fu">## Stabilized weights by hand</span></span>
-<span id="cb62-244"><a href="#cb62-244" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-245"><a href="#cb62-245" aria-hidden="true" tabindex="-1"></a><span class="in">```{r }</span></span>
-<span id="cb62-246"><a href="#cb62-246" aria-hidden="true" tabindex="-1"></a>dtB[, pA0 <span class="sc">:</span><span class="er">=</span> <span class="fu">predict</span>(numModel, <span class="at">type =</span> <span class="st">&quot;response&quot;</span>)]</span>
-<span id="cb62-247"><a href="#cb62-247" aria-hidden="true" tabindex="-1"></a>dtB[, pA <span class="sc">:</span><span class="er">=</span> <span class="fu">predict</span>(denModel, <span class="at">type =</span> <span class="st">&quot;response&quot;</span>)]</span>
-<span id="cb62-248"><a href="#cb62-248" aria-hidden="true" tabindex="-1"></a>defB2 <span class="ot">&lt;-</span> <span class="fu">defDataAdd</span>(<span class="at">varname =</span> <span class="st">&quot;IPW&quot;</span>, </span>
-<span id="cb62-249"><a href="#cb62-249" aria-hidden="true" tabindex="-1"></a>                    <span class="at">formula =</span> <span class="st">&quot;(A*pA0+(1-A)*(1-pA0))/((A * pA) + ((1 - A) * (1 - pA)))&quot;</span>, </span>
-<span id="cb62-250"><a href="#cb62-250" aria-hidden="true" tabindex="-1"></a>                    <span class="at">dist =</span> <span class="st">&quot;nonrandom&quot;</span>)</span>
-<span id="cb62-251"><a href="#cb62-251" aria-hidden="true" tabindex="-1"></a>dtB <span class="ot">&lt;-</span> <span class="fu">addColumns</span>(defB2, dtB)</span>
-<span id="cb62-252"><a href="#cb62-252" aria-hidden="true" tabindex="-1"></a>dtB[<span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>]</span>
-<span id="cb62-253"><a href="#cb62-253" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb62-254"><a href="#cb62-254" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-255"><a href="#cb62-255" aria-hidden="true" tabindex="-1"></a><span class="in">```{r }</span></span>
-<span id="cb62-256"><a href="#cb62-256" aria-hidden="true" tabindex="-1"></a><span class="fu">unique</span>(dtB<span class="sc">$</span>IPW)</span>
-<span id="cb62-257"><a href="#cb62-257" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb62-258"><a href="#cb62-258" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-259"><a href="#cb62-259" aria-hidden="true" tabindex="-1"></a><span class="fu">## Stabilized weights with **ipw** package</span></span>
-<span id="cb62-260"><a href="#cb62-260" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-261"><a href="#cb62-261" aria-hidden="true" tabindex="-1"></a><span class="in">```{r }</span></span>
-<span id="cb62-262"><a href="#cb62-262" aria-hidden="true" tabindex="-1"></a>tempsw<span class="ot">&lt;-</span>ipw<span class="sc">::</span><span class="fu">ipwpoint</span>(<span class="at">exposure=</span>A,<span class="at">family=</span><span class="st">&quot;binomial&quot;</span>,<span class="at">link=</span><span class="st">&quot;logit&quot;</span>,<span class="at">numerator=</span><span class="sc">~</span><span class="dv">1</span>,<span class="at">denominator =</span> <span class="sc">~</span>L,<span class="at">data=</span>dtB)</span>
-<span id="cb62-263"><a href="#cb62-263" aria-hidden="true" tabindex="-1"></a>tempw<span class="ot">&lt;-</span>ipw<span class="sc">::</span><span class="fu">ipwpoint</span>(<span class="at">exposure=</span>A,<span class="at">family=</span><span class="st">&quot;binomial&quot;</span>,<span class="at">link=</span><span class="st">&quot;logit&quot;</span>,<span class="at">denominator =</span> <span class="sc">~</span>L,<span class="at">data=</span>dtB)</span>
-<span id="cb62-264"><a href="#cb62-264" aria-hidden="true" tabindex="-1"></a><span class="fu">unique</span>(tempsw<span class="sc">$</span>ipw.weights)</span>
-<span id="cb62-265"><a href="#cb62-265" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(tempsw<span class="sc">$</span>ipw.weights)</span>
-<span id="cb62-266"><a href="#cb62-266" aria-hidden="true" tabindex="-1"></a><span class="fu">unique</span>(tempw<span class="sc">$</span>ipw.weights)</span>
-<span id="cb62-267"><a href="#cb62-267" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(tempw<span class="sc">$</span>ipw.weights)</span>
-<span id="cb62-268"><a href="#cb62-268" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb62-269"><a href="#cb62-269" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-270"><a href="#cb62-270" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-271"><a href="#cb62-271" aria-hidden="true" tabindex="-1"></a><span class="fu">## Applying IPW </span></span>
-<span id="cb62-272"><a href="#cb62-272" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-273"><a href="#cb62-273" aria-hidden="true" tabindex="-1"></a><span class="fu">### Unstabilized weights</span></span>
-<span id="cb62-274"><a href="#cb62-274" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-275"><a href="#cb62-275" aria-hidden="true" tabindex="-1"></a><span class="in">```{r }</span></span>
-<span id="cb62-276"><a href="#cb62-276" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(mw<span class="ot">&lt;-</span><span class="fu">glm</span>(Y <span class="sc">~</span> A , <span class="at">data =</span> dtB, <span class="at">family=</span><span class="st">&quot;binomial&quot;</span>, <span class="at">weights =</span> tempw<span class="sc">$</span>ipw.weights))<span class="sc">$</span>coef</span>
-<span id="cb62-277"><a href="#cb62-277" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb62-278"><a href="#cb62-278" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-279"><a href="#cb62-279" aria-hidden="true" tabindex="-1"></a><span class="fu">### Stabilized weights</span></span>
-<span id="cb62-280"><a href="#cb62-280" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-281"><a href="#cb62-281" aria-hidden="true" tabindex="-1"></a><span class="in">```{r }</span></span>
-<span id="cb62-282"><a href="#cb62-282" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(mws<span class="ot">&lt;-</span><span class="fu">glm</span>(Y <span class="sc">~</span> A , <span class="at">data =</span> dtB, <span class="at">family=</span><span class="st">&quot;binomial&quot;</span>, <span class="at">weights =</span> tempsw<span class="sc">$</span>ipw.weights))<span class="sc">$</span>coef</span>
-<span id="cb62-283"><a href="#cb62-283" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb62-284"><a href="#cb62-284" aria-hidden="true" tabindex="-1"></a><span class="fu">## Comparison</span></span>
-<span id="cb62-285"><a href="#cb62-285" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-286"><a href="#cb62-286" aria-hidden="true" tabindex="-1"></a><span class="in">```{r }</span></span>
-<span id="cb62-287"><a href="#cb62-287" aria-hidden="true" tabindex="-1"></a>modelsummary<span class="sc">::</span><span class="fu">modelsummary</span>(<span class="at">models=</span><span class="fu">list</span>(<span class="st">&quot;marginal&quot;</span><span class="ot">=</span>mm,<span class="st">&quot;conditional&quot;</span><span class="ot">=</span>mc,<span class="st">&quot;IPW&quot;</span><span class="ot">=</span>mw,<span class="st">&quot;IPWs&quot;</span><span class="ot">=</span>mws))</span>
-<span id="cb62-288"><a href="#cb62-288" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb62-289"><a href="#cb62-289" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-290"><a href="#cb62-290" aria-hidden="true" tabindex="-1"></a><span class="in">```{r echo=FALSE}</span></span>
-<span id="cb62-291"><a href="#cb62-291" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(grateful)</span>
-<span id="cb62-292"><a href="#cb62-292" aria-hidden="true" tabindex="-1"></a><span class="fu">cite_packages</span>(<span class="at">pkgs =</span> <span class="st">&quot;Session&quot;</span>,<span class="at">output=</span><span class="st">&quot;paragraph&quot;</span>,<span class="at">out.dir=</span><span class="fu">getwd</span>(),<span class="at">cite.tidyverse=</span><span class="cn">FALSE</span>,<span class="at">omit=</span><span class="fu">c</span>(<span class="st">&quot;grateful&quot;</span>,<span class="st">&quot;knitr&quot;</span>))</span>
-<span id="cb62-293"><a href="#cb62-293" aria-hidden="true" tabindex="-1"></a><span class="fu">cite_packages</span>(<span class="at">pkgs =</span> <span class="st">&quot;Session&quot;</span>,<span class="at">output=</span><span class="st">&quot;table&quot;</span>,<span class="at">out.dir=</span><span class="fu">getwd</span>(),<span class="at">cite.tidyverse=</span><span class="cn">FALSE</span>,<span class="at">omit=</span><span class="fu">c</span>(<span class="st">&quot;grateful&quot;</span>,<span class="st">&quot;knitr&quot;</span>))</span>
-<span id="cb62-294"><a href="#cb62-294" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb62-295"><a href="#cb62-295" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-296"><a href="#cb62-296" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-297"><a href="#cb62-297" aria-hidden="true" tabindex="-1"></a><span class="in">```{r EffSampleSize, include=FALSE}</span></span>
-<span id="cb62-298"><a href="#cb62-298" aria-hidden="true" tabindex="-1"></a>Nnew</span>
-<span id="cb62-299"><a href="#cb62-299" aria-hidden="true" tabindex="-1"></a>w<span class="ot">&lt;-</span>tempw<span class="sc">$</span>ipw.weights</span>
-<span id="cb62-300"><a href="#cb62-300" aria-hidden="true" tabindex="-1"></a>sw<span class="ot">&lt;-</span>tempsw<span class="sc">$</span>ipw.weights</span>
-<span id="cb62-301"><a href="#cb62-301" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(w)</span>
-<span id="cb62-302"><a href="#cb62-302" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(sw)</span>
-<span id="cb62-303"><a href="#cb62-303" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(w)<span class="sc">^</span><span class="dv">2</span><span class="sc">/</span><span class="fu">sum</span>(w<span class="sc">^</span><span class="dv">2</span>)</span>
-<span id="cb62-304"><a href="#cb62-304" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(sw)<span class="sc">^</span><span class="dv">2</span><span class="sc">/</span><span class="fu">sum</span>(sw<span class="sc">^</span><span class="dv">2</span>)</span>
-<span id="cb62-305"><a href="#cb62-305" aria-hidden="true" tabindex="-1"></a>Nnew<span class="sc">/</span>(<span class="dv">1</span><span class="sc">+</span><span class="fu">var</span>(w))</span>
-<span id="cb62-306"><a href="#cb62-306" aria-hidden="true" tabindex="-1"></a>Nnew<span class="sc">/</span>(<span class="dv">1</span><span class="sc">+</span><span class="fu">var</span>(sw))</span>
-<span id="cb62-307"><a href="#cb62-307" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb62-308"><a href="#cb62-308" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-309"><a href="#cb62-309" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-310"><a href="#cb62-310" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-311"><a href="#cb62-311" aria-hidden="true" tabindex="-1"></a><span class="fu"># Bibliography {-}</span></span>
-<span id="cb62-312"><a href="#cb62-312" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-313"><a href="#cb62-313" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-314"><a href="#cb62-314" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-315"><a href="#cb62-315" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-316"><a href="#cb62-316" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-317"><a href="#cb62-317" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-318"><a href="#cb62-318" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-319"><a href="#cb62-319" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-320"><a href="#cb62-320" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-321"><a href="#cb62-321" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-322"><a href="#cb62-322" aria-hidden="true" tabindex="-1"></a></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb72" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb72-1"><a href="#cb72-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb72-2"><a href="#cb72-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> &quot;Noncollapsibility of the odds ratio&quot;</span></span>
+<span id="cb72-3"><a href="#cb72-3" aria-hidden="true" tabindex="-1"></a><span class="an">date:</span><span class="co"> &quot;2023-12-02&quot;</span></span>
+<span id="cb72-4"><a href="#cb72-4" aria-hidden="true" tabindex="-1"></a><span class="an">description:</span><span class="co"> &quot;IPW-analysis&quot;</span></span>
+<span id="cb72-5"><a href="#cb72-5" aria-hidden="true" tabindex="-1"></a><span class="an">categories:</span><span class="co"> [code, analysis]</span></span>
+<span id="cb72-6"><a href="#cb72-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb72-7"><a href="#cb72-7" aria-hidden="true" tabindex="-1"></a><span class="an">bibliography:</span><span class="co"> </span></span>
+<span id="cb72-8"><a href="#cb72-8" aria-hidden="true" tabindex="-1"></a><span class="co">  - &quot;/home/meichtry/Templates/Rcite.bib&quot;</span></span>
+<span id="cb72-9"><a href="#cb72-9" aria-hidden="true" tabindex="-1"></a><span class="co">  - grateful-refs.bib</span></span>
+<span id="cb72-10"><a href="#cb72-10" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb72-11"><a href="#cb72-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb72-12"><a href="#cb72-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb72-13"><a href="#cb72-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb72-14"><a href="#cb72-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb72-15"><a href="#cb72-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb72-16"><a href="#cb72-16" aria-hidden="true" tabindex="-1"></a><span class="fu"># Noncollapsibility</span></span>
+<span id="cb72-17"><a href="#cb72-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb72-18"><a href="#cb72-18" aria-hidden="true" tabindex="-1"></a>We simulate data from GLM with **non-confounding** covariate $C$:</span>
+<span id="cb72-19"><a href="#cb72-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb72-20"><a href="#cb72-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb72-21"><a href="#cb72-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb72-22"><a href="#cb72-22" aria-hidden="true" tabindex="-1"></a><span class="in">```{r }</span></span>
+<span id="cb72-23"><a href="#cb72-23" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">3</span>)</span>
+<span id="cb72-24"><a href="#cb72-24" aria-hidden="true" tabindex="-1"></a>N <span class="ot">&lt;-</span> <span class="dv">400</span></span>
+<span id="cb72-25"><a href="#cb72-25" aria-hidden="true" tabindex="-1"></a>C <span class="ot">&lt;-</span> <span class="fu">sort</span>(<span class="fu">runif</span>(N,<span class="sc">-</span><span class="dv">8</span>,<span class="dv">8</span>)) <span class="co">#non-confounding C</span></span>
+<span id="cb72-26"><a href="#cb72-26" aria-hidden="true" tabindex="-1"></a>G<span class="ot">&lt;-</span><span class="fu">sample</span>(<span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">1</span>),N,<span class="at">replace=</span><span class="cn">TRUE</span>)</span>
+<span id="cb72-27"><a href="#cb72-27" aria-hidden="true" tabindex="-1"></a>beta0<span class="ot">&lt;-</span><span class="dv">0</span></span>
+<span id="cb72-28"><a href="#cb72-28" aria-hidden="true" tabindex="-1"></a>beta1<span class="ot">&lt;-</span><span class="fu">log</span>(<span class="dv">10</span>)</span>
+<span id="cb72-29"><a href="#cb72-29" aria-hidden="true" tabindex="-1"></a>beta2<span class="ot">&lt;-</span><span class="dv">1</span></span>
+<span id="cb72-30"><a href="#cb72-30" aria-hidden="true" tabindex="-1"></a><span class="do">##Logistic </span></span>
+<span id="cb72-31"><a href="#cb72-31" aria-hidden="true" tabindex="-1"></a>etai<span class="ot">&lt;-</span>beta0<span class="sc">+</span>beta1<span class="sc">*</span>G<span class="sc">+</span>beta2<span class="sc">*</span>C</span>
+<span id="cb72-32"><a href="#cb72-32" aria-hidden="true" tabindex="-1"></a>pii<span class="ot">&lt;-</span><span class="fu">exp</span>(etai)<span class="sc">/</span>(<span class="dv">1</span><span class="sc">+</span><span class="fu">exp</span>(etai))</span>
+<span id="cb72-33"><a href="#cb72-33" aria-hidden="true" tabindex="-1"></a>Ydich <span class="ot">&lt;-</span><span class="fu">rbinom</span>(G,<span class="at">size=</span><span class="dv">1</span>,<span class="at">prob=</span>pii)</span>
+<span id="cb72-34"><a href="#cb72-34" aria-hidden="true" tabindex="-1"></a>dat<span class="ot">&lt;-</span><span class="fu">data.frame</span>(C,G,Ydich)</span>
+<span id="cb72-35"><a href="#cb72-35" aria-hidden="true" tabindex="-1"></a><span class="fu">cor</span>(dat)</span>
+<span id="cb72-36"><a href="#cb72-36" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb72-37"><a href="#cb72-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb72-38"><a href="#cb72-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb72-39"><a href="#cb72-39" aria-hidden="true" tabindex="-1"></a><span class="in">```{r }</span></span>
+<span id="cb72-40"><a href="#cb72-40" aria-hidden="true" tabindex="-1"></a>modC<span class="ot">&lt;-</span><span class="fu">glm</span>(Ydich<span class="sc">~</span>G<span class="sc">+</span>C,<span class="at">family=</span><span class="st">&quot;binomial&quot;</span>)</span>
+<span id="cb72-41"><a href="#cb72-41" aria-hidden="true" tabindex="-1"></a>modM<span class="ot">&lt;-</span><span class="fu">glm</span>(Ydich<span class="sc">~</span>G,<span class="at">family=</span><span class="st">&quot;binomial&quot;</span>)</span>
+<span id="cb72-42"><a href="#cb72-42" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb72-43"><a href="#cb72-43" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb72-44"><a href="#cb72-44" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb72-45"><a href="#cb72-45" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb72-46"><a href="#cb72-46" aria-hidden="true" tabindex="-1"></a><span class="fu">## Illustrate non-collapsibility</span></span>
+<span id="cb72-47"><a href="#cb72-47" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb72-48"><a href="#cb72-48" aria-hidden="true" tabindex="-1"></a><span class="in">```{r }</span></span>
+<span id="cb72-49"><a href="#cb72-49" aria-hidden="true" tabindex="-1"></a>pred<span class="ot">&lt;-</span><span class="fu">predict</span>(modM,<span class="at">type=</span><span class="st">&quot;response&quot;</span>,<span class="at">se.fit=</span><span class="cn">TRUE</span>)</span>
+<span id="cb72-50"><a href="#cb72-50" aria-hidden="true" tabindex="-1"></a>predgA<span class="ot">&lt;-</span><span class="fu">predict</span>(modC,<span class="at">newdata=</span><span class="fu">data.frame</span>(<span class="at">C=</span>C[G<span class="sc">==</span><span class="dv">0</span>],<span class="at">G=</span><span class="dv">0</span>),<span class="at">se.fit=</span><span class="cn">TRUE</span>,<span class="at">type=</span><span class="st">&quot;response&quot;</span>)</span>
+<span id="cb72-51"><a href="#cb72-51" aria-hidden="true" tabindex="-1"></a>predgB<span class="ot">&lt;-</span><span class="fu">predict</span>(modC,<span class="at">newdata=</span><span class="fu">data.frame</span>(<span class="at">C=</span>C[G<span class="sc">==</span><span class="dv">1</span>],<span class="at">G=</span><span class="dv">1</span>),<span class="at">se.fit=</span><span class="cn">TRUE</span>,<span class="at">type=</span><span class="st">&quot;response&quot;</span>)</span>
+<span id="cb72-52"><a href="#cb72-52" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(C,Ydich,<span class="at">col=</span><span class="fu">c</span>(<span class="st">&quot;blue&quot;</span>,<span class="st">&quot;red&quot;</span>)[G<span class="sc">+</span><span class="dv">1</span>],<span class="at">ylab=</span><span class="st">&quot;Probability&quot;</span>)</span>
+<span id="cb72-53"><a href="#cb72-53" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(<span class="fu">sort</span>(C[G<span class="sc">==</span><span class="dv">0</span>]),<span class="fu">sort</span>(predgA<span class="sc">$</span>fit),<span class="at">col=</span><span class="st">&quot;blue&quot;</span>)</span>
+<span id="cb72-54"><a href="#cb72-54" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(<span class="fu">sort</span>(C[G<span class="sc">==</span><span class="dv">1</span>]),<span class="fu">sort</span>(predgB<span class="sc">$</span>fit),<span class="at">col=</span><span class="st">&quot;red&quot;</span>)</span>
+<span id="cb72-55"><a href="#cb72-55" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">a=</span><span class="fu">mean</span>(pii[G<span class="sc">==</span><span class="dv">0</span>]),<span class="at">b=</span><span class="dv">0</span>,<span class="at">col=</span><span class="st">&quot;blue&quot;</span>,<span class="at">lty=</span><span class="dv">2</span>)</span>
+<span id="cb72-56"><a href="#cb72-56" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">a=</span><span class="fu">mean</span>(pii[G<span class="sc">==</span><span class="dv">1</span>]),<span class="at">b=</span><span class="dv">0</span>,<span class="at">col=</span><span class="st">&quot;red&quot;</span>,<span class="at">lty=</span><span class="dv">2</span>)</span>
+<span id="cb72-57"><a href="#cb72-57" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb72-58"><a href="#cb72-58" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb72-59"><a href="#cb72-59" aria-hidden="true" tabindex="-1"></a><span class="fu">## Marginal model</span></span>
+<span id="cb72-60"><a href="#cb72-60" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb72-61"><a href="#cb72-61" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb72-62"><a href="#cb72-62" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb72-63"><a href="#cb72-63" aria-hidden="true" tabindex="-1"></a><span class="in">```{r }</span></span>
+<span id="cb72-64"><a href="#cb72-64" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(modM)<span class="sc">$</span>coef</span>
+<span id="cb72-65"><a href="#cb72-65" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb72-66"><a href="#cb72-66" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb72-67"><a href="#cb72-67" aria-hidden="true" tabindex="-1"></a><span class="fu">## Conditional model</span></span>
+<span id="cb72-68"><a href="#cb72-68" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb72-69"><a href="#cb72-69" aria-hidden="true" tabindex="-1"></a>Effect of $G$ is larger, even though $C$ is not a confounder. This is due to **non-collapsibility of the odds ratio**</span>
+<span id="cb72-70"><a href="#cb72-70" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb72-71"><a href="#cb72-71" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb72-72"><a href="#cb72-72" aria-hidden="true" tabindex="-1"></a><span class="in">```{r }</span></span>
+<span id="cb72-73"><a href="#cb72-73" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(modC)<span class="sc">$</span>coef</span>
+<span id="cb72-74"><a href="#cb72-74" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb72-75"><a href="#cb72-75" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb72-76"><a href="#cb72-76" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb72-77"><a href="#cb72-77" aria-hidden="true" tabindex="-1"></a><span class="fu">## IPW-model</span></span>
+<span id="cb72-78"><a href="#cb72-78" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb72-79"><a href="#cb72-79" aria-hidden="true" tabindex="-1"></a>Estimate inverse probability weights to fit marginal structural</span>
+<span id="cb72-80"><a href="#cb72-80" aria-hidden="true" tabindex="-1"></a>     models in a point treatment situation. </span>
+<span id="cb72-81"><a href="#cb72-81" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb72-82"><a href="#cb72-82" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb72-83"><a href="#cb72-83" aria-hidden="true" tabindex="-1"></a><span class="fu">### Weights</span></span>
+<span id="cb72-84"><a href="#cb72-84" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb72-85"><a href="#cb72-85" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb72-86"><a href="#cb72-86" aria-hidden="true" tabindex="-1"></a><span class="in">```{r }</span></span>
+<span id="cb72-87"><a href="#cb72-87" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ipw)</span>
+<span id="cb72-88"><a href="#cb72-88" aria-hidden="true" tabindex="-1"></a>temp <span class="ot">&lt;-</span> <span class="fu">ipwpoint</span>(<span class="at">exposure=</span>G,<span class="at">family =</span> <span class="st">&quot;binomial&quot;</span>,<span class="at">link =</span> <span class="st">&quot;logit&quot;</span>,<span class="at">data=</span>dat,<span class="at">numerator =</span><span class="sc">~</span><span class="dv">1</span>,<span class="at">denominator =</span> <span class="sc">~</span> C)</span>
+<span id="cb72-89"><a href="#cb72-89" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(temp<span class="sc">$</span>ipw.weights)</span>
+<span id="cb72-90"><a href="#cb72-90" aria-hidden="true" tabindex="-1"></a>dat<span class="sc">$</span>sw<span class="ot">&lt;-</span>temp<span class="sc">$</span>ipw.weights</span>
+<span id="cb72-91"><a href="#cb72-91" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb72-92"><a href="#cb72-92" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb72-93"><a href="#cb72-93" aria-hidden="true" tabindex="-1"></a><span class="fu">### Marginal structural model</span></span>
+<span id="cb72-94"><a href="#cb72-94" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb72-95"><a href="#cb72-95" aria-hidden="true" tabindex="-1"></a>Marginal structural model for the causal effect of $X$ on $Y$ corrected for confounding by $C$ using inverse probability weighting</span>
+<span id="cb72-96"><a href="#cb72-96" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb72-97"><a href="#cb72-97" aria-hidden="true" tabindex="-1"></a><span class="in">```{r }</span></span>
+<span id="cb72-98"><a href="#cb72-98" aria-hidden="true" tabindex="-1"></a>modW<span class="ot">&lt;-</span><span class="fu">glm</span>(Ydich<span class="sc">~</span>G,<span class="at">weights=</span>sw,<span class="at">data=</span>dat,<span class="at">family=</span>quasibinomial)</span>
+<span id="cb72-99"><a href="#cb72-99" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(modW)<span class="sc">$</span>coef</span>
+<span id="cb72-100"><a href="#cb72-100" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb72-101"><a href="#cb72-101" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb72-102"><a href="#cb72-102" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb72-103"><a href="#cb72-103" aria-hidden="true" tabindex="-1"></a><span class="in">```{r }</span></span>
+<span id="cb72-104"><a href="#cb72-104" aria-hidden="true" tabindex="-1"></a><span class="fu">require</span>(<span class="st">&quot;survey&quot;</span>)</span>
+<span id="cb72-105"><a href="#cb72-105" aria-hidden="true" tabindex="-1"></a>msm <span class="ot">&lt;-</span> (<span class="fu">svyglm</span>(Ydich <span class="sc">~</span> G, <span class="at">family=</span><span class="st">&quot;binomial&quot;</span>,<span class="at">design =</span> <span class="fu">svydesign</span>(<span class="sc">~</span> <span class="dv">1</span>, <span class="at">weights =</span><span class="sc">~</span>sw,<span class="at">data =</span> dat)))</span>
+<span id="cb72-106"><a href="#cb72-106" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(msm)</span>
+<span id="cb72-107"><a href="#cb72-107" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb72-108"><a href="#cb72-108" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb72-109"><a href="#cb72-109" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb72-110"><a href="#cb72-110" aria-hidden="true" tabindex="-1"></a><span class="fu">## Comparison</span></span>
+<span id="cb72-111"><a href="#cb72-111" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb72-112"><a href="#cb72-112" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb72-113"><a href="#cb72-113" aria-hidden="true" tabindex="-1"></a><span class="in">```{r }</span></span>
+<span id="cb72-114"><a href="#cb72-114" aria-hidden="true" tabindex="-1"></a>modelsummary<span class="sc">::</span><span class="fu">modelsummary</span>(<span class="at">models=</span><span class="fu">list</span>(<span class="st">&quot;marginal&quot;</span><span class="ot">=</span>modM,<span class="st">&quot;conditional&quot;</span><span class="ot">=</span>modC,<span class="st">&quot;IPW&quot;</span><span class="ot">=</span>modW))</span>
+<span id="cb72-115"><a href="#cb72-115" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb72-116"><a href="#cb72-116" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb72-117"><a href="#cb72-117" aria-hidden="true" tabindex="-1"></a>::: {.callout-important}</span>
+<span id="cb72-118"><a href="#cb72-118" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>conditional-marginal=noncollaps+confouding</span>
+<span id="cb72-119"><a href="#cb72-119" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>IPW-marginal=confounding</span>
+<span id="cb72-120"><a href="#cb72-120" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>conditional-IPW=noncollaps</span>
+<span id="cb72-121"><a href="#cb72-121" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb72-122"><a href="#cb72-122" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb72-123"><a href="#cb72-123" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb72-124"><a href="#cb72-124" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb72-125"><a href="#cb72-125" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb72-126"><a href="#cb72-126" aria-hidden="true" tabindex="-1"></a><span class="fu"># Example smoking and children weight</span></span>
+<span id="cb72-127"><a href="#cb72-127" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb72-128"><a href="#cb72-128" aria-hidden="true" tabindex="-1"></a><span class="in">```{r echo=FALSE}</span></span>
+<span id="cb72-129"><a href="#cb72-129" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rio)</span>
+<span id="cb72-130"><a href="#cb72-130" aria-hidden="true" tabindex="-1"></a>bwt <span class="ot">&lt;-</span> <span class="fu">import</span>(<span class="st">&quot;bwt_full.csv&quot;</span>)</span>
+<span id="cb72-131"><a href="#cb72-131" aria-hidden="true" tabindex="-1"></a><span class="co">#bwt$low &lt;- factor(bwt$low, levels = c(0,1), labels = c(&quot;no&quot;, &quot;yes&quot;))</span></span>
+<span id="cb72-132"><a href="#cb72-132" aria-hidden="true" tabindex="-1"></a><span class="co">#bwt$smoke &lt;- factor(bwt$smoke, levels = c(0,1), labels = c(&quot;no&quot;, &quot;yes&quot;))</span></span>
+<span id="cb72-133"><a href="#cb72-133" aria-hidden="true" tabindex="-1"></a>bwt<span class="sc">$</span>socclass <span class="ot">&lt;-</span> <span class="fu">factor</span>(bwt<span class="sc">$</span>socclass, <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">&quot;I&quot;</span>, <span class="st">&quot;II&quot;</span>, <span class="st">&quot;III&quot;</span>), <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">&quot;I&quot;</span>, <span class="st">&quot;II&quot;</span>, <span class="st">&quot;III&quot;</span>))</span>
+<span id="cb72-134"><a href="#cb72-134" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb72-135"><a href="#cb72-135" aria-hidden="true" tabindex="-1"></a><span class="in">```{r }</span></span>
+<span id="cb72-136"><a href="#cb72-136" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(bwt)</span>
+<span id="cb72-137"><a href="#cb72-137" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb72-138"><a href="#cb72-138" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb72-139"><a href="#cb72-139" aria-hidden="true" tabindex="-1"></a><span class="in">```{r }</span></span>
+<span id="cb72-140"><a href="#cb72-140" aria-hidden="true" tabindex="-1"></a>glm_smoke <span class="ot">&lt;-</span> <span class="fu">glm</span>(low <span class="sc">~</span> smoke, <span class="at">data =</span> bwt, <span class="at">family =</span> binomial)</span>
+<span id="cb72-141"><a href="#cb72-141" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(glm_smoke)<span class="sc">$</span>coef</span>
+<span id="cb72-142"><a href="#cb72-142" aria-hidden="true" tabindex="-1"></a>glm_multi_1 <span class="ot">&lt;-</span> <span class="fu">glm</span>(low <span class="sc">~</span> smoke <span class="sc">+</span> socclass, <span class="at">data =</span> bwt, <span class="at">family =</span> binomial)</span>
+<span id="cb72-143"><a href="#cb72-143" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(glm_multi_1)<span class="sc">$</span>coef</span>
+<span id="cb72-144"><a href="#cb72-144" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb72-145"><a href="#cb72-145" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb72-146"><a href="#cb72-146" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb72-147"><a href="#cb72-147" aria-hidden="true" tabindex="-1"></a><span class="in">```{r }</span></span>
+<span id="cb72-148"><a href="#cb72-148" aria-hidden="true" tabindex="-1"></a>temp <span class="ot">&lt;-</span> <span class="fu">ipwpoint</span>(<span class="at">exposure=</span>smoke,<span class="at">family =</span> <span class="st">&quot;binomial&quot;</span>,<span class="at">link =</span> <span class="st">&quot;logit&quot;</span>,<span class="at">data=</span>bwt,</span>
+<span id="cb72-149"><a href="#cb72-149" aria-hidden="true" tabindex="-1"></a>                 <span class="at">numerator=</span><span class="sc">~</span><span class="dv">1</span>,<span class="at">denominator=</span><span class="sc">~</span>socclass)</span>
+<span id="cb72-150"><a href="#cb72-150" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(temp<span class="sc">$</span>ipw.weights)</span>
+<span id="cb72-151"><a href="#cb72-151" aria-hidden="true" tabindex="-1"></a>bwt<span class="sc">$</span>sw<span class="ot">&lt;-</span>temp<span class="sc">$</span>ipw.weights</span>
+<span id="cb72-152"><a href="#cb72-152" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb72-153"><a href="#cb72-153" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb72-154"><a href="#cb72-154" aria-hidden="true" tabindex="-1"></a><span class="in">```{r }</span></span>
+<span id="cb72-155"><a href="#cb72-155" aria-hidden="true" tabindex="-1"></a>modW<span class="ot">&lt;-</span><span class="fu">glm</span>(low<span class="sc">~</span>smoke,<span class="at">weights=</span>sw,<span class="at">data=</span>bwt,<span class="at">family=</span>quasibinomial)</span>
+<span id="cb72-156"><a href="#cb72-156" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(modW)<span class="sc">$</span>coef</span>
+<span id="cb72-157"><a href="#cb72-157" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb72-158"><a href="#cb72-158" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb72-159"><a href="#cb72-159" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb72-160"><a href="#cb72-160" aria-hidden="true" tabindex="-1"></a>::: {.callout-important}</span>
+<span id="cb72-161"><a href="#cb72-161" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>conditional-marginal=noncollaps+confouding</span>
+<span id="cb72-162"><a href="#cb72-162" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>IPW-marginal=confounding</span>
+<span id="cb72-163"><a href="#cb72-163" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>conditional-IPW=noncollaps</span>
+<span id="cb72-164"><a href="#cb72-164" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb72-165"><a href="#cb72-165" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb72-166"><a href="#cb72-166" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb72-167"><a href="#cb72-167" aria-hidden="true" tabindex="-1"></a><span class="in">```{r }</span></span>
+<span id="cb72-168"><a href="#cb72-168" aria-hidden="true" tabindex="-1"></a>modelsummary<span class="sc">::</span><span class="fu">modelsummary</span>(<span class="at">models=</span><span class="fu">list</span>(<span class="st">&quot;marginal&quot;</span><span class="ot">=</span>glm_smoke,<span class="st">&quot;conditional&quot;</span><span class="ot">=</span>glm_multi_1,<span class="st">&quot;IPW&quot;</span><span class="ot">=</span>modW))</span>
+<span id="cb72-169"><a href="#cb72-169" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb72-170"><a href="#cb72-170" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb72-171"><a href="#cb72-171" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb72-172"><a href="#cb72-172" aria-hidden="true" tabindex="-1"></a><span class="fu"># Potential outcomes</span></span>
+<span id="cb72-173"><a href="#cb72-173" aria-hidden="true" tabindex="-1"></a>See <span class="co">[</span><span class="ot">Example</span><span class="co">](https://www.r-bloggers.com/2017/12/when-you-use-inverse-probability-weighting-for-estimation-what-are-the-weights-actually-doing/)</span> for marginal structural models in this context.</span>
+<span id="cb72-174"><a href="#cb72-174" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb72-175"><a href="#cb72-175" aria-hidden="true" tabindex="-1"></a><span class="fu">## Simulate some data</span></span>
+<span id="cb72-176"><a href="#cb72-176" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb72-177"><a href="#cb72-177" aria-hidden="true" tabindex="-1"></a><span class="in">```{r }</span></span>
+<span id="cb72-178"><a href="#cb72-178" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(simstudy)</span>
+<span id="cb72-179"><a href="#cb72-179" aria-hidden="true" tabindex="-1"></a><span class="co"># define the data</span></span>
+<span id="cb72-180"><a href="#cb72-180" aria-hidden="true" tabindex="-1"></a>defB <span class="ot">&lt;-</span> <span class="fu">defData</span>(<span class="at">varname =</span> <span class="st">&quot;L&quot;</span>, <span class="at">formula =</span><span class="fl">0.27</span>, </span>
+<span id="cb72-181"><a href="#cb72-181" aria-hidden="true" tabindex="-1"></a>                <span class="at">dist =</span> <span class="st">&quot;binary&quot;</span>)</span>
+<span id="cb72-182"><a href="#cb72-182" aria-hidden="true" tabindex="-1"></a>defB <span class="ot">&lt;-</span> <span class="fu">defData</span>(defB, <span class="at">varname =</span> <span class="st">&quot;Y0&quot;</span>, <span class="at">formula =</span> <span class="st">&quot;-2.5 + 1.75*L&quot;</span>, </span>
+<span id="cb72-183"><a href="#cb72-183" aria-hidden="true" tabindex="-1"></a>                <span class="at">dist =</span> <span class="st">&quot;binary&quot;</span>, <span class="at">link =</span> <span class="st">&quot;logit&quot;</span>)</span>
+<span id="cb72-184"><a href="#cb72-184" aria-hidden="true" tabindex="-1"></a>defB <span class="ot">&lt;-</span> <span class="fu">defData</span>(defB, <span class="at">varname =</span> <span class="st">&quot;Y1&quot;</span>, <span class="at">formula =</span> <span class="st">&quot;-1.5 + 1.75*L&quot;</span>, </span>
+<span id="cb72-185"><a href="#cb72-185" aria-hidden="true" tabindex="-1"></a>                <span class="at">dist =</span> <span class="st">&quot;binary&quot;</span>, <span class="at">link =</span> <span class="st">&quot;logit&quot;</span>)</span>
+<span id="cb72-186"><a href="#cb72-186" aria-hidden="true" tabindex="-1"></a>defB <span class="ot">&lt;-</span> <span class="fu">defData</span>(defB, <span class="at">varname =</span> <span class="st">&quot;A&quot;</span>, <span class="at">formula =</span> <span class="st">&quot;0.315 + 0.352 * L&quot;</span>, </span>
+<span id="cb72-187"><a href="#cb72-187" aria-hidden="true" tabindex="-1"></a>                <span class="at">dist =</span> <span class="st">&quot;binary&quot;</span>)</span>
+<span id="cb72-188"><a href="#cb72-188" aria-hidden="true" tabindex="-1"></a>defB <span class="ot">&lt;-</span> <span class="fu">defData</span>(defB, <span class="at">varname =</span> <span class="st">&quot;Y&quot;</span>, <span class="at">formula =</span> <span class="st">&quot;Y0 + A * (Y1 - Y0)&quot;</span>, </span>
+<span id="cb72-189"><a href="#cb72-189" aria-hidden="true" tabindex="-1"></a>                <span class="at">dist =</span> <span class="st">&quot;nonrandom&quot;</span>)</span>
+<span id="cb72-190"><a href="#cb72-190" aria-hidden="true" tabindex="-1"></a>defB</span>
+<span id="cb72-191"><a href="#cb72-191" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb72-192"><a href="#cb72-192" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb72-193"><a href="#cb72-193" aria-hidden="true" tabindex="-1"></a><span class="in">```{r }</span></span>
+<span id="cb72-194"><a href="#cb72-194" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">2002</span>)</span>
+<span id="cb72-195"><a href="#cb72-195" aria-hidden="true" tabindex="-1"></a>Nnew<span class="ot">&lt;-</span><span class="dv">1000</span></span>
+<span id="cb72-196"><a href="#cb72-196" aria-hidden="true" tabindex="-1"></a>dtB <span class="ot">&lt;-</span> <span class="fu">genData</span>(Nnew, defB)</span>
+<span id="cb72-197"><a href="#cb72-197" aria-hidden="true" tabindex="-1"></a>dtB</span>
+<span id="cb72-198"><a href="#cb72-198" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb72-199"><a href="#cb72-199" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb72-200"><a href="#cb72-200" aria-hidden="true" tabindex="-1"></a><span class="fu">## True causal effect (based on potential outcomes)</span></span>
+<span id="cb72-201"><a href="#cb72-201" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb72-202"><a href="#cb72-202" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb72-203"><a href="#cb72-203" aria-hidden="true" tabindex="-1"></a><span class="in">```{r }</span></span>
+<span id="cb72-204"><a href="#cb72-204" aria-hidden="true" tabindex="-1"></a>odds <span class="ot">&lt;-</span> <span class="cf">function</span> (p) {</span>
+<span id="cb72-205"><a href="#cb72-205" aria-hidden="true" tabindex="-1"></a>    <span class="fu">return</span>((p<span class="sc">/</span>(<span class="dv">1</span> <span class="sc">-</span> p)))</span>
+<span id="cb72-206"><a href="#cb72-206" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb72-207"><a href="#cb72-207" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb72-208"><a href="#cb72-208" aria-hidden="true" tabindex="-1"></a>dtB[, <span class="fu">log</span>( <span class="fu">odds</span>( <span class="fu">mean</span>(Y1) ) <span class="sc">/</span> <span class="fu">odds</span>( <span class="fu">mean</span>(Y0) ) )]</span>
+<span id="cb72-209"><a href="#cb72-209" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb72-210"><a href="#cb72-210" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb72-211"><a href="#cb72-211" aria-hidden="true" tabindex="-1"></a><span class="fu">## Conditional effect</span></span>
+<span id="cb72-212"><a href="#cb72-212" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb72-213"><a href="#cb72-213" aria-hidden="true" tabindex="-1"></a>The true conditional causal effect of $A$ is 1.</span>
+<span id="cb72-214"><a href="#cb72-214" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb72-215"><a href="#cb72-215" aria-hidden="true" tabindex="-1"></a><span class="in">```{r }</span></span>
+<span id="cb72-216"><a href="#cb72-216" aria-hidden="true" tabindex="-1"></a>mc<span class="ot">&lt;-</span><span class="fu">glm</span>(Y <span class="sc">~</span> A <span class="sc">+</span> L , <span class="at">data =</span> dtB, <span class="at">family=</span><span class="st">&quot;binomial&quot;</span>)</span>
+<span id="cb72-217"><a href="#cb72-217" aria-hidden="true" tabindex="-1"></a>mc</span>
+<span id="cb72-218"><a href="#cb72-218" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb72-219"><a href="#cb72-219" aria-hidden="true" tabindex="-1"></a>This estimate for $A$ is a good estimate of the conditional effect in the population, based on the potential outcomes at each level of $L$</span>
+<span id="cb72-220"><a href="#cb72-220" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb72-221"><a href="#cb72-221" aria-hidden="true" tabindex="-1"></a><span class="in">```{r }</span></span>
+<span id="cb72-222"><a href="#cb72-222" aria-hidden="true" tabindex="-1"></a>dtB[, .(<span class="at">LOR =</span> <span class="fu">log</span>( <span class="fu">odds</span>( <span class="fu">mean</span>(Y1) ) <span class="sc">/</span> <span class="fu">odds</span>( <span class="fu">mean</span>(Y0) ) ) ), keyby <span class="ot">=</span> L]</span>
+<span id="cb72-223"><a href="#cb72-223" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb72-224"><a href="#cb72-224" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb72-225"><a href="#cb72-225" aria-hidden="true" tabindex="-1"></a><span class="fu">## Marginal effect</span></span>
+<span id="cb72-226"><a href="#cb72-226" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb72-227"><a href="#cb72-227" aria-hidden="true" tabindex="-1"></a>The marginal estimate is biased both for the conditional effect and the marginal causal effect.</span>
+<span id="cb72-228"><a href="#cb72-228" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb72-229"><a href="#cb72-229" aria-hidden="true" tabindex="-1"></a><span class="in">```{r }</span></span>
+<span id="cb72-230"><a href="#cb72-230" aria-hidden="true" tabindex="-1"></a>mm<span class="ot">&lt;-</span><span class="fu">glm</span>(Y <span class="sc">~</span> A , <span class="at">data =</span> dtB, <span class="at">family=</span><span class="st">&quot;binomial&quot;</span>)</span>
+<span id="cb72-231"><a href="#cb72-231" aria-hidden="true" tabindex="-1"></a>mm</span>
+<span id="cb72-232"><a href="#cb72-232" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb72-233"><a href="#cb72-233" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb72-234"><a href="#cb72-234" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb72-235"><a href="#cb72-235" aria-hidden="true" tabindex="-1"></a><span class="fu">## Numerator and Denominator model</span></span>
+<span id="cb72-236"><a href="#cb72-236" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb72-237"><a href="#cb72-237" aria-hidden="true" tabindex="-1"></a><span class="in">```{r }</span></span>
+<span id="cb72-238"><a href="#cb72-238" aria-hidden="true" tabindex="-1"></a>numModel <span class="ot">&lt;-</span> <span class="fu">glm</span>(A <span class="sc">~</span> <span class="dv">1</span>, <span class="at">data =</span> dtB, <span class="at">family =</span> <span class="st">&quot;binomial&quot;</span>)</span>
+<span id="cb72-239"><a href="#cb72-239" aria-hidden="true" tabindex="-1"></a>denModel <span class="ot">&lt;-</span> <span class="fu">glm</span>(A <span class="sc">~</span> L, <span class="at">data =</span> dtB, <span class="at">family =</span> <span class="st">&quot;binomial&quot;</span>)</span>
+<span id="cb72-240"><a href="#cb72-240" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb72-241"><a href="#cb72-241" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb72-242"><a href="#cb72-242" aria-hidden="true" tabindex="-1"></a><span class="fu">## Stabilized weights by hand</span></span>
+<span id="cb72-243"><a href="#cb72-243" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb72-244"><a href="#cb72-244" aria-hidden="true" tabindex="-1"></a><span class="in">```{r }</span></span>
+<span id="cb72-245"><a href="#cb72-245" aria-hidden="true" tabindex="-1"></a>dtB[, pA0 <span class="sc">:</span><span class="er">=</span> <span class="fu">predict</span>(numModel, <span class="at">type =</span> <span class="st">&quot;response&quot;</span>)]</span>
+<span id="cb72-246"><a href="#cb72-246" aria-hidden="true" tabindex="-1"></a>dtB[, pA <span class="sc">:</span><span class="er">=</span> <span class="fu">predict</span>(denModel, <span class="at">type =</span> <span class="st">&quot;response&quot;</span>)]</span>
+<span id="cb72-247"><a href="#cb72-247" aria-hidden="true" tabindex="-1"></a>defB2 <span class="ot">&lt;-</span> <span class="fu">defDataAdd</span>(<span class="at">varname =</span> <span class="st">&quot;IPW&quot;</span>, </span>
+<span id="cb72-248"><a href="#cb72-248" aria-hidden="true" tabindex="-1"></a>                    <span class="at">formula =</span> <span class="st">&quot;(A*pA0+(1-A)*(1-pA0))/((A * pA) + ((1 - A) * (1 - pA)))&quot;</span>, </span>
+<span id="cb72-249"><a href="#cb72-249" aria-hidden="true" tabindex="-1"></a>                    <span class="at">dist =</span> <span class="st">&quot;nonrandom&quot;</span>)</span>
+<span id="cb72-250"><a href="#cb72-250" aria-hidden="true" tabindex="-1"></a>dtB <span class="ot">&lt;-</span> <span class="fu">addColumns</span>(defB2, dtB)</span>
+<span id="cb72-251"><a href="#cb72-251" aria-hidden="true" tabindex="-1"></a>dtB[<span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>]</span>
+<span id="cb72-252"><a href="#cb72-252" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb72-253"><a href="#cb72-253" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb72-254"><a href="#cb72-254" aria-hidden="true" tabindex="-1"></a><span class="in">```{r }</span></span>
+<span id="cb72-255"><a href="#cb72-255" aria-hidden="true" tabindex="-1"></a><span class="fu">unique</span>(dtB<span class="sc">$</span>IPW)</span>
+<span id="cb72-256"><a href="#cb72-256" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb72-257"><a href="#cb72-257" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb72-258"><a href="#cb72-258" aria-hidden="true" tabindex="-1"></a><span class="fu">## Stabilized weights with **ipw** package</span></span>
+<span id="cb72-259"><a href="#cb72-259" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb72-260"><a href="#cb72-260" aria-hidden="true" tabindex="-1"></a><span class="in">```{r }</span></span>
+<span id="cb72-261"><a href="#cb72-261" aria-hidden="true" tabindex="-1"></a>tempsw<span class="ot">&lt;-</span>ipw<span class="sc">::</span><span class="fu">ipwpoint</span>(<span class="at">exposure=</span>A,<span class="at">family=</span><span class="st">&quot;binomial&quot;</span>,<span class="at">link=</span><span class="st">&quot;logit&quot;</span>,<span class="at">numerator=</span><span class="sc">~</span><span class="dv">1</span>,<span class="at">denominator =</span> <span class="sc">~</span>L,<span class="at">data=</span>dtB)</span>
+<span id="cb72-262"><a href="#cb72-262" aria-hidden="true" tabindex="-1"></a>tempw<span class="ot">&lt;-</span>ipw<span class="sc">::</span><span class="fu">ipwpoint</span>(<span class="at">exposure=</span>A,<span class="at">family=</span><span class="st">&quot;binomial&quot;</span>,<span class="at">link=</span><span class="st">&quot;logit&quot;</span>,<span class="at">denominator =</span> <span class="sc">~</span>L,<span class="at">data=</span>dtB)</span>
+<span id="cb72-263"><a href="#cb72-263" aria-hidden="true" tabindex="-1"></a><span class="fu">unique</span>(tempsw<span class="sc">$</span>ipw.weights)</span>
+<span id="cb72-264"><a href="#cb72-264" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(tempsw<span class="sc">$</span>ipw.weights)</span>
+<span id="cb72-265"><a href="#cb72-265" aria-hidden="true" tabindex="-1"></a><span class="fu">unique</span>(tempw<span class="sc">$</span>ipw.weights)</span>
+<span id="cb72-266"><a href="#cb72-266" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(tempw<span class="sc">$</span>ipw.weights)</span>
+<span id="cb72-267"><a href="#cb72-267" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb72-268"><a href="#cb72-268" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb72-269"><a href="#cb72-269" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb72-270"><a href="#cb72-270" aria-hidden="true" tabindex="-1"></a><span class="fu">## Applying IPW </span></span>
+<span id="cb72-271"><a href="#cb72-271" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb72-272"><a href="#cb72-272" aria-hidden="true" tabindex="-1"></a><span class="fu">### Unstabilized weights</span></span>
+<span id="cb72-273"><a href="#cb72-273" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb72-274"><a href="#cb72-274" aria-hidden="true" tabindex="-1"></a><span class="in">```{r }</span></span>
+<span id="cb72-275"><a href="#cb72-275" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(mw<span class="ot">&lt;-</span><span class="fu">glm</span>(Y <span class="sc">~</span> A , <span class="at">data =</span> dtB, <span class="at">family=</span><span class="st">&quot;binomial&quot;</span>, <span class="at">weights =</span> tempw<span class="sc">$</span>ipw.weights))<span class="sc">$</span>coef</span>
+<span id="cb72-276"><a href="#cb72-276" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb72-277"><a href="#cb72-277" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb72-278"><a href="#cb72-278" aria-hidden="true" tabindex="-1"></a><span class="fu">### Stabilized weights</span></span>
+<span id="cb72-279"><a href="#cb72-279" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb72-280"><a href="#cb72-280" aria-hidden="true" tabindex="-1"></a><span class="in">```{r }</span></span>
+<span id="cb72-281"><a href="#cb72-281" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(mws<span class="ot">&lt;-</span><span class="fu">glm</span>(Y <span class="sc">~</span> A , <span class="at">data =</span> dtB, <span class="at">family=</span><span class="st">&quot;binomial&quot;</span>, <span class="at">weights =</span> tempsw<span class="sc">$</span>ipw.weights))<span class="sc">$</span>coef</span>
+<span id="cb72-282"><a href="#cb72-282" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb72-283"><a href="#cb72-283" aria-hidden="true" tabindex="-1"></a><span class="fu">## Comparison</span></span>
+<span id="cb72-284"><a href="#cb72-284" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb72-285"><a href="#cb72-285" aria-hidden="true" tabindex="-1"></a><span class="in">```{r }</span></span>
+<span id="cb72-286"><a href="#cb72-286" aria-hidden="true" tabindex="-1"></a>modelsummary<span class="sc">::</span><span class="fu">modelsummary</span>(<span class="at">models=</span><span class="fu">list</span>(<span class="st">&quot;marginal&quot;</span><span class="ot">=</span>mm,<span class="st">&quot;conditional&quot;</span><span class="ot">=</span>mc,<span class="st">&quot;IPW&quot;</span><span class="ot">=</span>mw,<span class="st">&quot;IPWs&quot;</span><span class="ot">=</span>mws))</span>
+<span id="cb72-287"><a href="#cb72-287" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb72-288"><a href="#cb72-288" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb72-289"><a href="#cb72-289" aria-hidden="true" tabindex="-1"></a><span class="in">```{r echo=FALSE}</span></span>
+<span id="cb72-290"><a href="#cb72-290" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(grateful)</span>
+<span id="cb72-291"><a href="#cb72-291" aria-hidden="true" tabindex="-1"></a><span class="fu">cite_packages</span>(<span class="at">pkgs =</span> <span class="st">&quot;Session&quot;</span>,<span class="at">output=</span><span class="st">&quot;paragraph&quot;</span>,<span class="at">out.dir=</span><span class="fu">getwd</span>(),<span class="at">cite.tidyverse=</span><span class="cn">FALSE</span>,<span class="at">omit=</span><span class="fu">c</span>(<span class="st">&quot;grateful&quot;</span>,<span class="st">&quot;knitr&quot;</span>))</span>
+<span id="cb72-292"><a href="#cb72-292" aria-hidden="true" tabindex="-1"></a><span class="fu">cite_packages</span>(<span class="at">pkgs =</span> <span class="st">&quot;Session&quot;</span>,<span class="at">output=</span><span class="st">&quot;table&quot;</span>,<span class="at">out.dir=</span><span class="fu">getwd</span>(),<span class="at">cite.tidyverse=</span><span class="cn">FALSE</span>,<span class="at">omit=</span><span class="fu">c</span>(<span class="st">&quot;grateful&quot;</span>,<span class="st">&quot;knitr&quot;</span>))</span>
+<span id="cb72-293"><a href="#cb72-293" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb72-294"><a href="#cb72-294" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb72-295"><a href="#cb72-295" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb72-296"><a href="#cb72-296" aria-hidden="true" tabindex="-1"></a><span class="in">```{r EffSampleSize, include=FALSE}</span></span>
+<span id="cb72-297"><a href="#cb72-297" aria-hidden="true" tabindex="-1"></a>Nnew</span>
+<span id="cb72-298"><a href="#cb72-298" aria-hidden="true" tabindex="-1"></a>w<span class="ot">&lt;-</span>tempw<span class="sc">$</span>ipw.weights</span>
+<span id="cb72-299"><a href="#cb72-299" aria-hidden="true" tabindex="-1"></a>sw<span class="ot">&lt;-</span>tempsw<span class="sc">$</span>ipw.weights</span>
+<span id="cb72-300"><a href="#cb72-300" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(w)</span>
+<span id="cb72-301"><a href="#cb72-301" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(sw)</span>
+<span id="cb72-302"><a href="#cb72-302" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(w)<span class="sc">^</span><span class="dv">2</span><span class="sc">/</span><span class="fu">sum</span>(w<span class="sc">^</span><span class="dv">2</span>)</span>
+<span id="cb72-303"><a href="#cb72-303" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(sw)<span class="sc">^</span><span class="dv">2</span><span class="sc">/</span><span class="fu">sum</span>(sw<span class="sc">^</span><span class="dv">2</span>)</span>
+<span id="cb72-304"><a href="#cb72-304" aria-hidden="true" tabindex="-1"></a>Nnew<span class="sc">/</span>(<span class="dv">1</span><span class="sc">+</span><span class="fu">var</span>(w))</span>
+<span id="cb72-305"><a href="#cb72-305" aria-hidden="true" tabindex="-1"></a>Nnew<span class="sc">/</span>(<span class="dv">1</span><span class="sc">+</span><span class="fu">var</span>(sw))</span>
+<span id="cb72-306"><a href="#cb72-306" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb72-307"><a href="#cb72-307" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb72-308"><a href="#cb72-308" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb72-309"><a href="#cb72-309" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb72-310"><a href="#cb72-310" aria-hidden="true" tabindex="-1"></a><span class="fu"># Bibliography {-}</span></span>
+<span id="cb72-311"><a href="#cb72-311" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb72-312"><a href="#cb72-312" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb72-313"><a href="#cb72-313" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb72-314"><a href="#cb72-314" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb72-315"><a href="#cb72-315" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb72-316"><a href="#cb72-316" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb72-317"><a href="#cb72-317" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb72-318"><a href="#cb72-318" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb72-319"><a href="#cb72-319" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb72-320"><a href="#cb72-320" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb72-321"><a href="#cb72-321" aria-hidden="true" tabindex="-1"></a></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
 

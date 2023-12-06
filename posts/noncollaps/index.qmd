@@ -13,7 +13,6 @@ bibliography:
 
 
 
-
 # Noncollapsibility
 
 We simulate data from GLM with **non-confounding** covariate $C$:
@@ -101,7 +100,7 @@ summary(modW)$coef
 ```
 
 
-```{r eval=FALSE}
+```{r }
 require("survey")
 msm <- (svyglm(Ydich ~ G, family="binomial",design = svydesign(~ 1, weights =~sw,data = dat)))
 summary(msm)
