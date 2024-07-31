@@ -19,5 +19,5 @@ about:
 
 *******************************
 
-[andre_meichtry@bluewin.ch](mailto:andre_meichtry@bluewin.ch)
-</div> 
+<!-- [andre_meichtry@bluewin.ch](mailto:andre_meichtry@bluewin.ch) -->
+
