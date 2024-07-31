@@ -12,48 +12,111 @@ bibliography:
 
 
 
-
 # Noncollapsibility
 
-We simulate data from GLM with **non-confounding** covariate $C$:
 
+Assume having a binary outcome $Y$ and a treatment indicator $X$ denoting if patient was randomised to treatment ($X=1$) or control ($X=0$). The analysis would be to fit a simple **logistic regression model**
+
+$$
+P(Y=1|X)=\text{expit}(\alpha_0+\alpha_1X),
+$$
+
+with $\text{expit}(\alpha_0+\alpha_1X)=\frac{\exp(\alpha_0+\alpha_1X)}{1+\exp(\alpha_0+\alpha_1X)}$.
+
+Often, we write the model with the linear predictor, that is, the logit transformed expectation,
+
+$$
+\boxed{\text{logit}P(Y=1|X)=\alpha_0+{\color{red}\alpha_1}X}.
+$$
+ 
+
+Of course, there will be other factors that influence the probability that $Y=1$. Assume another variable $C$ which influences the probability that $Y=1$. The conditional model would be
+
+$$
+\boxed{\text{logit}P(Y=1|X,C)=\beta_0+{\color{red}\beta_1}X+\beta_2C}.
+$$
+
+Now, under randomisation, $C$ and $X$ are (population) independent -- that is -- there is no confounding of the effect of $X$ on $Y$ by $C$ in place. 
+
+Though $C$ is not a confounder, in general, ${\color{red}\alpha_1 \neq \beta_1}$. The parameters (log odds ratios) in the marginal and conditional model are **different**. The proof is based on **William's Tower rule** for conditional expectations:
+
+
+$$
+\begin{align}
+E(Y|X)=&E(E(Y|X,C)|X)\\
+=&E(\text{expit}(\beta_0+\beta_1X+\beta_2C)|X)\\
+\neq &\text{expit}(\beta_0+\beta_1X+\beta_2E(C|X))
+\end{align}
+$$
+
+
+<!-- $$ -->
+<!-- \begin{align} -->
+<!-- E(Y_x=1)=&E_C(Y_x=1|C)\\ -->
+<!-- =&E_C(\text{expit}(\beta_0+\beta_1X+\beta_2C))\\ -->
+<!-- \neq &\text{expit}(\beta_0+\beta_1X+\beta_2E(C)) -->
+<!-- \end{align} -->
+<!-- $$ -->
+
+
+With **other link functions** (in log-linear models) and identity (in linear models)), however, the two quantities are **equal**. 
+
+
+# Example
+
+We simulate data from logistic GLM with **non-confounding** covariate $C$:
 
 
 ```{r }
 set.seed(3)
 N <- 400
 C <- sort(runif(N,-8,8)) #non-confounding C
-G<-sample(c(0,1),N,replace=TRUE)
+X<-sample(c(0,1),N,replace=TRUE)
 beta0<-0
 beta1<-log(10)
 beta2<-1
 ##Logistic 
-etai<-beta0+beta1*G+beta2*C
+etai<-beta0+beta1*X+beta2*C
 pii<-exp(etai)/(1+exp(etai))
-Ydich <-rbinom(G,size=1,prob=pii)
-dat<-data.frame(C,G,Ydich)
-cor(dat)
+Ydich <-rbinom(X,size=1,prob=pii)
+dat<-data.frame(C,X,Ydich)
+```
+
+```{r }
+psych::headTail(dat)
 ```
 
 
+
 ```{r }
-modC<-glm(Ydich~G+C,family="binomial")
-modM<-glm(Ydich~G,family="binomial")
+modC<-glm(Ydich~X+C,data=dat,family="binomial")
+modM<-glm(Ydich~X,data=dat,family="binomial")
+```
+
+## Marginal model
+
+```{r }
+equatiomatic::extract_eq(modM)
+```
+## Conditional model
+
+```{r }
+equatiomatic::extract_eq(modC)
 ```
 
 
 
 ## Illustrate non-collapsibility
 
-```{r }
+```{r fig.cap="Log odds ratio for group is larger when we adjust for $C$ (Differences in logits  between solid lines relative to distance between dashed lines)"}
 pred<-predict(modM,type="response",se.fit=TRUE)
-predgA<-predict(modC,newdata=data.frame(C=C[G==0],G=0),se.fit=TRUE,type="response")
-predgB<-predict(modC,newdata=data.frame(C=C[G==1],G=1),se.fit=TRUE,type="response")
-plot(C,Ydich,col=c("blue","red")[G+1],ylab="Probability")
-lines(sort(C[G==0]),sort(predgA$fit),col="blue")
-lines(sort(C[G==1]),sort(predgB$fit),col="red")
-abline(a=mean(pii[G==0]),b=0,col="blue",lty=2)
-abline(a=mean(pii[G==1]),b=0,col="red",lty=2)
+predgA<-predict(modC,newdata=data.frame(C=C[X==0],X=0),se.fit=TRUE,type="response")
+predgB<-predict(modC,newdata=data.frame(C=C[X==1],X=1),se.fit=TRUE,type="response")
+plot(C,Ydich,col=c("blue","red")[X+1],ylab="Probability")
+lines(sort(C[X==0]),sort(predgA$fit),col="blue")
+lines(sort(C[X==1]),sort(predgB$fit),col="red")
+abline(a=mean(pii[X==0]),b=0,col="blue",lty=2)
+abline(a=mean(pii[X==1]),b=0,col="red",lty=2)
 ```
 
 ## Marginal model
@@ -66,7 +129,7 @@ summary(modM)$coef
 
 ## Conditional model
 
-Effect of $G$ is larger, even though $C$ is not a confounder. This is due to **non-collapsibility of the odds ratio**
+Effect of $X$ is larger, even though $C$ is not a confounder. This is due to **non-collapsibility of the odds ratio**
 
 
 ```{r }
@@ -85,7 +148,7 @@ Estimate inverse probability weights to fit marginal structural
 
 ```{r }
 library(ipw)
-temp <- ipwpoint(exposure=G,family = "binomial",link = "logit",data=dat,numerator =~1,denominator = ~ C)
+temp <- ipwpoint(exposure=X,family = "binomial",link = "logit",data=dat,numerator =~1,denominator = ~ C)
 summary(temp$ipw.weights)
 dat$sw<-temp$ipw.weights
 ```
@@ -95,14 +158,14 @@ dat$sw<-temp$ipw.weights
 Marginal structural model for the causal effect of $X$ on $Y$ corrected for confounding by $C$ using inverse probability weighting
 
 ```{r }
-modW<-glm(Ydich~G,weights=sw,data=dat,family=quasibinomial)
+modW<-glm(Ydich~X,weights=sw,data=dat,family=quasibinomial)
 summary(modW)$coef
 ```
 
 
 ```{r }
 require("survey")
-msm <- (svyglm(Ydich ~ G, family="binomial",design = svydesign(~ 1, weights =~sw,data = dat)))
+msm <- (svyglm(Ydich ~ X, family="binomial",design = svydesign(~ 1, weights =~sw,data = dat)))
 summary(msm)
 ```
 
@@ -123,7 +186,7 @@ modelsummary::modelsummary(models=list("marginal"=modM,"conditional"=modC,"IPW"=
 
 
 
-# Example smoking and children weight
+# Smoking and children weight
 
 ```{r echo=FALSE}
 library(rio)
@@ -169,23 +232,24 @@ modelsummary::modelsummary(models=list("marginal"=glm_smoke,"conditional"=glm_mu
 ```
 
 
-# Potential outcomes
-See [Example](https://www.r-bloggers.com/2017/12/when-you-use-inverse-probability-weighting-for-estimation-what-are-the-weights-actually-doing/) for marginal structural models in this context.
+# The view of potential outcomes
+
+<!-- See [Example](https://www.r-bloggers.com/2017/12/when-you-use-inverse-probability-weighting-for-estimation-what-are-the-weights-actually-doing/) for marginal structural models in this context. -->
 
 ## Simulate some data
 
 ```{r }
 library(simstudy)
 # define the data
-defB <- defData(varname = "L", formula =0.27, 
+defB <- defData(varname = "C", formula =0.27, 
                 dist = "binary")
-defB <- defData(defB, varname = "Y0", formula = "-2.5 + 1.75*L", 
+defB <- defData(defB, varname = "Y0", formula = "-2.5 + 1.75*C", 
                 dist = "binary", link = "logit")
-defB <- defData(defB, varname = "Y1", formula = "-1.5 + 1.75*L", 
+defB <- defData(defB, varname = "Y1", formula = "-1.5 + 1.75*C", 
                 dist = "binary", link = "logit")
-defB <- defData(defB, varname = "A", formula = "0.315 + 0.352 * L", 
+defB <- defData(defB, varname = "X", formula = "0.315 + 0.352 *C", 
                 dist = "binary")
-defB <- defData(defB, varname = "Y", formula = "Y0 + A * (Y1 - Y0)", 
+defB <- defData(defB, varname = "Y", formula = "Y0 + X * (Y1 - Y0)", 
                 dist = "nonrandom")
 defB
 ```
@@ -213,13 +277,13 @@ dtB[, log( odds( mean(Y1) ) / odds( mean(Y0) ) )]
 The true conditional causal effect of $A$ is 1.
 
 ```{r }
-mc<-glm(Y ~ A + L , data = dtB, family="binomial")
+mc<-glm(Y ~ X + C , data = dtB, family="binomial")
 mc
 ```
-This estimate for $A$ is a good estimate of the conditional effect in the population, based on the potential outcomes at each level of $L$
+This estimate for $X$ is a good estimate of the conditional effect in the population, based on the potential outcomes at each level of $C$
 
 ```{r }
-dtB[, .(LOR = log( odds( mean(Y1) ) / odds( mean(Y0) ) ) ), keyby = L]
+dtB[, .(LOR = log( odds( mean(Y1) ) / odds( mean(Y0) ) ) ), keyby = C]
 ```
 
 ## Marginal effect
@@ -227,7 +291,7 @@ dtB[, .(LOR = log( odds( mean(Y1) ) / odds( mean(Y0) ) ) ), keyby = L]
 The marginal estimate is biased both for the conditional effect and the marginal causal effect.
 
 ```{r }
-mm<-glm(Y ~ A , data = dtB, family="binomial")
+mm<-glm(Y ~ X , data = dtB, family="binomial")
 mm
 ```
 
@@ -235,17 +299,17 @@ mm
 ## Numerator and Denominator model
 
 ```{r }
-numModel <- glm(A ~ 1, data = dtB, family = "binomial")
-denModel <- glm(A ~ L, data = dtB, family = "binomial")
+numModel <- glm(X ~ 1, data = dtB, family = "binomial")
+denModel <- glm(X ~ C, data = dtB, family = "binomial")
 ```
 
 ## Stabilized weights by hand
 
 ```{r }
-dtB[, pA0 := predict(numModel, type = "response")]
-dtB[, pA := predict(denModel, type = "response")]
+dtB[, pX0 := predict(numModel, type = "response")]
+dtB[, pX := predict(denModel, type = "response")]
 defB2 <- defDataAdd(varname = "IPW", 
-                    formula = "(A*pA0+(1-A)*(1-pA0))/((A * pA) + ((1 - A) * (1 - pA)))", 
+                    formula = "(X*pX0+(1-X)*(1-pX0))/((X * pX) + ((1 - X) * (1 - pX)))", 
                     dist = "nonrandom")
 dtB <- addColumns(defB2, dtB)
 dtB[1:6]
@@ -258,8 +322,8 @@ unique(dtB$IPW)
 ## Stabilized weights with **ipw** package
 
 ```{r }
-tempsw<-ipw::ipwpoint(exposure=A,family="binomial",link="logit",numerator=~1,denominator = ~L,data=dtB)
-tempw<-ipw::ipwpoint(exposure=A,family="binomial",link="logit",denominator = ~L,data=dtB)
+tempsw<-ipw::ipwpoint(exposure=X,family="binomial",link="logit",numerator=~1,denominator = ~C,data=dtB)
+tempw<-ipw::ipwpoint(exposure=X,family="binomial",link="logit",denominator = ~C,data=dtB)
 unique(tempsw$ipw.weights)
 mean(tempsw$ipw.weights)
 unique(tempw$ipw.weights)
@@ -272,13 +336,13 @@ mean(tempw$ipw.weights)
 ### Unstabilized weights
 
 ```{r }
-summary(mw<-glm(Y ~ A , data = dtB, family="binomial", weights = tempw$ipw.weights))$coef
+summary(mw<-glm(Y ~ X , data = dtB, family="binomial", weights = tempw$ipw.weights))$coef
 ```
 
 ### Stabilized weights
 
 ```{r }
-summary(mws<-glm(Y ~ A , data = dtB, family="binomial", weights = tempsw$ipw.weights))$coef
+summary(mws<-glm(Y ~ X , data = dtB, family="binomial", weights = tempsw$ipw.weights))$coef
 ```
 ## Comparison
 
