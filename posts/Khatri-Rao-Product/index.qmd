@@ -1,0 +1,111 @@
+---
+title: "Design Matrix for interaction effects"
+date: "2025-02-06"
+description: "Matrix Algebra"
+categories: [code, analysis]
+---
+
+
+
+
+
+## Design Matrix for interaction effects
+
+Problem discussed with Niklaus Meier (Thank you.)
+
+Assume we want interaction terms  of continuous variables (variables in $\mathbf{X}$) with categorical variables (variables in $\mathbf{J}$). The corresponding Design Matrix is the **Transposed Khatri-Rao Product**; this is a **row-by-row Kronecker product** of two matrices.
+
+
+
+$$
+\mathbf{J} \bullet \mathbf{X}
+=
+\begin{bmatrix}
+\mathbf{J}[1,] \otimes \mathbf{X}[1,]\\\hline 
+\mathbf{J}[2,] \otimes \mathbf{X}[2,]\\\hline
+\mathbf{J}[3,] \otimes \mathbf{X}[3,]\\\hline
+...\\\hline
+\mathbf{J}[n,] \otimes \mathbf{X}[n,]\\
+\end{bmatrix}
+$$
+
+
+<!-- ```{r include=FALSE} -->
+<!-- library(knitr) -->
+<!-- opts_chunk$set(echo=FALSE,fig.path="figures/",fig.align="center", -->
+<!--                background="transparent",size="scriptsize",out.width="75%",warning=FALSE,message=FALSE,tidy=TRUE) -->
+               
+<!-- ``` -->
+
+# Dummy Matrix $J$ and Matrix $X$, Parameter vector
+
+
+```{r }
+library(Matrix)
+library(psych)
+n<-20
+p1<-2
+p2<-4
+```
+
+```{r }
+k<-p1*p2
+J<-matrix(sample(c(0,1),n*p1,replace=TRUE),n,p1)
+X<-matrix(round(rnorm(n*p2,10,2)),n,p2)
+beta<-t(t(rnorm(k)))
+J
+X
+```
+
+
+```{r }
+beta
+```
+
+
+# Design Matrix: Transposed Khatri-Rao product 
+
+This is a **row-by-row Kronecker product of two matrices**
+
+
+```{r }
+Design<-t(KhatriRao(t(J),t(X)))##Design matrix
+```
+
+# Alternative ("by hand")
+
+
+```{r }
+KR<-matrix(0,rep(n*p1*p2),nrow=n,ncol=p1*p2)
+for (i in 1:n) {KR[i,]<-kronecker(J[i,],X[i,])} ##Explicit: row-by-row Kronecker product of two matrices
+headTail(KR)
+```
+
+# Model Matrix (macht dasselbe)
+
+```{r }
+headTail(model.matrix(~X:J-1))
+```
+
+
+# Linear Prediction
+
+```{r }
+eta<-Design%*%beta
+Y<-rnorm(n,mean=as.vector(eta),sd=.001)
+```
+
+# Analyse
+
+```{r }
+dat<-data.frame(Y=Y,X=as.data.frame(KR))
+data.frame(estimated=coef(m<-lm(Y~.-1,dat)),true=beta)
+```
+
+
+
+
+
+
+
+

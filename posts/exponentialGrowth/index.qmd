@@ -129,6 +129,7 @@ plot(1:length(cases),log(cases),type="l",col="blue",lwd=2,xlab="Tage")
 
 
 
+
 ```{r fig.cap=c("Inzidenz","log Inzidenz")} 
 swisspop<-8e6
 time<-seq(1,60,by=1)

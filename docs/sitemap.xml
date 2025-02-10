@@ -2,31 +2,31 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://mcdr65.github.io/myblog/index.html</loc>
-    <lastmod>2024-07-31T08:27:36.993Z</lastmod>
+    <lastmod>2025-02-10T10:13:36.273Z</lastmod>
   </url>
   <url>
     <loc>https://mcdr65.github.io/myblog/posts/fromLMtoSplines/index.html</loc>
     <lastmod>2023-06-16T13:47:12.016Z</lastmod>
   </url>
   <url>
-    <loc>https://mcdr65.github.io/myblog/posts/logratioGeometry/index.html</loc>
-    <lastmod>2022-11-04T15:56:16.000Z</lastmod>
+    <loc>https://mcdr65.github.io/myblog/posts/Khatri-Rao-Product/index.html</loc>
+    <lastmod>2025-02-07T15:02:18.812Z</lastmod>
   </url>
   <url>
-    <loc>https://mcdr65.github.io/myblog/posts/exponentialGrowth/index.html</loc>
-    <lastmod>2022-10-09T09:30:45.000Z</lastmod>
-  </url>
-  <url>
-    <loc>https://mcdr65.github.io/myblog/archive.html</loc>
-    <lastmod>2024-07-31T07:16:23.642Z</lastmod>
+    <loc>https://mcdr65.github.io/myblog/posts/noncollaps/index.html</loc>
+    <lastmod>2025-02-06T15:58:24.938Z</lastmod>
   </url>
   <url>
     <loc>https://mcdr65.github.io/myblog/about.html</loc>
     <lastmod>2024-07-31T07:37:19.598Z</lastmod>
   </url>
   <url>
-    <loc>https://mcdr65.github.io/myblog/posts/noncollaps/index.html</loc>
-    <lastmod>2023-12-07T15:44:57.275Z</lastmod>
+    <loc>https://mcdr65.github.io/myblog/posts/exponentialGrowth/index.html</loc>
+    <lastmod>2025-02-06T16:32:04.414Z</lastmod>
+  </url>
+  <url>
+    <loc>https://mcdr65.github.io/myblog/posts/logratioGeometry/index.html</loc>
+    <lastmod>2022-11-04T15:56:16.000Z</lastmod>
   </url>
   <url>
     <loc>https://mcdr65.github.io/myblog/posts/gendern/index.html</loc>

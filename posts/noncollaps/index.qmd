@@ -3,10 +3,6 @@ title: "Noncollapsibility of the odds ratio"
 date: "2023-12-02"
 description: "IPW-analysis"
 categories: [code, analysis]
-
-bibliography: 
-  - "/home/meichtry/Templates/Rcite.bib"
-  - grateful-refs.bib
 ---
 
 
@@ -350,12 +346,6 @@ summary(mws<-glm(Y ~ X , data = dtB, family="binomial", weights = tempsw$ipw.wei
 modelsummary::modelsummary(models=list("marginal"=mm,"conditional"=mc,"IPW"=mw,"IPWs"=mws))
 ```
 
-```{r echo=FALSE}
-library(grateful)
-cite_packages(pkgs = "Session",output="paragraph",out.dir=getwd(),cite.tidyverse=FALSE,omit=c("grateful","knitr"))
-cite_packages(pkgs = "Session",output="table",out.dir=getwd(),cite.tidyverse=FALSE,omit=c("grateful","knitr"))
-```
-
 
 ```{r EffSampleSize, include=FALSE}
 Nnew
@@ -368,12 +358,6 @@ sum(sw)^2/sum(sw^2)
 Nnew/(1+var(w))
 Nnew/(1+var(sw))
 ```
-
-
-
-# Bibliography {-}
-
-
 
 
 
