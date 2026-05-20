@@ -1,0 +1,39 @@
+# options specified here will apply to all posts in this folder
+
+# freeze computational output
+# (see https://quarto.org/docs/projects/code-execution.html#freeze)
+freeze: true
+
+# Enable banner style title blocks
+title-block-banner: true
+
+
+# Author name of all blog posts
+author: "André Meichtry"
+
+# Table of content settings
+toc: true
+toc-depth: 3
+
+
+knitr:
+  opts_chunk: 
+    collapse: false
+    column: page
+    
+format:
+  html:
+    df-print: kable
+    embed-resources: true
+    code-fold: false
+    code-tools:
+      source: true
+      toggle: false
+
+
+
+page-layout: article
+fig-cap-location: top
+comments: 
+  utterances: 
+    repo: mcdr65/myblog

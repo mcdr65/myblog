@@ -1,0 +1,23 @@
+---
+title: "About"
+image: profile.png
+about:
+  template: jolla
+  links:
+    - icon: github
+      text: Github
+      href: https://github.com
+---
+
+
+ 👋 Hi, I’m André Meichtry
+ 
+ 👀 I’m interested in philosophy, physics, quantitative research methodology and biostatistics.
+ 
+  
+❤️ I like 🏃.
+
+*******************************
+
+<!-- [andre_meichtry@bluewin.ch](mailto:andre_meichtry@bluewin.ch) -->
+

@@ -1,0 +1,73 @@
+---
+title: "Compositions"
+date: "2022-11-03"
+description: "Simplex as sample space: Tetrahedron for 4-part compositions"
+categories: [code, analysis]
+---
+
+###### Sample space of compositional data ######
+
+The sample space of compositional data with $D$ parts is a simplex $\mathcal{S}^D$ of dimension $D-1$: 
+
+$\mathcal{S}^D=\{\mathbf{x}=[x_1,x_2,\dots,x_D]\in \mathbb{R}^D \mid
+x_i>0, i=1,2,\dots,D; \sum_{i=1}^Dx_i=\mathcal{k}\}$
+
+The only information is given by the *ratios between components*, so
+the information of a composition is preserved under multiplication by
+any positive constant. Therefore, the sample space of compositional
+data can always be assumed to be a standard simplex, i.e. $\mathcal{k}
+= 1$.
+
+Normalization to the standard simplex is called closure and is
+
+$\mathcal{C}[x_1,x_2,\dots,x_D]=\left[\frac{x_1}{\sum_{i=1}^D x_i},\frac{x_2}{\sum_{i=1}^D x_i}, \dots,\frac{x_D}{\sum_{i=1}^D x_i}\right]$
+
+
+###### Example ######
+
+4 Raters rated a 4-part-composition on $n=20$ subjects. See the interactive *Tetrahedron*
+
+```{r include=FALSE,warning=FALSE}
+library(compositions)
+library(DirichletReg)
+library(psych)
+library(irr)
+library(rgl)
+
+knitr::knit_hooks$set(webgl = hook_webgl)
+d.ern<-read.csv("ern.csv",stringsAsFactors=TRUE)
+
+d.ern[]<-lapply(d.ern,gsub,pattern="%",replacement="")
+d.ern[]<-lapply(d.ern,as.numeric)
+str(d.ern)
+d.ern
+d.ern$ID<-as.factor(d.ern$ID)
+data.frame(names(d.ern))
+A<-acomp(d.ern[,c(2,6,10,14)])
+B<-acomp(d.ern[,c(3,7,11,15)])
+C<-acomp(d.ern[,c(4,8,12,16)])
+D<-acomp(d.ern[,c(5,9,13,17)])
+
+HA<-as.matrix(d.ern[,c(2,6,10,14)])%*%c(0,1,2,3)
+HB<-as.matrix(d.ern[,c(3,7,11,15)])%*%c(0,1,2,3)
+HC<-as.matrix(d.ern[,c(4,8,12,16)])%*%c(0,1,2,3)
+HD<-as.matrix(d.ern[,c(5,9,13,17)])%*%c(0,1,2,3)
+
+apply(A,1,sum) 
+apply(B,1,sum)
+apply(C,1,sum) 
+apply(D,1,sum)
+datAitch<-acomp(data.frame(rbind(A,B,C,D)))
+datAitch
+Rater<-as.factor(rep(c("A","B","C","D"),each=20))
+ID<-as.factor(rep(1:20,4))
+peri<-d.ern[,2:5]
+zent<-d.ern[,6:9]
+kort<-d.ern[,10:13]
+veg<-d.ern[,14:17]
+```
+
+
+```{r rgl1,webgl=TRUE,warning=FALSE}
+plot3D(datAitch,col=as.numeric(Rater),size=5,axes=TRUE,coors=TRUE)
+```

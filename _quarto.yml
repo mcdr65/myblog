@@ -1,0 +1,28 @@
+project:
+  type: website
+  output-dir: docs
+
+website:
+  title: "Stats and other things"
+  site-url: "https://mcdr65.github.io/myblog/"
+  description: "This is André Meichtry's personal Blog"
+  navbar:
+    right:
+      - about.qmd
+      - text: Archive
+        href: archive.qmd
+
+format:
+  html:
+    link-external-newwindow: true
+    theme:
+      light: litera
+      dark: cyborg
+    css: styles.css
+    code-link: true
+    code-fold: true
+    code-tools:
+      source: false
+      toggle: true
+
+

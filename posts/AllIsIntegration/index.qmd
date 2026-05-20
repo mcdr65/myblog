@@ -1,0 +1,51 @@
+---
+title: "\"All Is Integration\""
+date: "2026-05-20"
+description: "Integrieren über unbekannte Welten"
+categories: [philosophie]
+---
+
+Statistics, viewed from a sufficient distance, is often presented as a science of estimation, testing, prediction, or uncertainty quantification. Yet beneath these familiar activities lies a deeper and more universal mathematical structure: the repeated necessity of integrating over what cannot be directly observed.
+
+
+| Model class | Example model | Observation model | What is integrated over? | Integral / summation structure | Philosophical interpretation | Additional explanation |
+|---|---|---|---|---|---|---|
+| Deterministic regression | $y=x^\top\beta$ | none | nothing | none | Pure functional law | No probability model; data assumed to follow an exact deterministic relation. |
+| Gaussian LM | $Y_i=x_i^\top\beta+\varepsilon_i$ | $\varepsilon_i\sim N(0,\sigma^2)$ | Gaussian error noise | implicit in Gaussian density | Additive uncertainty around deterministic mean | Classical regression with homoscedastic additive residuals. |
+| One-sample $t$-test | $Y_i\sim N(\mu,\sigma^2)$ | Gaussian | error variability | product of normal densities | Mean inference under stochastic sampling | Special case of Gaussian likelihood with one mean parameter. |
+| Two-sample $t$-test | $Y_i=\beta_0+\beta_1G_i+\varepsilon_i$ | Gaussian | residual noise | Gaussian likelihood | Group differences with uncertainty | Equivalent to a linear model with a binary group predictor. |
+| ANOVA | $Y_{ij}=\mu+\alpha_j+\varepsilon_{ij}$ | Gaussian | residual noise | Gaussian likelihood | Group means plus stochastic variation | Multi-group extension of the linear model. |
+| Logistic regression | $Y_i\sim \mathrm{Bernoulli}(p_i)$ | Bernoulli | binary outcome randomness | product of Bernoulli probabilities | Uncertainty in binary realizations | Models probabilities through a link function such as the logit. |
+| Poisson regression | $Y_i\sim \mathrm{Poisson}(\mu_i)$ | Poisson | count randomness | product of Poisson probabilities | Event generation process | Variance equals the mean under the Poisson assumption. |
+| Gamma GLM | $Y_i\sim \mathrm{Gamma}(\mu_i,\phi)$ | Gamma | multiplicative positive noise | Gamma likelihood | Relative / proportional variability | Suitable for positive skewed outcomes with variance increasing quadratically with the mean. |
+| Negative-binomial GLM | $Y_i\sim NB(\mu_i,\theta)$ | NB | Poisson intensity heterogeneity | Poisson-Gamma mixture | Extra latent variability in rates | Can be derived as a Poisson model with a Gamma-distributed latent rate. |
+| Probit regression | $Y_i=1[Z_i>0]$ | latent Gaussian threshold | latent $Z_i$ | $\int 1(z>0)\phi(z)\,dz$ | Hidden continuous propensity | Binary outcomes arise from an unobserved continuous latent variable. |
+| Finite mixture model | $Y_i\sim \sum_k \pi_k f_k(y)$ | mixture | latent class membership | $\sum_k \pi_k f_k(y)$ | Population heterogeneity | Data assumed to arise from several overlapping subpopulations. |
+| Latent class analysis | categorical latent groups | multinomial | latent class $C_i$ | $\sum_c P(Y\mid C=c)P(C=c)$ | Hidden subpopulations | Common in psychometrics and sociology for identifying hidden categories. |
+| Factor analysis | $Y=\Lambda f+\varepsilon$ | Gaussian | latent factors $f$ | $\int f(y\mid f)p(f)df$ | Hidden dimensions generate observed variables | Correlations among variables explained through lower-dimensional latent traits. |
+| IRT / Rasch | $P(Y_{ij}=1)=\mathrm{logit}^{-1}(\theta_i-b_j)$ | Bernoulli | latent ability $\theta_i$ | $\int P(Y\mid\theta)p(\theta)d\theta$ | Hidden trait generates responses | Item responses modeled via latent ability and item difficulty. |
+| Random intercept LMM | $Y_{ij}=x_{ij}^\top\beta+b_j+\varepsilon_{ij}$ | Gaussian | random intercepts $b_j$ | $\int f(y\mid b)f(b)db$ | Cluster heterogeneity | Observations within a cluster become correlated through shared latent effects. |
+| Random slope model | $Y_{ij}=x_{ij}^\top\beta+b_{1j}+b_{2j}x_{ij}+\varepsilon$ | Gaussian | random coefficient vector | multivariate integral | Individual-specific effects | Allows regression slopes to vary between clusters or persons. |
+| Logistic GLMM | binary mixed model | Bernoulli | random effects | $\int f(y\mid b)f(b)db$ | Cluster-specific risk differences | Extends logistic regression to clustered or longitudinal data. |
+| Poisson GLMM | count mixed model | Poisson | latent cluster intensity | $\int f(y\mid b)f(b)db$ | Unobserved rate heterogeneity | Random effects induce extra-Poisson variability and correlation. |
+| Gamma GLMM | positive skewed mixed model | Gamma | latent cluster effects | $\int f(y\mid b)f(b)db$ | Multiplicative cluster heterogeneity | Useful for repeated positive skewed outcomes. |
+| Frailty survival model | hazard with frailty $u_j$ | survival process | frailty term | $\int f(t\mid u)f(u)du$ | Hidden susceptibility | Survival differences explained by latent vulnerability. |
+| Hidden Markov model | latent states $S_t$ | conditional observation model | hidden states | $\sum_{S_1,\dots,S_T}$ | Hidden dynamic process | Observed sequences generated from unobserved evolving states. |
+| Kalman filter | state-space Gaussian model | Gaussian | latent states | recursive Gaussian integration | Continuous hidden dynamics | Sequential updating of hidden continuous states over time. |
+| Gaussian process regression | $f(x)\sim GP$ | Gaussian | latent function $f$ | functional integral | Distribution over functions | Bayesian nonparametric regression over infinite-dimensional function spaces. |
+| Ridge regression | penalized LM | Gaussian | equivalent Gaussian prior on $\beta$ | MAP / Bayesian integral | Shrinkage via prior uncertainty | Penalization corresponds to Gaussian priors on coefficients. |
+| Lasso | Laplace prior | Gaussian | prior uncertainty on coefficients | Bayesian interpretation | Sparse latent structure | Encourages sparse solutions by shrinking some coefficients exactly to zero. |
+| Bayesian linear regression | prior on $\beta,\sigma^2$ | Gaussian | parameter uncertainty | $\int f(y\mid\theta)p(\theta)d\theta$ | Epistemic uncertainty | Uncertainty exists not only in observations but also in parameters. |
+| Bayesian GLM | prior on coefficients | exponential-family | posterior over parameters | full posterior integral | Uncertainty in effects | Generalizes Bayesian inference to non-Gaussian outcomes. |
+| Bayesian GLMM | priors + random effects | hierarchical | parameters and random effects | nested integrals | Full uncertainty hierarchy | Simultaneously integrates over latent effects and parameter uncertainty. |
+| Posterior predictive distribution | $p(y^{new}\mid y)$ | predictive | posterior uncertainty | $\int p(y^{new}\mid\theta)p(\theta\mid y)d\theta$ | Prediction averaged over uncertainty | Bayesian prediction averages over all plausible parameter values. |
+| Marginal likelihood | $p(y)$ | any Bayesian model | all parameter uncertainty | $\int f(y\mid\theta)p(\theta)d\theta$ | Occam averaging | Central quantity in Bayesian model comparison and Bayes factors. |
+| EM algorithm | incomplete-data likelihood | latent-variable model | latent missing data | $\int f(y,z\mid\theta)dz$ | Unobserved structure | Alternates between estimating latent variables and parameters. |
+| Missing-data model | observed-data likelihood | partial observation | missing values | $\int f(y_{obs},y_{mis})dy_{mis}$ | Uncertainty about missingness | Missing values treated as latent unknown quantities. |
+| Causal marginalization | potential outcomes | counterfactual model | covariate distribution | $\int E(Y\mid X=x)dF(x)$ | Population-average causal effect | Standardization averages causal effects over a target population. |
+| Marginal means / emmeans | adjusted means | regression model | nuisance covariates | averaging over covariate distribution | Population-adjusted effects | Produces covariate-adjusted group means or contrasts. |
+| Random-effects meta-analysis | study effects $\theta_j\sim N(\mu,\tau^2)$ | study likelihoods | true study heterogeneity | $\int f(y_j\mid\theta_j)f(\theta_j)d\theta_j$ | Between-study variability | Studies assumed to estimate varying underlying true effects. |
+| Deep neural network (Bayesian view) | stochastic weights | flexible nonlinear model | parameter uncertainty | high-dimensional integral | Distribution over representations | Bayesian interpretation treats weights as uncertain latent parameters. |
+| Variational Bayes | approximate posterior | arbitrary | latent posterior distribution | optimized approximate integral | Tractable uncertainty approximation | Replaces exact integration by optimization over simpler distributions. |
+| MCMC | sampling algorithm | arbitrary Bayesian model | posterior distribution | Monte Carlo integration | Numerical integration engine | Numerical approximation of otherwise intractable integrals. |
+
