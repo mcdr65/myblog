@@ -90,3 +90,82 @@ $$
 This mirrors the role of expectations and covariance matrices in statistics.
 
 From this viewpoint, much of the mathematical machinery of quantum mechanics—Hilbert spaces, Hermitian operators, eigenvalues, eigenvectors, traces, and spectral decompositions—can be seen as consequences of the experimentally observed validity of superposition. The deepest mystery is perhaps not why quantum mechanics relies so heavily on linear algebra, but why nature itself appears to obey the superposition principle with such extraordinary precision.
+
+
+For a statistician, one of the most illuminating ways to understand quantum mechanics is through the concept of the density matrix. In many respects, the density matrix plays a role analogous to that of a probability distribution in classical statistics.
+
+In classical probability theory, a random variable $X$ takes values $x_i$ with probabilities $p_i$. The expectation of $X$ is given by
+
+$$
+E(X)
+=
+\sum_i x_i p_i.
+$$
+
+The probability distribution contains all information necessary to predict future observations and compute expectations.
+
+Quantum mechanics has a remarkably similar structure. The state of a system is described by a density matrix $\rho$, while a measurable quantity is represented by a Hermitian operator $A$. The expected value of the observable is
+
+$$
+E(A)
+=
+\operatorname{tr}(\rho A).
+$$
+
+This formula is the quantum analogue of the classical expectation.
+
+To see the connection, consider the spectral decomposition of the observable:
+
+$$
+A
+=
+\sum_i a_i P_i,
+$$
+
+where $a_i$ are the possible measurement outcomes (the eigenvalues of $A$) and $P_i$ are the corresponding projection operators. The probability of observing outcome $a_i$ is given by the Born rule,
+
+$$
+P(a_i)
+=
+\operatorname{tr}(\rho P_i).
+$$
+
+Substituting this into the classical expectation formula yields
+
+$$
+E(A)
+=
+\sum_i a_i P(a_i)
+=
+\sum_i a_i \operatorname{tr}(\rho P_i).
+$$
+
+Using the linearity of the trace,
+
+$$
+E(A)
+=
+\operatorname{tr}
+\left(
+\rho
+\sum_i a_i P_i
+\right)
+=
+\operatorname{tr}(\rho A).
+$$
+
+Thus, the familiar formula for expectation in statistics reappears in quantum mechanics in matrix form.
+
+The analogy can be summarized as follows:
+
+| Statistics | Quantum Mechanics |
+|------------|-------------------|
+| Probability distribution $p(x)$ | Density matrix $\rho$ |
+| Random variable $X$ | Observable $A$ |
+| Possible values $x_i$ | Eigenvalues $a_i$ |
+| Probabilities $p_i$ | Born probabilities $\operatorname{tr}(\rho P_i)$ |
+| Expectation $E(X)=\sum_i x_i p_i$ | Expectation $E(A)=\operatorname{tr}(\rho A)$ |
+
+From this perspective, the density matrix can be viewed as a generalized probability distribution and the trace as a generalized form of integration. Classical statistics computes expectations by integrating a random variable with respect to a probability distribution. Quantum mechanics computes expectations by taking the trace of an observable with respect to a density matrix. The mathematical language differs, but the underlying idea is strikingly similar: both theories describe uncertainty through a state representation from which probabilities and expectations are derived.
+
+One may therefore view quantum mechanics as a kind of *non-commutative probability theory*. In classical statistics, uncertainty is represented by probability measures and expectations are computed through sums or integrals. In quantum mechanics, uncertainty is represented by density matrices and expectations are computed through traces. The density matrix $\rho$ plays a role analogous to a probability distribution, while Hermitian operators generalize the notion of random variables.
