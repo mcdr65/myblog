@@ -1,0 +1,177 @@
+---
+title: "The Magic of Linear Algebra"
+date: "2026-05-20"
+description: "Analogies in Quantum Mechanics and Statistics"
+categories: [philosophie]
+---
+
+
+# Quantum Mechanics Through the Lens of Statistics
+
+A modern perspective views the superposition principle as the fundamental empirical observation underlying quantum mechanics. Experiments indicate that if two states $\psi_1$ and $\psi_2$ are physically possible, then any linear combination
+
+$$
+a\psi_1 + b\psi_2
+$$
+
+is also a possible state. This implies that quantum states form a vector space, more precisely a Hilbert space. Once states are represented as vectors, the mathematical framework of linear algebra emerges naturally.
+
+To be compatible with superposition, physical observables such as energy, momentum, or spin are represented by linear operators acting on the state space. Likewise, the time evolution of a quantum system must preserve superpositions and is therefore described by a linear dynamical law. The Schrödinger equation
+
+$$
+i\hbar \frac{\partial \psi}{\partial t}
+=
+H\psi
+$$
+
+can be understood as the mathematical expression of continuous linear time evolution, where $H$ denotes the Hamiltonian, the operator associated with energy.
+
+From a statistical perspective, there are several striking analogies. In multivariate statistics, a covariance matrix $\Sigma$ summarizes the dependence structure among variables. In quantum mechanics, a Hermitian operator such as the Hamiltonian $H$ plays a similarly central role by determining the structure of a physical system and its possible energy states.
+
+Eigenvalue decompositions are fundamental in both fields. In principal component analysis (PCA),
+
+$$
+\Sigma v = \lambda v,
+$$
+
+where $\lambda$ denotes the variance explained by the principal component $v$. In quantum mechanics,
+
+$$
+H\psi = E\psi,
+$$
+
+where $E$ denotes an energy level and $\psi$ the corresponding energy eigenstate. In both cases, eigenvectors identify privileged directions or states, and eigenvalues quantify important properties of those directions.
+
+There is also a conceptual analogy between latent variable models and quantum theory. In factor analysis, observed correlations are explained through unobserved latent factors:
+
+$$
+\Sigma = \Lambda \Phi \Lambda^\top + \Psi.
+$$
+
+Similarly, quantum mechanics postulates an underlying state $\psi$ that is not directly observable. What can be observed are the probabilities of measurement outcomes, which are derived from the state through the Born rule:
+
+$$
+P(i)
+=
+\left|
+\langle i \mid \psi \rangle
+\right|^2.
+$$
+
+Thus, both statistics and quantum mechanics infer hidden structure from observable data.
+
+Another parallel arises from spectral decomposition. In statistics, a covariance matrix can be decomposed as
+
+$$
+\Sigma = Q D Q^\top,
+$$
+
+where the columns of $Q$ are eigenvectors and the diagonal elements of $D$ are eigenvalues. In quantum mechanics, a Hermitian operator admits an analogous decomposition:
+
+$$
+H = U D U^\dagger,
+$$
+
+where $U$ is a unitary matrix and $D$ contains the energy eigenvalues. The mathematical structure is nearly identical; only the interpretation differs.
+
+From this viewpoint, much of the mathematical machinery of quantum mechanics—Hilbert spaces, Hermitian operators, eigenvalues, eigenvectors, traces, and spectral decompositions—can be seen as consequences of the experimentally observed validity of superposition. The deepest mystery is perhaps not why quantum mechanics relies so heavily on linear algebra, but why nature itself appears to obey the superposition principle with such extraordinary precision.
+
+# Quantum Mechanics as Generalized Probability Theory
+
+The previous discussion emphasized why quantum mechanics naturally leads to linear algebra. However, quantum theory can also be viewed as a generalization of probability theory. This perspective becomes particularly clear through the concept of the density matrix, which plays a role analogous to a probability distribution in classical statistics.
+
+In classical probability theory, a random variable $X$ takes values $x_i$ with probabilities $p_i$. The expectation of $X$ is given by
+
+$$
+E(X)
+=
+\sum_i x_i p_i.
+$$
+
+The probability distribution contains all information necessary to predict future observations and compute expectations.
+
+Quantum mechanics has a remarkably similar structure. The state of a system is described by a density matrix $\rho$, while a measurable quantity is represented by a Hermitian operator $A$. In this analogy, the density matrix plays a role similar to a probability distribution, whereas observables generalize the notion of random variables.
+
+The expectation of an observable is given by
+
+$$
+E(A)
+=
+\operatorname{tr}(\rho A).
+$$
+
+This formula is the quantum analogue of the classical expectation.
+
+To understand why, consider the spectral decomposition of the observable:
+
+$$
+A
+=
+\sum_i a_i P_i,
+$$
+
+where $a_i$ are the eigenvalues of $A$ and $P_i$ are the corresponding projection operators. The eigenvalues represent the possible outcomes of a measurement. Their probabilities are determined by the Born rule:
+
+$$
+P(a_i)
+=
+\operatorname{tr}(\rho P_i).
+$$
+
+The expectation of the observable therefore becomes
+
+$$
+E(A)
+=
+\sum_i a_i P(a_i).
+$$
+
+Substituting the Born rule yields
+
+$$
+E(A)
+=
+\sum_i a_i \operatorname{tr}(\rho P_i).
+$$
+
+Using the linearity of the trace,
+
+$$
+E(A)
+=
+\operatorname{tr}
+\left(
+\rho
+\sum_i a_i P_i
+\right)
+=
+\operatorname{tr}(\rho A).
+$$
+
+Thus, the familiar formula for expectation in statistics reappears in quantum mechanics in matrix form.
+
+The analogy can be summarized as follows:
+
+| Statistics | Quantum Mechanics |
+|------------|-------------------|
+| Probability distribution $P$ | Density matrix $\rho$ |
+| Random variable $X$ | Observable $A$ |
+| Possible values $x_i$ | Eigenvalues $a_i$ |
+| Probabilities $P(X=x_i)$ | Born probabilities $\operatorname{tr}(\rho P_i)$ |
+| Expectation $E(X)$ | Expectation $\operatorname{tr}(\rho A)$ |
+
+From this perspective, quantum mechanics may be viewed as a form of *non-commutative probability theory*. In classical probability, random variables are ordinary functions and therefore commute:
+
+$$
+XY = YX.
+$$
+
+In quantum mechanics, observables are operators and generally do not commute:
+
+$$
+AB \neq BA.
+$$
+
+This seemingly small mathematical change has profound consequences. Non-commutativity leads to uncertainty relations, interference phenomena, and many of the characteristic features that distinguish quantum mechanics from classical probability theory.
+
+From a mathematical perspective, one may therefore view quantum mechanics as a generalization of probability theory in which probability distributions are replaced by density matrices, random variables by Hermitian operators, and integration by the trace operator. The familiar concepts of probabilities, expectations, variances, and mixtures survive, but they are expressed in the language of linear operators rather than functions.

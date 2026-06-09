@@ -1,0 +1,118 @@
+---
+title: "The trace of a matrix"
+date: "2026-06-09"
+description: "Trace as a Bridge Between Item Space and Factor Space"
+categories: [philosophie]
+---
+
+## Trace as a Bridge Between Item Space and Factor Space
+
+One of the most important properties of the trace of a matrix is its **cyclic invariance**:
+
+$$
+\operatorname{tr}(ABC)
+=
+\operatorname{tr}(BCA)
+=
+\operatorname{tr}(CAB).
+$$
+
+In the context of factor analysis, this immediately implies
+
+$$
+\operatorname{tr}(\Lambda \Phi \Lambda^T)
+=
+\operatorname{tr}(\Lambda^T \Lambda \Phi).
+$$
+
+This identity has a deep geometric interpretation. In the common factor model
+
+$$
+\Sigma = \Lambda \Phi \Lambda^T + \Psi,
+$$
+
+the matrix
+
+$$
+\Sigma_c = \Lambda \Phi \Lambda^T
+$$
+
+represents the covariance structure explained by the common factors. It resides in the **item space** and has dimension $p \times p$, where $p$ denotes the number of observed variables.
+
+Using the cyclic property of the trace, the same common variance can be written as
+
+$$
+\operatorname{tr}(\Lambda^T \Lambda \Phi).
+$$
+
+The matrix
+
+$$
+\Lambda^T \Lambda
+$$
+
+resides in the **factor space** and has dimension $m \times m$, where $m$ denotes the number of factors.
+
+The equality of these two trace values shows that the total variance explained by the common factors remains the same regardless of whether it is viewed in the high-dimensional space of observed variables or in the lower-dimensional latent factor space. The trace therefore acts as a kind of *conservation law* for common variance.
+
+Geometrically,
+
+$$
+\Lambda \Phi \Lambda^T
+$$
+
+describes the structure of the data in item space, whereas
+
+$$
+\Lambda^T \Lambda \Phi
+$$
+
+describes the same structure from the perspective of factor space. Although these matrices have different dimensions and represent different objects, they yield the same total amount of common variance.
+
+### Connection to PCA and SVD
+
+The same idea appears in principal component analysis (PCA) and singular value decomposition (SVD). For any matrix $A$,
+
+$$
+\operatorname{tr}(AA^T)
+=
+\operatorname{tr}(A^TA).
+$$
+
+The matrix $AA^T$ describes the geometry in one space, whereas $A^TA$ describes the same structure in a different coordinate system. Both matrices contain the same total variance, even though they may have different dimensions.
+
+In PCA, the trace of the covariance matrix equals the sum of its eigenvalues and therefore the total variance of the data:
+
+$$
+\operatorname{tr}(\Sigma)
+=
+\sum_{i=1}^{p} \lambda_i.
+$$
+
+Factor analysis extends this idea to the common variance component. The identity
+
+$$
+\operatorname{tr}(\Lambda \Phi \Lambda^T)
+=
+\operatorname{tr}(\Lambda^T \Lambda \Phi)
+$$
+
+shows that the explained common variance is invariant under whether it is viewed in item space or factor space.
+
+### Intuition
+
+The factor loading matrix $\Lambda$ can be viewed as a linear mapping from factor space into item space. The matrix
+
+$$
+\Lambda \Phi \Lambda^T
+$$
+
+describes how factor variance is distributed across the observed variables. In contrast,
+
+$$
+\Lambda^T \Lambda \Phi
+$$
+
+describes how the same variance is organized within the latent factor space.
+
+The trace reveals that no common variance is lost when moving between these two perspectives—it is merely represented in a different coordinate system. The cyclic invariance of the trace therefore provides the mathematical foundation for the duality between item space and factor space in factor analysis.
